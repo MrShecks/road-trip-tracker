@@ -1,11 +1,37 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+<!--    </style>-->
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+        <item name="android:windowBackground">@color/colorWindowBackground</item>
+
+        <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
+        <item name="tabStyle">@style/AppTheme.TabLayout</item>
+    </style>
+
+    <style name="AppTheme.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextColor">@color/colorTextPrimary</item>
+        <item name="subtitleTextColor">@color/colorTextSecondary</item>
+    </style>
+
+    <style name="AppTheme.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextColor">@color/colorTextPrimary</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="tabMode">scrollable</item>
     </style>
 
 </resources>
