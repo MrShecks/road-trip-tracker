@@ -1,4 +1,4 @@
-package ie.justonetech.roadtriptracker.ui.activities
+package ie.justonetech.roadtriptracker.view.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +8,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import ie.justonetech.roadtriptracker.R
 import kotlinx.android.synthetic.main.main_activity.*
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MainActivity
+// Application entry point, hosts the main navigation view
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 class MainActivity : AppCompatActivity() {
 

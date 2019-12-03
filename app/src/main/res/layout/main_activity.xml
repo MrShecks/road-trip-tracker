@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.MainActivity">
+    tools:context=".view.activities.MainActivity">
 
     <!--
         Lint want's me to change "fragment" to "FragmentContainerView" because it's
@@ -38,7 +38,6 @@
             android:layout_height="?attr/actionBarSize"
 
             android:background="@color/colorPrimaryDark"
-
             app:layout_scrollFlags="scroll|enterAlways|snap" />
 
     </com.google.android.material.appbar.AppBarLayout>

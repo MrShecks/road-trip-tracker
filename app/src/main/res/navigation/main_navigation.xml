@@ -5,10 +5,10 @@
 
     <fragment
         android:id="@+id/action_navigate_home"
-        android:name="ie.justonetech.roadtriptracker.ui.fragments.HomeFragment"
+        android:name="ie.justonetech.roadtriptracker.view.fragments.HomeFragment"
         android:label="@string/home_fragment_title" />
     <fragment
         android:id="@+id/action_navigate_history"
-        android:name="ie.justonetech.roadtriptracker.ui.fragments.HistoryFragment"
+        android:name="ie.justonetech.roadtriptracker.view.fragments.HistoryFragment"
         android:label="@string/history_fragment_title" />
 </navigation>
