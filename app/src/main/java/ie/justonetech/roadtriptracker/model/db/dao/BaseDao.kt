@@ -1,5 +1,6 @@
 package ie.justonetech.roadtriptracker.model.db.dao
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -9,6 +10,7 @@ import androidx.room.OnConflictStrategy
 // Generic base class with common utilities for Data Access Objects
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+@Dao
 interface BaseDao<T> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: T): Long

@@ -14,14 +14,17 @@ class FormatUtils private constructor() {
 
     enum class DateFormat {
         FORMAT_SHORT_TEXT,
-        FORMAT_DATABASE
+        FORMAT_DATABASE,
+        FORMAT_LONG_SHORT_TIME
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private val dateFormats = mapOf(
+
         DateFormat.FORMAT_SHORT_TEXT to SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, Locale.getDefault()),
-        DateFormat.FORMAT_DATABASE to SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
+        DateFormat.FORMAT_DATABASE to SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()),
+        DateFormat.FORMAT_LONG_SHORT_TIME to SimpleDateFormat("dd MMMM yyyy HH:mm", Locale.getDefault())
     )
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////

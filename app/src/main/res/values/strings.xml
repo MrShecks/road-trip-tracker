@@ -3,4 +3,9 @@
 
     <string name="home_fragment_title">Home</string>
     <string name="history_fragment_title">History</string>
+
+    <string name="route_summary_list_duration_title">Duration</string>
+    <string name="route_summary_list_distance_title">Distance</string>
+    <string name="route_summary_list_avg_speed_title">Avg Speed</string>
+
 </resources>

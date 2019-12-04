@@ -15,7 +15,7 @@ import ie.justonetech.roadtriptracker.utils.ThreadUtils
 // Provides data from the Room database to the UI via view models
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class TrackingRepository(private val context: Context) {
+class TrackingRepository(context: Context) {
 
     fun getRouteList(): LiveData<PagedList<RouteSummary>> {
         val pagedListConfig = PagedList.Config.Builder()
@@ -24,19 +24,21 @@ class TrackingRepository(private val context: Context) {
             .setPageSize(20)
             .build()
 
-        return TrackingDatabase(context)
-            .routeDetailDao()
+        return database.routeDetailDao()
             .getList()
             .toLiveData(pagedListConfig)
     }
 
     fun addRoute(route: RouteDetail) {
         ThreadUtils().runOnDiskThread {
-            with(TrackingDatabase(context)) {
+            with(database) {
                 runInTransaction {
+                    Log.d(TAG, "Inserting new route, Thread=${Thread.currentThread()}")
+
                     val routeId = routeDetailDao().insert(
                         DbRouteDetail(
-                            route.id,
+                            null,
+                            route.profile.id,
 
                             route.startTime,
                             route.endTime,
@@ -51,24 +53,28 @@ class TrackingRepository(private val context: Context) {
                         )
                     )
 
-                    routePointDao().insertAll(
-                        route.points.map {
-                            DbRoutePoint(
-                                null,
-                                routeId.toInt(),
+                    Log.d(TAG, "New route with id=$routeId inserted successfully")
 
-                                it.timeStamp,
+                    if(route.points.isNotEmpty()) {
+                        routePointDao().insertAll(
+                            route.points.map {
+                                DbRoutePoint(
+                                    null,
+                                    routeId.toInt(),
 
-                                it.latitude,
-                                it.longitude,
-                                it.altitude,
+                                    it.timeStamp,
 
-                                it.speed,
-                                it.bearing,
-                                it.accuracy
-                            )
-                        }
-                    )
+                                    it.latitude,
+                                    it.longitude,
+                                    it.altitude,
+
+                                    it.speed,
+                                    it.bearing,
+                                    it.accuracy
+                                )
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -82,7 +88,7 @@ class TrackingRepository(private val context: Context) {
 
     fun deleteRoute(routeId: Int) {
         ThreadUtils().runOnDiskThread {
-            with(TrackingDatabase(context)) {
+            with(database) {
                 runInTransaction {
                     routeDetailDao().deleteById(routeId).also {
                         Log.d(TAG, "Deleted $it routes with routeId=$routeId from database.")
@@ -91,6 +97,10 @@ class TrackingRepository(private val context: Context) {
             }
         }
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private val database = TrackingDatabase(context)
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -103,7 +113,7 @@ class TrackingRepository(private val context: Context) {
 
         operator fun invoke(context: Context): TrackingRepository {
             return instance ?: synchronized(LOCK) {
-                instance ?: TrackingRepository(context.applicationContext).also {
+                instance ?: TrackingRepository(context).also {
                     instance = it
                 }
             }

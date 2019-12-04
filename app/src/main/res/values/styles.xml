@@ -1,28 +1,34 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/secondaryColor</item>
 
-        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
-        <item name="android:windowBackground">@color/colorWindowBackground</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+        <item name="android:windowBackground">@color/windowBackgroundColor</item>
 
-        <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
+<!--        <item name="toolbarStyle">@style/AppTheme.Toolbar</item>-->
         <item name="tabStyle">@style/AppTheme.TabLayout</item>
+        <item name="bottomNavigationStyle">@style/AppTheme.BottomNavigationView</item>
     </style>
 
-    <style name="AppTheme.Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="titleTextColor">@color/colorTextPrimary</item>
-        <item name="subtitleTextColor">@color/colorTextSecondary</item>
-    </style>
+<!--    <style name="AppTheme.Toolbar" parent="Widget.MaterialComponents.Toolbar">-->
+<!--        <item name="android:background">@color/primaryColor</item>-->
+<!--        <item name="titleTextColor">@color/primaryTextColor</item>-->
+<!--        <item name="subtitleTextColor">@color/secondaryTextColor</item>-->
+<!--    </style>-->
 
     <style name="AppTheme.TabLayout" parent="Widget.MaterialComponents.TabLayout">
-        <item name="tabTextColor">@color/colorTextPrimary</item>
-        <item name="tabSelectedTextColor">@color/colorAccent</item>
-        <item name="tabIndicatorColor">@color/colorAccent</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="tabTextColor">@color/primaryTextColor</item>
+        <item name="tabSelectedTextColor">@color/secondaryColor</item>
+        <item name="tabIndicatorColor">@color/secondaryColor</item>
+        <item name="android:background">@color/primaryDarkColor</item>
         <item name="tabMode">scrollable</item>
+    </style>
+
+    <style name="AppTheme.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
     </style>
 
 </resources>

@@ -20,6 +20,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding.enabled = true
 }
 
 dependencies {
@@ -32,11 +34,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.kotlinCoroutinesVersion"
 
-    implementation "androidx.gridlayout:gridlayout:$rootProject.gridlayoutLivraryVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayoutLibraryVersion"
     implementation "com.google.android.material:material:$rootProject.materialLibraryVersion"
 
-    implementation "androidx.gridlayout:gridlayout:$rootProject.gridlayoutLivraryVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayoutLibraryVersion"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationLibraryVersion"

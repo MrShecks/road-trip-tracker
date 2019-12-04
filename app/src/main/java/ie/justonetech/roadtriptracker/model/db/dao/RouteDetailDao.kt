@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import ie.justonetech.roadtriptracker.model.RouteDetail
 import ie.justonetech.roadtriptracker.model.RouteSummary
 import ie.justonetech.roadtriptracker.model.db.entities.DbRouteDetail
@@ -16,9 +17,11 @@ import ie.justonetech.roadtriptracker.model.db.entities.DbRouteDetail
 @Dao
 interface RouteDetailDao : BaseDao<DbRouteDetail> {
 
+    @Transaction
     @Query("SELECT * FROM TRouteDetail ORDER BY _id DESC")
     fun getList(): DataSource.Factory<Int, RouteSummary>
 
+    @Transaction
     @Query("SELECT * FROM TRouteDetail WHERE _id=:id LIMIT 1")
     fun getById(id: Int): LiveData<RouteDetail>
 

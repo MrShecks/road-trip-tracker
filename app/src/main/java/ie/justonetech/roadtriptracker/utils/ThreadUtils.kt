@@ -14,10 +14,10 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class ThreadUtils internal constructor() {
 
-    val mainThreadExecutor = MainThreadExecutor()
-    val networkThreadExecutor = Executors.newSingleThreadExecutor()
+    private val mainThreadExecutor = MainThreadExecutor()
+    private val networkThreadExecutor = Executors.newSingleThreadExecutor()
 
-    val diskThreadExecutor = Executors.newFixedThreadPool(MAX_DISK_IO_THREADS, object : ThreadFactory {
+    private val diskThreadExecutor = Executors.newFixedThreadPool(MAX_DISK_IO_THREADS, object : ThreadFactory {
         private val threadId = AtomicInteger(0)
 
         override fun newThread(r: Runnable?): Thread {

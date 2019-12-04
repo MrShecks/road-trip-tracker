@@ -11,7 +11,7 @@ import java.util.*
 @Entity(
     tableName = "TRoutePoint",
     indices = [
-        Index(value = ["route_id"], name = "IDX_RouteId")
+        Index(value = ["route_id"], name = "IDX_route_id")
     ],
     foreignKeys = [
         ForeignKey(entity = DbRouteDetail::class, parentColumns = ["_id"], childColumns = ["route_id"], onDelete = ForeignKey.CASCADE)
