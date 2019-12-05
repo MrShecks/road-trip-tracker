@@ -8,4 +8,6 @@
     <string name="route_summary_list_distance_title">Distance</string>
     <string name="route_summary_list_avg_speed_title">Avg Speed</string>
 
+    <string name="route_history_action_menu_delete">Delete</string>
+
 </resources>

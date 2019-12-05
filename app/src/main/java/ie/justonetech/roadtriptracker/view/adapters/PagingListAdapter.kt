@@ -25,11 +25,11 @@ abstract class PagingListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>)
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     interface ItemClickListener<T> {
-        fun onItemClicked(item: T)
+        fun onItemClicked(position: Int, item: T)
     }
 
     interface ItemLongClickListener<T> {
-        fun onItemLongClicked(item: T)
+        fun onItemLongClicked(position: Int, item: T)
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,13 +46,13 @@ abstract class PagingListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>)
         protected fun onItemClicked() {
 
             adapter.getItem(adapterPosition)?.let {
-                adapter.itemClickListener?.onItemClicked(it)
+                adapter.itemClickListener?.onItemClicked(adapterPosition, it)
             }
         }
 
         protected fun onItemLongClicked() {
             adapter.getItem(adapterPosition)?.let {
-                adapter.itemLongClickListener?.onItemLongClicked(it)
+                adapter.itemLongClickListener?.onItemLongClicked(adapterPosition, it)
             }
         }
 
