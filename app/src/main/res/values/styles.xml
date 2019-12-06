@@ -10,6 +10,7 @@
         <item name="android:windowBackground">@color/windowBackgroundColor</item>
 
         <item name="windowActionModeOverlay">true</item>
+        <item name="actionMenuTextColor">@color/primaryTextColor</item>
         <item name="actionModeBackground">@color/primaryColor</item>
 
         <item name="tabStyle">@style/AppTheme.TabLayout</item>
