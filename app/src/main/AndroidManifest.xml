@@ -18,6 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--
+            Sorry, if you want to build the application for source yourself you will need
+            to generate your own Google Maps API key and add it as a string to a values
+            resource file with the name "road_trip_tracker_google_maps_api_key"
+
+            Shecks
+        -->
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/road_trip_tracker_google_maps_api_key"/>
+
     </application>
 
 </manifest>

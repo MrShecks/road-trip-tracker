@@ -2,6 +2,8 @@
     <string name="app_name">Road Trip Tracker</string>
 
     <string name="home_fragment_title">Home</string>
+    <string name="home_fragment_new_route_button">New Route</string>
+
     <string name="history_fragment_title">History</string>
 
     <string name="route_summary_list_duration_title">Duration</string>

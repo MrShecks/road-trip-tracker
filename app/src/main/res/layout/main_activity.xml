@@ -1,33 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activities.MainActivity">
-
-    <!--
-        Lint want's me to change "fragment" to "FragmentContainerView" because it's
-        the new way to include fragments in activities but it's based on "FrameLayout"
-        and does not seem to support navigation as it does not return a NavController
-
-        Note: Setting layout_behavior below is IMPORTANT as it allows the CoordinatorLayout
-        to correctly scroll the AppBarLayout off the screen in response to scroll events
-        from the NavHostFragment. Without this the toolbar will not be displayed correctly
-    -->
-
-    <fragment
-        android:id="@+id/navHostFragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        app:defaultNavHost="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:navGraph="@navigation/main_navigation" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -40,7 +25,34 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways|snap" />
 
+    <!--
+        Lint want's me to change "fragment" to "FragmentContainerView" because it's
+        the new way to include fragments in activities but it's based on "FrameLayout"
+        and does not seem to support navigation as it does not return a NavController
+
+        Note: Setting layout_behavior below is IMPORTANT as it allows the CoordinatorLayout
+        to correctly scroll the AppBarLayout off the screen in response to scroll events
+        from the NavHostFragment. Without this the toolbar will not be displayed correctly
+    -->
+
+<!--    app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+
+
+
+
+
     </com.google.android.material.appbar.AppBarLayout>
+
+    <fragment
+        android:id="@+id/navHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+
+
+        app:defaultNavHost="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:navGraph="@navigation/main_navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -48,7 +60,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
 
+
+        app:menu="@menu/main_navigation_menu"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
-        app:menu="@menu/main_navigation_menu" />
+        />
+
+<!--    app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"-->
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
