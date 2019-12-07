@@ -33,6 +33,7 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
+            routeSummaryList.setHasFixedSize(true)
             routeSummaryList.adapter = RouteHistoryListAdapter()
 
             context?.let {

@@ -1,7 +1,7 @@
 package ie.justonetech.roadtriptracker.view.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.main_activity.*
 // Application entry point, hosts the main navigation view
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class MainActivity : AppCompatActivity()  {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity()  {
             }
 
             bottomNavigationView.setupWithNavController(navController)
-
         }
     }
 
