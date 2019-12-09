@@ -6,6 +6,8 @@
 
     <string name="history_fragment_title">History</string>
 
+    <string name="settings_fragment_title">Settings</string>
+
     <string name="route_summary_list_duration_title">Duration</string>
     <string name="route_summary_list_distance_title">Distance</string>
     <string name="route_summary_list_avg_speed_title">Avg Speed</string>

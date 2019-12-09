@@ -5,8 +5,16 @@
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
 
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
+        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
-        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+        <!-- The DrawerLayout ArrowToggleIcon uses textColorSecondary for its color
+             but the grey is too dark against the primary blue, need to fix that
+        -->
+<!--        <item name="android:textColorSecondary">@color/secondaryTextColor</item>-->
+        <item name="android:textColorSecondary">@color/primaryTextColor</item>
+
         <item name="android:windowBackground">@color/windowBackgroundColor</item>
 
         <item name="windowActionModeOverlay">true</item>

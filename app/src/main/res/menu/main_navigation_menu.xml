@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/action_navigate_home"
+        android:id="@+id/destination_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/home_fragment_title" />
+
     <item
-        android:id="@+id/action_navigate_history"
+        android:id="@+id/destination_history"
         android:icon="@drawable/ic_history_black_24dp"
         android:title="@string/history_fragment_title" />
+
+    <item
+        android:id="@+id/destination_settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings_fragment_title" />
 </menu>
