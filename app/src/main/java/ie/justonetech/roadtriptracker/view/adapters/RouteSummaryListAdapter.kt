@@ -8,11 +8,11 @@ import ie.justonetech.roadtriptracker.model.RouteSummary
 import ie.justonetech.roadtriptracker.utils.RouteSummaryFormatter
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// RouteHistoryListAdapter
+// RouteSummaryListAdapter
 // Paged list adapter used to show the route summary history list
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class RouteHistoryListAdapter : PagingListAdapter<RouteSummary>(DIFF_CALLBACK) {
+class RouteSummaryListAdapter : PagingListAdapter<RouteSummary>(DIFF_CALLBACK) {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // RouteSummaryViewHolder
@@ -40,7 +40,7 @@ class RouteHistoryListAdapter : PagingListAdapter<RouteSummary>(DIFF_CALLBACK) {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     companion object {
-        private val TAG = RouteHistoryListAdapter::class.java.simpleName
+        private val TAG = RouteSummaryListAdapter::class.java.simpleName
 
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<RouteSummary>() {
             override fun areItemsTheSame(first: RouteSummary, second: RouteSummary): Boolean {

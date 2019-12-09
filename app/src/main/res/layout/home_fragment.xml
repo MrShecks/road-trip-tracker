@@ -40,7 +40,7 @@
         android:layout_marginRight="8dp"
         android:drawableTop="@drawable/ic_profile_running_black_24dp"
         android:drawableTint="@color/primaryTextColor"
-        android:text="Running"
+        android:text="@string/profile_name_running"
         app:layout_constraintBottom_toTopOf="@+id/trackingButton"
         app:layout_constraintEnd_toEndOf="parent" />
 

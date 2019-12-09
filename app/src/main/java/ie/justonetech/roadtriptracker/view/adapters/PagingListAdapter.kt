@@ -85,6 +85,10 @@ abstract class PagingListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>)
         }
     }
 
+    public override fun getItem(position: Int): T? {
+        return super.getItem(position)
+    }
+
     fun setOnItemClickListener(listener: ItemClickListener<T>) {
         itemClickListener = listener
     }

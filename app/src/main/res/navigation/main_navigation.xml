@@ -10,9 +10,29 @@
     <fragment
         android:id="@+id/destination_history"
         android:name="ie.justonetech.roadtriptracker.view.fragments.HistoryFragment"
-        android:label="@string/history_fragment_title" />
+        android:label="@string/history_fragment_title" >
+        <action
+            android:id="@+id/action_destination_history_to_route_detail"
+            app:destination="@+id/destination_route_detail" />
+    </fragment>
     <fragment
         android:id="@+id/destination_settings"
         android:name="ie.justonetech.roadtriptracker.view.fragments.SettingsFragment"
         android:label="@string/settings_fragment_title" />
+    <fragment
+        android:id="@+id/destination_favourites"
+        android:name="ie.justonetech.roadtriptracker.view.fragments.FavouritesFragment"
+        android:label="@string/favourites_fragment_title" >
+        <action
+            android:id="@+id/action_destination_favourites_to_route_detail"
+            app:destination="@id/destination_route_detail" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_route_detail"
+        android:name="ie.justonetech.roadtriptracker.view.fragments.RouteDetailFragment"
+        android:label="@string/route_detail_fragment_title" >
+        <argument
+            android:name="routeId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- FIXME Need to figure out how to tint icons pre API 26 -->
+
+    <item
+        android:id="@+id/destination_settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings_fragment_title"
+        app:showAsAction="ifRoom"
+
+        android:iconTint="?android:textColorPrimary"
+        />
+</menu>

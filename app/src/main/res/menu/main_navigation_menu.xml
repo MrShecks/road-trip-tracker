@@ -13,7 +13,7 @@
         android:title="@string/history_fragment_title" />
 
     <item
-        android:id="@+id/destination_settings"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="@string/settings_fragment_title" />
+        android:id="@+id/destination_favourites"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="@string/favourites_fragment_title" />
 </menu>
