@@ -49,6 +49,7 @@ dependencies {
     implementation "com.google.android.material:material:$rootProject.materialLibraryVersion"
 
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayoutLibraryVersion"
+    implementation "androidx.recyclerview:recyclerview-selection:$rootProject.recyclerViewSelectionLibraryVersion"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationLibraryVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationLibraryVersion"

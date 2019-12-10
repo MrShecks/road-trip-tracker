@@ -38,24 +38,29 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
                         Navigation.findNavController(routeSummaryList).navigate(action)
                     }
                 }
-
-                override fun onItemLongClicked(item: RouteSummary) {
-                }
-
             })
 
-            routeSummaryList.setOnItemSelectionListener(object: RouteSummaryRecyclerView.ItemSelectionChangedListener{
+            routeSummaryList.setOnItemSelectionListener(object: RouteSummaryRecyclerView.ItemSelectionChangedListener {
                 override fun onBeginMultiSelect() {
+                    check(actionMode == null) { "|actionMode| should be null when onBeginMultiSelect() is called" }
+
                     actionMode = startActionMode(this@HistoryFragment)
                 }
 
                 override fun onEndMultiSelect() {
+                    check(actionMode != null) { "|actionMode| should not be null when onEndMultiSelect() is called"}
+
+                    actionMode?.finish()
+                    actionMode = null
+
                     Log.i(TAG, "onEndMultiSelect()")
                 }
 
-                override fun onItemSelectionChanged(selectedItems: Set<RouteSummary>) {
+                override fun onItemSelectionChanged(selectedItemCount: Int) {
+                    check(actionMode != null) { "|actioMdoe| should not be null when onItemSelectionChanged() is called"}
+
                     actionMode?.let {
-                        it.title = resources.getQuantityString(R.plurals.route_list_selection_action_title, selectedItems.size, selectedItems.size)
+                        it.title = resources.getQuantityString(R.plurals.route_list_selection_action_title, selectedItemCount, selectedItemCount)
                     }
                 }
             })
@@ -64,6 +69,32 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
                 routeSummaryList.submitList(it)
             })
         }
+
+        //
+        // Note: In order for selection tracking to persisted between device configuration
+        // changes we need include the RouteSummaryRecyclerView in the fragment lifecycle
+        // bu calling onRestoreInstanceState() and onSaveInstanceState() in response
+        // the the corresponding Fragment lifecycle calls.
+        //
+        // Note: onRestoreInstanceState() should be called AFTER calling
+        // RouteSummaryRecyclerView.setOnItemSelectionListener() above so that we don't
+        // miss notifications when the selection state is restored.
+        //
+
+        routeSummaryList.onRestoreInstanceState(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        // Save any RecyclerView selections
+        routeSummaryList.onSaveInstanceState(outState)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        
+        actionMode?.finish()
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,8 +108,11 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-        routeSummaryList.cancelMultiSelectMode()
-        actionMode?.finish()
+        routeSummaryList.getSelection().forEach {
+            Log.i(TAG, "Selected Route=$it")
+        }
+
+        routeSummaryList.endMultiSelect()
 
         return true
     }
@@ -94,7 +128,7 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
-        // Not Used
+        routeSummaryList.endMultiSelect()
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,3 +137,4 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
         private val TAG = HistoryFragment::class.java.simpleName
     }
 }
+

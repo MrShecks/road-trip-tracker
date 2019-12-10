@@ -1,6 +1,7 @@
 package ie.justonetech.roadtriptracker.view.adapters
 
 import android.view.ViewGroup
+import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.DiffUtil
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.databinding.RouteSummaryListItemBinding
@@ -19,22 +20,30 @@ class RouteSummaryListAdapter : PagingListAdapter<RouteSummary>(DIFF_CALLBACK) {
     // View holder for a list item summary information for a route
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private class RouteSummaryViewHolder(adapter: PagingListAdapter<RouteSummary>, parent: ViewGroup)
+    class RouteSummaryViewHolder(adapter: PagingListAdapter<RouteSummary>, parent: ViewGroup)
         : PagingListAdapter.BindingViewHolder<RouteSummary, RouteSummaryListItemBinding>(adapter, parent, R.layout.route_summary_list_item) {
 
         override fun onBindView(item: RouteSummary) {
             viewBinding?.let { binding ->
+                binding.cardView.isChecked = itemView.isActivated
                 binding.routeSummary = RouteSummaryFormatter(binding.root.context, item)
-
-                binding.root.setOnClickListener{
-                    onItemClicked()
-                }
             }
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    init {
+        setHasStableIds(true)
+    }
+
     override fun createViewHolder(adapter: PagingListAdapter<RouteSummary>, parent: ViewGroup, viewType: Int): ViewHolder<RouteSummary> {
         return RouteSummaryViewHolder(adapter, parent)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return getItem(position)?.id?.toLong()
+            ?: super.getItemId(position)
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////

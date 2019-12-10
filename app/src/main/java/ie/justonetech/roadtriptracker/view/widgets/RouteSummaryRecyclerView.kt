@@ -1,15 +1,16 @@
 package ie.justonetech.roadtriptracker.view.widgets
 
 import android.content.Context
+import android.os.Bundle
 import android.util.AttributeSet
-import android.view.View
-import android.widget.Checkable
+import android.util.Log
+import android.view.MotionEvent
 import androidx.paging.PagedList
+import androidx.recyclerview.selection.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ie.justonetech.roadtriptracker.model.RouteSummary
 import ie.justonetech.roadtriptracker.view.adapters.RouteSummaryListAdapter
-import ie.justonetech.roadtriptracker.view.utils.RecyclerItemClickListener
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // RouteSummaryRecyclerView
@@ -20,118 +21,152 @@ class RouteSummaryRecyclerView @JvmOverloads constructor(context: Context, attrs
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    enum class SelectionMode {
-        SINGLE_SELECT,
-        MULTI_SELECT
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-
     interface ItemClickListener {
         fun onItemClicked(item: RouteSummary)
-        fun onItemLongClicked(item: RouteSummary)
     }
 
     interface ItemSelectionChangedListener {
         fun onBeginMultiSelect()
         fun onEndMultiSelect()
 
-        fun onItemSelectionChanged(selectedItems: Set<RouteSummary>)
+        fun onItemSelectionChanged(selectedItemCount: Int)
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    var selectionMode = SelectionMode.SINGLE_SELECT
-        private set
+    private class RouteSummaryItemDetailsLookup(private val recyclerView: RouteSummaryRecyclerView) : ItemDetailsLookup<Long>() {
 
-    val selectedItems = mutableSetOf<RouteSummary>()
+        override fun getItemDetails(event: MotionEvent): ItemDetails<Long>? {
+            return recyclerView.findChildViewUnder(event.x, event.y)?.let {
+                (recyclerView.getChildViewHolder(it) as RouteSummaryListAdapter.RouteSummaryViewHolder).getItemDetails()
+            }
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private var itemClickListener: ItemClickListener? = null
     private var itemSelectionChangedListener: ItemSelectionChangedListener? = null
 
-    private val selectedItemIds = mutableSetOf<Int>()
+    private val itemSelectionTracker: SelectionTracker<Long>
+    private var isMultiSelectActive = false
 
     init {
         setHasFixedSize(true)
+
         layoutManager = LinearLayoutManager(context, VERTICAL, false)
+
+        //
+        // Note: The following call sequence is important. The Recycler.Selection library
+        // has a bit of a circular dependency on the SelectionTracker. In order to handle
+        // item selection correctly the Adaptor needs access to the SelectionTracker, however
+        // SelectionTracker.Builder checks to make sure that the RecyclerView passed already
+        // has a non-null adapter set. So we need to assign the RecyclerView adapter first,
+        // build the SelectionTracker and then assign the SelectionTracker to the Adapter.
+        //
+        // Well done Google ;)
+        //
+
         adapter = RouteSummaryListAdapter()
 
-        addOnItemTouchListener(RecyclerItemClickListener(context, this).apply {
-            setItemClickListener(object: RecyclerItemClickListener.ItemClickListener {
-                override fun onItemClicked(position: Int, view: View) {
-                    getItem(position)?.also { item ->
-                        when(selectionMode) {
-                            SelectionMode.SINGLE_SELECT -> {
-                                itemClickListener?.onItemClicked(item)
-                            }
+        itemSelectionTracker = SelectionTracker.Builder<Long>(
+            SELECTION_TRACKING_ID,
+            this,
+            StableIdKeyProvider(this),
+            RouteSummaryItemDetailsLookup(this),
+            StorageStrategy.createLongStorage()
 
-                            SelectionMode.MULTI_SELECT -> {
-                                if(view is Checkable) {
-                                    toggleItemSelection(position, view, item)
-                                    itemSelectionChangedListener?.onItemSelectionChanged(selectedItems)
-                                }
-                            }
-                        }
-                    }
+        )
+        .withSelectionPredicate(SelectionPredicates.createSelectAnything())
+        .withOnItemActivatedListener { item, e ->
+            getItem(item.position)?.let {
+                itemClickListener?.onItemClicked(it)
+            }
+
+            true
+        }
+        .build()
+
+        (adapter as RouteSummaryListAdapter).selectionTracker = itemSelectionTracker
+
+        itemSelectionTracker.addObserver(object: SelectionTracker.SelectionObserver<Long>() {
+            override fun onSelectionChanged() {
+
+                //
+                // If this is the first selection change event then notify the listener
+                // to let them know that multi selection mode has begun
+                //
+
+                if(!isMultiSelectActive) {
+                    itemSelectionChangedListener?.onBeginMultiSelect()
+                    isMultiSelectActive = true
                 }
-            })
 
-            setItemLongClickListener(object: RecyclerItemClickListener.ItemLongClickListener {
-                override fun onItemLongClicked(position: Int, view: View) {
-                    getItem(position)?.let { item ->
-                        when(selectionMode) {
-                            SelectionMode.SINGLE_SELECT -> {
-                                if(view is Checkable && !view.isChecked) {
-                                    selectionMode = SelectionMode.MULTI_SELECT
-                                    toggleItemSelection(position, view, item)
+                //
+                // Notify the listener with the updated selection count
+                //
 
-                                    itemSelectionChangedListener?.let {
-                                        it.onBeginMultiSelect()
-                                        it.onItemSelectionChanged(selectedItems)
-                                    }
-                                }
-                            }
+                itemSelectionChangedListener?.onItemSelectionChanged(itemSelectionTracker.selection.size())
+            }
 
-                            SelectionMode.MULTI_SELECT -> {
+            override fun onSelectionRestored() {
 
-                            }
-                        }
+                //
+                // Called when the selection state is restored after onRestoreInstanceState()
+                // This happens in response to configure changes (device rotations) so we
+                // need to notify any listeners so that any selection UI (ActionMode menu)
+                // can be restored correctly.
+                //
+                // Note: We also call onItemSelectionChanged() with the selected item count
+                //
+
+                if(!itemSelectionTracker.selection.isEmpty) {
+                    itemSelectionChangedListener?.let {
+                        it.onBeginMultiSelect()
+                        it.onItemSelectionChanged(itemSelectionTracker.selection.size())
                     }
+
+                    isMultiSelectActive = true
                 }
-            })
+            }
         })
+
     }
 
     fun submitList(pagedList: PagedList<RouteSummary>) {
         (adapter as RouteSummaryListAdapter).submitList(pagedList)
     }
 
-    fun cancelMultiSelectMode(clearSelection: Boolean = true) {
-
-        if(clearSelection) {
-
-            //
-            // TODO: Figure out I should uncheck the list items
-            //
-
-//            selectedItemIds.forEach { id ->
-//
-//            }
-
-            selectedItems.clear()
-            selectedItemIds.clear()
-        }
-
-        selectionMode = SelectionMode.SINGLE_SELECT
-        itemSelectionChangedListener?.onEndMultiSelect()
-    }
-
     fun setOnItemClickListener(itemClickListener: ItemClickListener) {
         this.itemClickListener = itemClickListener
     }
 
-    fun setOnItemSelectionListener(itemSelectionListener: ItemSelectionChangedListener) {
-        this.itemSelectionChangedListener = itemSelectionListener
+    fun setOnItemSelectionListener(itemSelectionChangedListener: ItemSelectionChangedListener) {
+        this.itemSelectionChangedListener = itemSelectionChangedListener
+    }
+
+    fun onRestoreInstanceState(state: Bundle?) {
+        itemSelectionTracker.onRestoreInstanceState(state)
+    }
+
+    fun onSaveInstanceState(outState: Bundle) {
+        itemSelectionTracker.onSaveInstanceState(outState)
+    }
+
+    fun endMultiSelect() {
+        if(isMultiSelectActive) {
+            itemSelectionTracker.clearSelection()
+            itemSelectionChangedListener?.onEndMultiSelect()
+            isMultiSelectActive = false
+        }
+    }
+
+    fun getSelection(): List<RouteSummary> {
+        return itemSelectionTracker.selection.mapNotNull { selectedId ->
+            selectedId?.let {
+                getItem(it.toInt())
+            }
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,21 +175,11 @@ class RouteSummaryRecyclerView @JvmOverloads constructor(context: Context, attrs
         return (adapter as RouteSummaryListAdapter).getItem(position)
     }
 
-    private fun toggleItemSelection(position: Int, view: Checkable, item: RouteSummary) {
-        if(view.isChecked) {
-            selectedItems.remove(item)
-            selectedItemIds.remove(position)
-            view.isChecked = false
-        } else {
-            selectedItems.add(item)
-            selectedItemIds.add(position)
-            view.isChecked = true
-        }
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     companion object {
         private val TAG = RouteSummaryRecyclerView::class.java.simpleName
+
+        private const val SELECTION_TRACKING_ID: String = "_route_summary_selection_id"
     }
 }

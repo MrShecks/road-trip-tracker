@@ -7,12 +7,14 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.paging.PagedListAdapter
+import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // PagingListAdapter
-// Implementation of a generic PagedListAdapter with additional support list item click handling
+// Implementation of a generic PagedListAdapter with additional support for item selection
 //
 // Subclasses should implement the PagingListAdapter.createViewHolder() abstract method to return
 // view holder instances. A view holder should be subclass of PagedListAdapter.ViewHolder or
@@ -22,15 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class PagingListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>)
     : PagedListAdapter<T, PagingListAdapter.ViewHolder<T>>(diffCallback) {
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-    interface ItemClickListener<T> {
-        fun onItemClicked(position: Int, item: T)
-    }
-
-    interface ItemLongClickListener<T> {
-        fun onItemLongClicked(position: Int, item: T)
-    }
+    var selectionTracker: SelectionTracker<Long>? = null
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // ViewHolder
@@ -43,20 +37,14 @@ abstract class PagingListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>)
         constructor(adapter: PagingListAdapter<T>, parent: ViewGroup, @LayoutRes layoutId: Int, attachToRoot: Boolean = false)
                 : this(adapter, LayoutInflater.from(parent.context).inflate(layoutId, parent, attachToRoot))
 
-        protected fun onItemClicked() {
-
-            adapter.getItem(adapterPosition)?.let {
-                adapter.itemClickListener?.onItemClicked(adapterPosition, it)
-            }
-        }
-
-        protected fun onItemLongClicked() {
-            adapter.getItem(adapterPosition)?.let {
-                adapter.itemLongClickListener?.onItemLongClicked(adapterPosition, it)
-            }
-        }
-
         abstract fun onBindView(item: T)
+
+        fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> {
+            return object: ItemDetailsLookup.ItemDetails<Long>() {
+                override fun getSelectionKey(): Long? = adapter.getItemId(adapterPosition)
+                override fun getPosition(): Int = adapterPosition
+            }
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,29 +60,23 @@ abstract class PagingListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>)
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private var itemClickListener: ItemClickListener<T>? = null
-    private var itemLongClickListener: ItemLongClickListener<T>? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<T> {
         return createViewHolder(this, parent, viewType)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder<T>, position: Int) {
-        getItem(position)?.let {
-            viewHolder.onBindView(it)
+        getItem(position)?.let { item ->
+
+            selectionTracker?.let {
+                viewHolder.itemView.isActivated = it.isSelected(getItemId(position))
+            }
+
+            viewHolder.onBindView(item)
         }
     }
 
     public override fun getItem(position: Int): T? {
         return super.getItem(position)
-    }
-
-    fun setOnItemClickListener(listener: ItemClickListener<T>) {
-        itemClickListener = listener
-    }
-
-    fun setOnItemLongClickListener(listener: ItemLongClickListener<T>) {
-        itemLongClickListener = listener
     }
 
     protected abstract fun createViewHolder(adapter: PagingListAdapter<T>, parent: ViewGroup, viewType: Int): ViewHolder<T>
