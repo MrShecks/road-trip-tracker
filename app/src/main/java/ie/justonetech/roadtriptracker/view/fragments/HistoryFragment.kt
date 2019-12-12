@@ -57,7 +57,7 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
                 }
 
                 override fun onItemSelectionChanged(selectedItemCount: Int) {
-                    check(actionMode != null) { "|actioMdoe| should not be null when onItemSelectionChanged() is called"}
+                    check(actionMode != null) { "|actionMode| should not be null when onItemSelectionChanged() is called"}
 
                     actionMode?.let {
                         it.title = resources.getQuantityString(R.plurals.route_list_selection_action_title, selectedItemCount, selectedItemCount)
@@ -87,13 +87,18 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
+        // FIXME: For some reason onSaveInstanceState() is called when
+        // FIXME: the RouteDetailFragment() displayed and there is a device
+        // FIXME: configuration change, when this happens routeSummaryList
+        // FIXME: is null and the application crashes. The ?. safe call is a hack!
+
         // Save any RecyclerView selections
-        routeSummaryList.onSaveInstanceState(outState)
+        routeSummaryList?.onSaveInstanceState(outState)
     }
 
     override fun onPause() {
         super.onPause()
-        
+
         actionMode?.finish()
     }
 
