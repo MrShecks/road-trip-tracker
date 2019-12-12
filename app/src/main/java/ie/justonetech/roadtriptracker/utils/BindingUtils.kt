@@ -8,7 +8,7 @@ import androidx.databinding.BindingAdapter
 // Utility functions used to bind model data to views/layouts
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-@BindingAdapter("android:profileIcon")
+@BindingAdapter("android:profileImage")
 fun setProfileImage(imageView: ImageView, profileId: Int) {
     imageView.setImageResource(ProfileType.fromId(profileId).drawableId)
 }

@@ -17,16 +17,44 @@ import ie.justonetech.roadtriptracker.utils.ThreadUtils
 
 class TrackingRepository(context: Context) {
 
+    fun getRouteDetail(id: Int): LiveData<RouteDetail> {
+        return database.routeDetailDao().getById(id)
+    }
+
     fun getRouteList(): LiveData<PagedList<RouteSummary>> {
         val pagedListConfig = PagedList.Config.Builder()
             .setEnablePlaceholders(true)
-            .setInitialLoadSizeHint(20)
-            .setPageSize(20)
+            .setInitialLoadSizeHint(PAGE_LOAD_SIZE_HINT)
+            .setPageSize(PAGE_SIZE)
             .build()
 
         return database.routeDetailDao()
             .getList()
             .toLiveData(pagedListConfig)
+    }
+
+    fun getFavouriteRouteList(): LiveData<PagedList<RouteSummary>> {
+        val pagedListConfig = PagedList.Config.Builder()
+            .setEnablePlaceholders(true)
+            .setInitialLoadSizeHint(PAGE_LOAD_SIZE_HINT)
+            .setPageSize(PAGE_SIZE)
+            .build()
+
+        return database.routeDetailDao()
+            .getFavourites()
+            .toLiveData(pagedListConfig)
+    }
+
+    fun setFavouriteRoute(routeId: Int?, isFavourite: Boolean) {
+        routeId?.let {
+            ThreadUtils().runOnDiskThread {
+                with(database) {
+                    runInTransaction {
+                        routeDetailDao().setFavouriteById(it, isFavourite)
+                    }
+                }
+            }
+        }
     }
 
     fun addRoute(route: RouteDetail) {
@@ -49,7 +77,9 @@ class TrackingRepository(context: Context) {
                             route.distance,
                             route.maxSpeed,
                             route.avgSpeed,
-                            route.maxClimb
+                            route.maxClimb,
+
+                            route.isFavourite
                         )
                     )
 
@@ -106,6 +136,9 @@ class TrackingRepository(context: Context) {
 
     companion object {
         private val TAG = TrackingRepository::class.java.simpleName
+
+        private const val PAGE_SIZE           = 20
+        private const val PAGE_LOAD_SIZE_HINT = 20
 
         @Volatile
         private var instance: TrackingRepository? = null

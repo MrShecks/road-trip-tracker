@@ -3,6 +3,8 @@ package ie.justonetech.roadtriptracker.model.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ie.justonetech.roadtriptracker.utils.DistanceUnit
+import ie.justonetech.roadtriptracker.utils.SpeedUnit
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // TRouteProfile
@@ -15,7 +17,7 @@ data class DbRouteProfile(
     @ColumnInfo(name = "_id")               val id: Int,
 
     @ColumnInfo(name = "accent_color")      val accentColor: Long,
-    @ColumnInfo(name = "distance_unit")     val distanceUnit: Int,
-    @ColumnInfo(name = "speed_unit")        val speedUnit: Int
+    @ColumnInfo(name = "distance_unit")     val distanceUnit: DistanceUnit,
+    @ColumnInfo(name = "speed_unit")        val speedUnit: SpeedUnit
 )
 

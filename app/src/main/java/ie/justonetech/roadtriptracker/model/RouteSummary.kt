@@ -26,6 +26,8 @@ data class RouteSummary(
     @ColumnInfo(name = "avg_speed")         var avgSpeed: Float,
     @ColumnInfo(name = "max_climb")         var maxClimb: Double,
 
+    @ColumnInfo(name = "is_favourite")      var isFavourite: Boolean,
+
     @Relation(parentColumn = "profile_id", entityColumn = "_id", entity = DbRouteProfile::class)
     val profile: RouteProfile
 )

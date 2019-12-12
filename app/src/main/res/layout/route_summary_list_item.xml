@@ -60,10 +60,10 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="8dp"
 
-                    android:importantForAccessibility="no"
+                    android:profileImage="@{routeSummary.data.profile.id}"
+                    android:contentDescription="@{routeSummary.profileName}"
 
-                    android:profileIcon="@{routeSummary.data.profile.id}"
-                    android:src="@drawable/ic_profile_running_black_24dp"
+                    tools:srcCompat="@drawable/ic_profile_running_black_24dp"
                     android:tint="@color/primaryColor" />
 
                 <LinearLayout
@@ -74,11 +74,12 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/duration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="00:00:00"
-                        tools:text="0" />
+                        android:text="@{routeSummary.totalDuration}"
+                        tools:text="00:00:00" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -98,11 +99,12 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/distance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="0 KM"
-                        tools:text="0" />
+                        android:text="@{routeSummary.distance}"
+                        tools:text="0 KM" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -122,11 +124,12 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/averageSpeed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="0 KPH"
-                        tools:text="0" />
+                        android:text="@{routeSummary.avgSpeed}"
+                        tools:text="0 KPH" />
 
                     <TextView
                         android:layout_width="match_parent"

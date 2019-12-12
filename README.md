@@ -7,11 +7,13 @@ not do it as my [Level1Techs](https://level1techs.com/) #Devember2k19 project?
 
 My devblog, ramblings and rants for this years festivities can be found [here](https://forum.level1techs.com/t/devember-road-trip-tracker-android-application/150676/3)
 
-The finished application will use the MVVM architecture and the following components/libraries: -
+The finished application will use/demonstrate the MVVM architecture and the following components/libraries: -
 
 - Android Room Database
 - Android Architecture Components
+- Android View Models
 - Navigation Library
+- View Binding
 - LiveData
 - Paging Library
 - Lifecycle Components

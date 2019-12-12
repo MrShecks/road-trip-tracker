@@ -78,7 +78,7 @@ class RouteSummaryRecyclerView @JvmOverloads constructor(context: Context, attrs
 
         )
         .withSelectionPredicate(SelectionPredicates.createSelectAnything())
-        .withOnItemActivatedListener { item, e ->
+        .withOnItemActivatedListener { item, _ ->
             getItem(item.position)?.let {
                 itemClickListener?.onItemClicked(it)
             }

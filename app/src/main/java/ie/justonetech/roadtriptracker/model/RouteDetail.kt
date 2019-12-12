@@ -1,6 +1,8 @@
 package ie.justonetech.roadtriptracker.model
 
+import androidx.annotation.ColorInt
 import androidx.room.ColumnInfo
+import androidx.room.Ignore
 import androidx.room.Relation
 import com.google.android.gms.maps.model.LatLng
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
@@ -15,18 +17,20 @@ import java.util.*
 data class RouteDetail(
 
     @ColumnInfo(name = "_id")               val id: Int?,
-    @ColumnInfo(name = "profile_id")        var profileId: Int,
+    @ColumnInfo(name = "profile_id")        val profileId: Int,
 
-    @ColumnInfo(name = "start_time")        var startTime: Date,
-    @ColumnInfo(name = "end_time")          var endTime: Date,
+    @ColumnInfo(name = "start_time")        val startTime: Date,
+    @ColumnInfo(name = "end_time")          val endTime: Date,
 
-    @ColumnInfo(name = "total_duration")    var totalDuration: Long,
-    @ColumnInfo(name = "active_duration")   var activeDuration: Long,
+    @ColumnInfo(name = "total_duration")    val totalDuration: Long,
+    @ColumnInfo(name = "active_duration")   val activeDuration: Long,
 
-    @ColumnInfo(name = "distance")          var distance: Double,
-    @ColumnInfo(name = "max_speed")         var maxSpeed: Float,
-    @ColumnInfo(name = "avg_speed")         var avgSpeed: Float,
-    @ColumnInfo(name = "max_climb")         var maxClimb: Double,
+    @ColumnInfo(name = "distance")          val distance: Double,
+    @ColumnInfo(name = "max_speed")         val maxSpeed: Float,
+    @ColumnInfo(name = "avg_speed")         val avgSpeed: Float,
+    @ColumnInfo(name = "max_climb")         val maxClimb: Double,
+
+    @ColumnInfo(name = "is_favourite")      val isFavourite: Boolean,
 
     @Relation(parentColumn = "profile_id", entityColumn = "_id", entity = DbRouteProfile::class)
     val profile: RouteProfile,
@@ -37,20 +41,25 @@ data class RouteDetail(
 ) {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    val pausedDuration
+        get() = totalDuration - activeDuration
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     // Point
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     data class Point (
         @ColumnInfo(name = "_id")               val id: Int?,
-        @ColumnInfo(name = "timestamp")         var timeStamp: Date,
+        @ColumnInfo(name = "timestamp")         val timeStamp: Date,
 
-        @ColumnInfo(name = "latitude")          var latitude: Double,
-        @ColumnInfo(name = "longitude")         var longitude: Double,
-        @ColumnInfo(name = "altitude")          var altitude: Double,
+        @ColumnInfo(name = "latitude")          val latitude: Double,
+        @ColumnInfo(name = "longitude")         val longitude: Double,
+        @ColumnInfo(name = "altitude")          val altitude: Double,
 
-        @ColumnInfo(name = "speed")             var speed: Float,
-        @ColumnInfo(name = "bearing")           var bearing: Float,
-        @ColumnInfo(name = "accuracy")          var accuracy: Float
+        @ColumnInfo(name = "speed")             val speed: Float,
+        @ColumnInfo(name = "bearing")           val bearing: Float,
+        @ColumnInfo(name = "accuracy")          val accuracy: Float
     ) {
 
         val latLng: LatLng

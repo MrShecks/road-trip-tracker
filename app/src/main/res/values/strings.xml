@@ -11,8 +11,25 @@
     <string name="settings_fragment_title">Settings</string>
 
     <string name="route_detail_fragment_title">Route Detail</string>
+
     <string name="route_detail_stat_tab_title">Stats</string>
+
+    <string name="route_detail_stat_distance_title">Distance</string>
+    <string name="route_detail_stat_distance">Distance</string>
+    <string name="route_detail_stat_climb">Climb</string>
+
+    <string name="route_detail_stat_time_title">Duration</string>
+    <string name="route_detail_stat_total_time">Total</string>
+    <string name="route_detail_stat_active_time">Active</string>
+    <string name="route_detail_stat_paused_time">Paused</string>
+
+    <string name="route_detail_stat_speed_title">Speed</string>
+    <string name="route_detail_stat_max_speed">Max</string>
+    <string name="route_detail_stat_avg_speed">Avg</string>
+    <string name="route_detail_stat_pace">Pace</string>
+
     <string name="route_detail_map_tab_title">Map</string>
+
 
     <string name="route_summary_list_duration_title">Duration</string>
     <string name="route_summary_list_distance_title">Distance</string>
@@ -32,5 +49,19 @@
     <string name="profile_name_driving">Driving</string>
     <string name="profile_name_boating">Boating</string>
     <string name="profile_name_motorcycling">Motorcycling</string>
+
+    <string name="distance_unit_meters">meters</string>
+    <string name="distance_unit_miles">miles</string>
+    <string name="distance_unit_kilometers">kilometers</string>
+
+    <string name="distance_unit_suffix_meters">MTS</string>
+    <string name="distance_unit_suffix_miles">MI</string>
+    <string name="distance_unit_suffix_kilometers">KM</string>
+
+    <string name="speed_unit_suffix_mps">MPS</string>
+    <string name="speed_unit_suffix_mph">MPH</string>
+    <string name="speed_unit_suffix_kph">KPH</string>
+    <string name="speed_unit_suffix_fps">FPS</string>
+    <string name="speed_unit_suffix_knots">KTS</string>
 
 </resources>

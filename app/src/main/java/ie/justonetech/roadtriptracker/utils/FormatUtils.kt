@@ -1,8 +1,10 @@
 package ie.justonetech.roadtriptracker.utils
 
+import android.content.Context
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // FormatUtils
@@ -21,7 +23,6 @@ class FormatUtils private constructor() {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private val dateFormats = mapOf(
-
         DateFormat.FORMAT_SHORT_TEXT to SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, Locale.getDefault()),
         DateFormat.FORMAT_DATABASE to SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()),
         DateFormat.FORMAT_LONG_SHORT_TIME to SimpleDateFormat("dd MMMM yyyy HH:mm", Locale.getDefault())
@@ -45,6 +46,31 @@ class FormatUtils private constructor() {
                 defaultValue
             }
         }
+    }
+
+    fun formatDuration(duration: Long, sourceUnit: TimeUnit): String {
+        val hours = sourceUnit.toHours(duration)
+        val minutes = sourceUnit.toMinutes(duration) - TimeUnit.HOURS.toMinutes(hours)
+        val seconds = sourceUnit.toSeconds(duration) - TimeUnit.HOURS.toSeconds(hours) - TimeUnit.MINUTES.toSeconds(minutes)
+
+        return if(hours > 0)
+            String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, seconds)
+        else
+            String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+    }
+
+    fun formatDistance(context: Context, distance: Double, sourceUnit: DistanceUnit, targetUnit: DistanceUnit, withSuffix: Boolean = true): String {
+        return if(withSuffix)
+            String.format(Locale.getDefault(), "%.2f %s", sourceUnit.convertTo(distance, targetUnit), targetUnit.getSuffix(context))
+        else
+            String.format(Locale.getDefault(), "%.2f", sourceUnit.convertTo(distance, targetUnit))
+    }
+
+    fun formatSpeed(context: Context, speed: Float, sourceUnit: SpeedUnit, targetUnit: SpeedUnit, withSuffix: Boolean = true): String {
+        return if(withSuffix)
+            String.format(Locale.getDefault(), "%.2f %s", sourceUnit.convertTo(speed, targetUnit), targetUnit.getSuffix(context))
+        else
+            String.format(Locale.getDefault(), "%.2f", sourceUnit.convertTo(speed, targetUnit))
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////

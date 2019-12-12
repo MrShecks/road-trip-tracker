@@ -25,14 +25,16 @@ data class DbRouteDetail(
     @ColumnInfo(name = "_id")               val id: Int?,
     @ColumnInfo(name = "profile_id")        val profileId: Int,
 
-    @ColumnInfo(name = "start_time")        var startTime: Date,
-    @ColumnInfo(name = "end_time")          var endTime: Date,
+    @ColumnInfo(name = "start_time")        val startTime: Date,
+    @ColumnInfo(name = "end_time")          val endTime: Date,
 
-    @ColumnInfo(name = "total_duration")    var totalDuration: Long,
-    @ColumnInfo(name = "active_duration")   var activeDuration: Long,
+    @ColumnInfo(name = "total_duration")    val totalDuration: Long,
+    @ColumnInfo(name = "active_duration")   val activeDuration: Long,
 
-    @ColumnInfo(name = "distance")          var distance: Double,
-    @ColumnInfo(name = "max_speed")         var maxSpeed: Float,
-    @ColumnInfo(name = "avg_speed")         var avgSpeed: Float,
-    @ColumnInfo(name = "max_climb")         var maxClimb: Double
+    @ColumnInfo(name = "distance")          val distance: Double,
+    @ColumnInfo(name = "max_speed")         val maxSpeed: Float,
+    @ColumnInfo(name = "avg_speed")         val avgSpeed: Float,
+    @ColumnInfo(name = "max_climb")         val maxClimb: Double,
+
+    @ColumnInfo(name = "is_favourite")      val isFavourite: Boolean
 )

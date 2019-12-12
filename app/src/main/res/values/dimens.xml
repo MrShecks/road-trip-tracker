@@ -2,4 +2,7 @@
 <resources>
     <dimen name="route_summary_list_profile_width">48dp</dimen>
     <dimen name="route_summary_list_profile_height">48dp</dimen>
+
+    <dimen name="route_detail_profile_width">84dp</dimen>
+    <dimen name="route_detail_profile_height">84dp</dimen>
 </resources>

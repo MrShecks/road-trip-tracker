@@ -5,9 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    android:orientation="vertical"-->
-<!--    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-
     <ie.justonetech.roadtriptracker.view.widgets.RouteSummaryRecyclerView
         android:id="@+id/routeSummaryList"
         android:layout_width="0dp"
