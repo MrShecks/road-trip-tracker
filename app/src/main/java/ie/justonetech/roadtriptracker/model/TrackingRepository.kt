@@ -100,7 +100,9 @@ class TrackingRepository(context: Context) {
 
                                     it.speed,
                                     it.bearing,
-                                    it.accuracy
+                                    it.accuracy,
+
+                                    it.barometricAltitude
                                 )
                             }
                         )

@@ -19,29 +19,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/trackingButton"
+        android:id="@+id/startTracking"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:drawableTop="@drawable/ic_play_arrow_black_24dp"
         android:drawableTint="@color/primaryTextColor"
         android:text="@string/home_fragment_start_route_button"
         app:backgroundTint="@color/colorDarkGreen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/profileButton" />
+        app:layout_constraintStart_toStartOf="@+id/selectProfile" />
 
     <Button
-        android:id="@+id/profileButton"
+        android:id="@+id/selectProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:drawableTop="@drawable/ic_profile_running_black_24dp"
+        android:drawableLeft="@drawable/ic_profile_running_white_24dp"
+        android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
         android:drawableTint="@color/primaryTextColor"
         android:text="@string/profile_name_running"
-        app:layout_constraintBottom_toTopOf="@+id/trackingButton"
+        app:layout_constraintBottom_toTopOf="@+id/startTracking"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

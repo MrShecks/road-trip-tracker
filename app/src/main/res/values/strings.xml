@@ -43,6 +43,15 @@
         <item quantity="other">%d items selected</item>
     </plurals>
 
+    <string name="tracking_activity_title">Tracking</string>
+    <string name="tracking_start_button_title">Start</string>
+    <string name="tracking_stop_button_title">Stop</string>
+    <string name="tracking_pause_button_title">Pause</string>
+    <string name="tracking_resume_button_title">Resume</string>
+
+    <string name="tracking_screen_locked">Screen Locked</string>
+    <string name="tracking_screen_unlocked">Screen Unlocked</string>
+
     <string name="profile_name_walking">Walking</string>
     <string name="profile_name_running">Running</string>
     <string name="profile_name_cycling">Cycling</string>
@@ -54,14 +63,14 @@
     <string name="distance_unit_miles">miles</string>
     <string name="distance_unit_kilometers">kilometers</string>
 
-    <string name="distance_unit_suffix_meters">MTS</string>
-    <string name="distance_unit_suffix_miles">MI</string>
-    <string name="distance_unit_suffix_kilometers">KM</string>
+    <string name="distance_unit_suffix_meters">mts</string>
+    <string name="distance_unit_suffix_miles">mi</string>
+    <string name="distance_unit_suffix_kilometers">km</string>
 
-    <string name="speed_unit_suffix_mps">MPS</string>
-    <string name="speed_unit_suffix_mph">MPH</string>
-    <string name="speed_unit_suffix_kph">KPH</string>
-    <string name="speed_unit_suffix_fps">FPS</string>
-    <string name="speed_unit_suffix_knots">KTS</string>
+    <string name="speed_unit_suffix_mps">mps</string>
+    <string name="speed_unit_suffix_mph">mph</string>
+    <string name="speed_unit_suffix_kph">kph</string>
+    <string name="speed_unit_suffix_fps">fps</string>
+    <string name="speed_unit_suffix_knots">kts</string>
 
 </resources>

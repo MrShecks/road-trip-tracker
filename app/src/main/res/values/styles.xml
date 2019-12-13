@@ -36,4 +36,16 @@
     <style name="AppTheme.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
     </style>
 
+    <style name="AppTheme.TrackingButton" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.LockProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressBackgroundTint">@color/primaryTextColor</item>
+        <item name="android:progressTint">@color/primaryColor</item>
+        <item name="android:minHeight">16dp</item>
+    </style>
+
 </resources>

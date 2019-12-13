@@ -59,7 +59,10 @@ data class RouteDetail(
 
         @ColumnInfo(name = "speed")             val speed: Float,
         @ColumnInfo(name = "bearing")           val bearing: Float,
-        @ColumnInfo(name = "accuracy")          val accuracy: Float
+        @ColumnInfo(name = "accuracy")          val accuracy: Float,
+
+        @ColumnInfo(name = "barometric_alt")    var barometricAltitude: Double
+
     ) {
 
         val latLng: LatLng

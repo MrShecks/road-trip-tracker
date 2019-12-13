@@ -45,7 +45,7 @@
 
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/startTime"
-                        tools:srcCompat="@drawable/ic_profile_running_black_24dp" />
+                        tools:srcCompat="@drawable/ic_profile_running_white_24dp" />
 
                     <TextView
                         android:id="@+id/startTime"
@@ -56,8 +56,8 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
-                        android:drawableStart="@drawable/ic_timeline_black_24dp"
-                        android:drawableLeft="@drawable/ic_timeline_black_24dp"
+                        android:drawableStart="@drawable/ic_timeline_white_24dp"
+                        android:drawableLeft="@drawable/ic_timeline_white_24dp"
                         android:drawablePadding="4dp"
                         android:gravity="center_vertical"
                         android:textAllCaps="true"
@@ -148,8 +148,8 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
-                        android:drawableStart="@drawable/ic_timer_black_24dp"
-                        android:drawableLeft="@drawable/ic_timer_black_24dp"
+                        android:drawableStart="@drawable/ic_timer_white_24dp"
+                        android:drawableLeft="@drawable/ic_timer_white_24dp"
                         android:drawablePadding="4dp"
                         android:gravity="center_vertical"
                         android:text="@string/route_detail_stat_time_title"
@@ -268,8 +268,8 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
-                        android:drawableStart="@drawable/ic_multiline_chart_black_24dp"
-                        android:drawableLeft="@drawable/ic_multiline_chart_black_24dp"
+                        android:drawableStart="@drawable/ic_multiline_chart_white_24dp"
+                        android:drawableLeft="@drawable/ic_multiline_chart_white_24dp"
                         android:drawablePadding="4dp"
                         android:gravity="center_vertical"
                         android:text="@string/route_detail_stat_speed_title"
