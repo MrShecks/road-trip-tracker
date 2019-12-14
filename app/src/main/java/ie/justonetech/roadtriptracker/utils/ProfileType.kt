@@ -1,6 +1,7 @@
 package ie.justonetech.roadtriptracker.utils
 
 import android.content.Context
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import ie.justonetech.roadtriptracker.R
