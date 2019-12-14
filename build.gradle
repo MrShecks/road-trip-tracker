@@ -15,7 +15,7 @@ buildscript {
         androidBuildToolsVersion = '3.5.2'
 
         roomLibraryVersion = '2.2.2'
-        navigationLibraryVersion = '2.2.0-rc02'
+        navigationLibraryVersion = '2.2.0-rc03'
         preferencesLibraryVersion = '1.1.0'
         pagingLibraryVersion = '2.1.0'
         recyclerViewLibraryVersion = '1.0.0'

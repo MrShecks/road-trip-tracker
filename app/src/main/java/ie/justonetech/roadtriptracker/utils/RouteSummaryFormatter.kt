@@ -11,10 +11,10 @@ import ie.justonetech.roadtriptracker.model.RouteSummary
 class RouteSummaryFormatter(context: Context, data: RouteSummary) : ModelFormatter<RouteSummary>(context, data) {
 
     val startTime: String
-        get() = FormatUtils().formatDate(data.startTime, format = FormatUtils.DateFormat.FORMAT_LONG_SHORT_TIME)
+        get() = FormatUtils().formatDate(data.startTime, format = FormatUtils.DateFormat.FORMAT_SHORT_SHORT_TIME)
 
     val endTime: String
-        get() = FormatUtils().formatDate(data.endTime, format = FormatUtils.DateFormat.FORMAT_LONG_SHORT_TIME)
+        get() = FormatUtils().formatDate(data.endTime, format = FormatUtils.DateFormat.FORMAT_SHORT_SHORT_TIME)
 
     val totalDuration: String
         get() = formatDuration(data.totalDuration)
@@ -27,4 +27,8 @@ class RouteSummaryFormatter(context: Context, data: RouteSummary) : ModelFormatt
 
     val profileName: String
         get() = ProfileType.fromId(data.profileId).getName(context)
+
+    val profileColor: Int
+        get() = data.profile.tagColor
+        //get() = 0xFF007700.toInt() //data.profile.accentColor.toInt()
 }

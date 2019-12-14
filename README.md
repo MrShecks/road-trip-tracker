@@ -25,7 +25,10 @@ The finished application will use/demonstrate the MVVM architecture and the foll
 ### Current Application
 TODO: Add screenshots of a hopefully more modern looking material style application
 
+#### History and Favourites
+![Road Trip Tracker](docs/screenshots/road-trip-tracker-001.png)
+
 ### Original Prototype
 Yep ... I know, it looks horrible ... but that will be fixed.
 
-![Road Trip Tracker](docs/screenshots/screenshot-000.png)
+![Old Road Trip Tracker](docs/screenshots/screenshot-000.png)

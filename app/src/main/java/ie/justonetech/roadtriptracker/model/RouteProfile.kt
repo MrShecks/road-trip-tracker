@@ -12,7 +12,7 @@ import ie.justonetech.roadtriptracker.utils.SpeedUnit
 data class RouteProfile(
     @ColumnInfo(name = "_id")               val id: Int,
 
-    @ColumnInfo(name = "accent_color")      val accentColor: Long,
+    @ColumnInfo(name = "tag_color")         val tagColor: Int,
     @ColumnInfo(name = "distance_unit")     val distanceUnit: DistanceUnit,
     @ColumnInfo(name = "speed_unit")        val speedUnit: SpeedUnit
 )
