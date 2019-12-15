@@ -20,6 +20,7 @@
         android:clickable="true"
         android:focusable="true"
 
+        app:cardBackgroundColor="?android:attr/colorBackground"
         app:cardElevation="3dp">
 
         <LinearLayout
@@ -29,11 +30,11 @@
 
             <View
                 android:id="@+id/profileTag"
-                android:layout_width="8dp"
+                android:layout_width="@dimen/profile_tag_width"
                 android:layout_height="match_parent"
                 android:profileColor="@{routeSummary.profileColor}"
 
-                tools:background="@color/primaryColor"/>
+                tools:background="@color/primaryColor" />
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -54,19 +55,18 @@
                     android:layout_marginRight="2dp"
 
 
-                    app:drawableTint="@color/secondaryTextColor"
-                    android:profileDrawable="@{routeSummary.data.profileId}"
                     android:drawablePadding="4dp"
-
                     android:gravity="center_vertical"
+                    android:profileDrawable="@{routeSummary.data.profileId}"
+
                     android:text="@{routeSummary.profileName}"
                     android:textAllCaps="true"
                     android:textSize="16sp"
+                    app:drawableTint="@color/secondaryTextColor"
 
-                    tools:text="Cycling"
-                    tools:drawableStart="@drawable/ic_profile_cycling_white_24dp"
                     tools:drawableLeft="@drawable/ic_profile_cycling_white_24dp"
-                    />
+                    tools:drawableStart="@drawable/ic_profile_cycling_white_24dp"
+                    tools:text="Cycling" />
 
                 <TextView
                     android:id="@+id/startTime"
@@ -167,7 +167,7 @@
                             android:gravity="center_horizontal"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
-                            android:text="@string/route_summary_list_duration_title"
+                            android:text="@string/route_summary_list_time_title"
                             android:textAllCaps="true"
                             android:textColor="?attr/colorPrimary" />
 

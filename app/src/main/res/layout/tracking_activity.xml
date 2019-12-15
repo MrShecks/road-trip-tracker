@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,68 +7,389 @@
     android:orientation="vertical"
     tools:context=".view.activities.TrackingActivity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="@dimen/profile_tag_width"
+                android:layout_height="0dp"
+                android:background="@color/primaryColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:drawableStart="@drawable/ic_profile_cycling_white_24dp"
+                android:drawableLeft="@drawable/ic_profile_cycling_white_24dp"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
+                android:text="@string/profile_name_cycling"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                app:drawableTint="@color/secondaryTextColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view4"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Cycling" />
+
+            <TableLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view4"
+                app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+                <TableRow android:layout_width="match_parent">
+
+                    <TextView
+                        android:id="@+id/currentSpeed"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="100 KPH"
+
+                        android:textSize="36sp"
+                        tools:text="100 KPH" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="00:00:00"
+
+                        android:textSize="36sp"
+                        tools:text="00:00:00" />
+
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="@string/tracking_stat_speed_title"
+                        android:textAllCaps="true"
+                        android:textColor="@color/primaryColor" />
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+
+                        android:gravity="center_horizontal"
+                        android:text="@string/tracking_stat_time_title"
+                        android:textAllCaps="true"
+                        android:textColor="@color/primaryColor" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="25 KPH" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="100 KPH" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="00:00:00" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="00:00:00" />
+
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="@string/tracking_stat_avg_speed_title"
+                        android:textAllCaps="true"
+                        android:textColor="@color/primaryColor" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="@string/tracking_stat_max_speed_title"
+                        android:textAllCaps="true"
+                        android:textColor="@color/primaryColor" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="@string/tracking_stat_active_time_title"
+                        android:textAllCaps="true"
+                        android:textColor="@color/primaryColor" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="center_horizontal"
+                        android:text="@string/tracking_stat_paused_time_title"
+                        android:textAllCaps="true"
+                        android:textColor="@color/primaryColor" />
+                </TableRow>
+
+            </TableLayout>
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/currentSpeed"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="8dp"-->
+            <!--                android:layout_marginLeft="8dp"-->
+            <!--                android:text="TextView"-->
+            <!--                android:textSize="36sp"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/view4"-->
+            <!--                tools:layout_editor_absoluteY="43dp"-->
+            <!--                tools:text="0 KPH" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView8"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="@string/tracking_stat_speed_title"-->
+            <!--                android:textAllCaps="true"-->
+            <!--                android:textColor="@color/primaryColor"-->
+            <!--                app:layout_constraintEnd_toEndOf="@+id/currentSpeed"-->
+            <!--                app:layout_constraintStart_toStartOf="@+id/currentSpeed"-->
+            <!--                tools:layout_editor_absoluteY="92dp" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView9"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="TextView"-->
+            <!--                tools:layout_editor_absoluteX="28dp"-->
+            <!--                tools:layout_editor_absoluteY="117dp"-->
+            <!--                tools:text="0 KPH" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView10"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="@string/tracking_stat_avg_speed_title"-->
+            <!--                android:textAllCaps="true"-->
+            <!--                android:textColor="@color/primaryColor"-->
+            <!--                app:layout_constraintEnd_toEndOf="@+id/textView9"-->
+            <!--                app:layout_constraintStart_toStartOf="@+id/textView9"-->
+            <!--                tools:layout_editor_absoluteY="144dp" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView11"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="TextView"-->
+            <!--                tools:layout_editor_absoluteX="130dp"-->
+            <!--                tools:layout_editor_absoluteY="118dp"-->
+            <!--                tools:text="0 KPH" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView12"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="@string/tracking_stat_max_speed_title"-->
+            <!--                android:textAllCaps="true"-->
+            <!--                android:textColor="@color/primaryColor"-->
+            <!--                app:layout_constraintEnd_toEndOf="@+id/textView11"-->
+            <!--                app:layout_constraintStart_toStartOf="@+id/textView11"-->
+            <!--                tools:layout_editor_absoluteY="145dp" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView13"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginEnd="8dp"-->
+            <!--                android:layout_marginRight="8dp"-->
+            <!--                android:text="TextView"-->
+            <!--                android:textSize="36sp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                tools:layout_editor_absoluteY="43dp"-->
+            <!--                tools:text="00:00:00" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView14"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="@string/tracking_stat_time_title"-->
+            <!--                android:textAllCaps="true"-->
+            <!--                android:textColor="@color/primaryColor"-->
+            <!--                app:layout_constraintEnd_toEndOf="@+id/textView13"-->
+            <!--                app:layout_constraintStart_toStartOf="@+id/textView13"-->
+            <!--                tools:layout_editor_absoluteY="92dp" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/routeMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </androidx.viewpager.widget.ViewPager>
+        android:layout_alignParentBottom="false"
+        android:layout_marginTop="4dp"
+        android:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
     <ProgressBar
         android:id="@+id/lockProgress"
         style="@style/AppTheme.LockProgressBar"
-
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="invisible" />
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/lockButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/startStopButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_toStartOf="@id/lockButton"
+        android:layout_toLeftOf="@id/lockButton"
+        android:background="@color/colorDarkGreen"
+        android:gravity="start|center_vertical"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:paddingEnd="@dimen/tracking_lock_button_width"
+        android:paddingRight="@dimen/tracking_lock_button_width"
+        android:text="@string/tracking_start_button_title"
+        app:backgroundTint="@color/colorDarkGreen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pauseResumeButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/startStopButton"
-            style="@style/AppTheme.TrackingButton"
+    <Button
+        android:id="@+id/pauseResumeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_toEndOf="@id/lockButton"
+        android:layout_toRightOf="@id/lockButton"
+        android:background="@color/colorDarkRed"
+        android:gravity="center_vertical|end"
+        android:paddingStart="@dimen/tracking_lock_button_width"
+        android:paddingLeft="@dimen/tracking_lock_button_width"
+        android:paddingEnd="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/tracking_stop_button_title"
+        app:backgroundTint="@color/colorDarkRed"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/startStopButton" />
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorDarkGreen"
-            android:enabled="true"
-            android:text="@string/tracking_start_button_title"
-            app:backgroundTint="@color/colorDarkGreen" />
+    <ie.justonetech.roadtriptracker.view.widgets.LockButton
+        android:id="@+id/lockButton"
+        style="@style/AppTheme.LockButton"
 
-        <ie.justonetech.roadtriptracker.view.widgets.LockButton
-            android:id="@+id/lockButton"
-            style="@style/AppTheme.TrackingButton"
+        android:layout_width="@dimen/tracking_lock_button_width"
+        android:layout_height="@dimen/tracking_lock_button_height"
 
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/primaryColor"
-            android:longClickable="true"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:visibility="visible" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
 
-        <Button
-            android:id="@+id/pauseResumeButton"
-            style="@style/AppTheme.TrackingButton"
+        android:layout_marginBottom="16dp"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorDarkGreen"
-            android:enabled="true"
-            android:text="@string/tracking_pause_button_title"
-            android:visibility="visible"
-            app:backgroundTint="@color/colorDarkGreen" />
-    </LinearLayout>
+        android:translationZ="10dp"
 
-</LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

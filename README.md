@@ -28,7 +28,10 @@ TODO: Add screenshots of a hopefully more modern looking material style applicat
 #### History and Favourites
 ![Road Trip Tracker](docs/screenshots/road-trip-tracker-001.png)
 
+#### Application Theme (A little more modern?)
+![Road Trip Tracker](docs/screenshots/road-trip-tracker-002.png)
+
 ### Original Prototype
-Yep ... I know, it looks horrible ... but that will be fixed.
+Yep ... I know, it looks horrible ... but that will be fixed (hopefully).
 
 ![Old Road Trip Tracker](docs/screenshots/screenshot-000.png)

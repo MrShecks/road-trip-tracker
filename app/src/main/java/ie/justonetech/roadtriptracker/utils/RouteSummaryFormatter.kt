@@ -30,5 +30,4 @@ class RouteSummaryFormatter(context: Context, data: RouteSummary) : ModelFormatt
 
     val profileColor: Int
         get() = data.profile.tagColor
-        //get() = 0xFF007700.toInt() //data.profile.accentColor.toInt()
 }

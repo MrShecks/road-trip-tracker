@@ -12,10 +12,10 @@ import ie.justonetech.roadtriptracker.model.RouteDetail
 class RouteDetailFormatter(context: Context, data: RouteDetail) : ModelFormatter<RouteDetail>(context, data) {
 
     val startTime: String
-        get() = FormatUtils().formatDate(data.startTime, format = FormatUtils.DateFormat.FORMAT_LONG_SHORT_TIME)
+        get() = FormatUtils().formatDate(data.startTime, format = FormatUtils.DateFormat.FORMAT_SHORT_SHORT_TIME)
 
     val endTime: String
-        get() = FormatUtils().formatDate(data.endTime, format = FormatUtils.DateFormat.FORMAT_LONG_SHORT_TIME)
+        get() = FormatUtils().formatDate(data.endTime, format = FormatUtils.DateFormat.FORMAT_SHORT_SHORT_TIME)
 
     val distance: String
         get() = formatDistance(data.distance, data.profile.distanceUnit)
@@ -46,4 +46,7 @@ class RouteDetailFormatter(context: Context, data: RouteDetail) : ModelFormatter
 
     val profileName: String
         get() = ProfileType.fromId(data.profileId).getName(context)
+
+    val profileColor: Int
+        get() = data.profile.tagColor
 }

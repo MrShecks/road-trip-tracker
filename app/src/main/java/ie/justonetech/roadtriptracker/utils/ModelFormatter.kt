@@ -12,10 +12,6 @@ open class ModelFormatter<T>(protected val context: Context, val data: T) {
 
     protected fun formatDuration(duration: Long) = FormatUtils().formatDuration(duration, TimeUnit.SECONDS)
 
-    protected fun formatSpeed(speed: Long, speedUnit: SpeedUnit): String {
-        return "FIXME"
-    }
-
     protected fun formatDistance(distance: Double, targetUnit: DistanceUnit, withSuffix: Boolean = true): String {
         return FormatUtils().formatDistance(context, distance, DistanceUnit.KILOMETERS, targetUnit, withSuffix)
     }

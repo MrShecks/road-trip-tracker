@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="RoadTripTracker.Theme" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
@@ -16,6 +16,7 @@
         <item name="android:textColorSecondary">@color/primaryTextColor</item>
 
         <item name="android:windowBackground">@color/windowBackgroundColor</item>
+        <item name="android:colorBackground">#FFFAFAFA</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="actionMenuTextColor">@color/primaryTextColor</item>
@@ -33,6 +34,11 @@
         <item name="tabMode">scrollable</item>
     </style>
 
+    <style name="RoadTripTracker.Theme.NoActionBar" parent="RoadTripTracker.Theme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
     </style>
 
@@ -40,6 +46,12 @@
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.LockButton" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:background">@drawable/round_lock_button</item>
+
     </style>
 
     <style name="AppTheme.LockProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">

@@ -12,7 +12,7 @@ buildscript {
         kotlinCoreVersion = '1.1.0'
         kotlinCoroutinesVersion = '1.3.0'
 
-        androidBuildToolsVersion = '3.5.2'
+        androidBuildToolsVersion = '3.5.3'
 
         roomLibraryVersion = '2.2.2'
         navigationLibraryVersion = '2.2.0-rc03'
