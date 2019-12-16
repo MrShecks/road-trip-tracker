@@ -1,4 +1,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Shape drawable examples
+        https://www.zoftino.com/android-shape-drawable-examples
+    -->
+
     <item>
         <shape android:shape="oval">
             <size android:width="100dp"

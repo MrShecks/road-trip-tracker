@@ -3,7 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ie.justonetech.roadtriptracker">
 
+    <!-- FIXME: Not sure if we need INTERNET permissions, Google Maps seems to work without it -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Only required on API 28 or higher -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +32,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activities.TrackingActivity" android:label="@string/tracking_activity_title" android:theme="@style/RoadTripTracker.Theme" />
+        <activity
+            android:name=".view.activities.TrackingActivity"
+            android:label="@string/tracking_activity_title"
+            android:theme="@style/RoadTripTracker.Theme"
+            android:launchMode="singleTop" />
+
+        <service
+            android:name=".service.TrackingService"
+            android:description="@string/tracking_service_description" />
 
         <!--
             Sorry, if you want to build the application form source yourself you will need

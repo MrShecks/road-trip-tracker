@@ -27,6 +27,8 @@ buildscript {
         appcompatLibraryVersion = '1.1.0'
         materialLibraryVersion = '1.2.0-alpha02'
 
+        localBroadcastManagerLibraryVersion = '1.1.0-alpha01'
+
         googleMapsLibraryVersion = '17.0.0'
     }
 

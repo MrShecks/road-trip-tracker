@@ -60,6 +60,12 @@
     <string name="tracking_screen_locked">Screen Locked</string>
     <string name="tracking_screen_unlocked">Screen Unlocked</string>
 
+    <string name="tracking_stop_prompt_title">Stop Tracking</string>
+    <string name="tracking_stop_prompt_message">Would you like to stop route tracking?</string>
+    <string name="tracking_stop_prompt_save_button">Save</string>
+    <string name="tracking_stop_prompt_discard_button">Discard</string>
+    <string name="tracking_stop_prompt_cancel_button">Cancel</string>
+
     <string name="profile_name_walking">Walking</string>
     <string name="profile_name_running">Running</string>
     <string name="profile_name_cycling">Cycling</string>
@@ -81,4 +87,7 @@
     <string name="speed_unit_suffix_fps">fps</string>
     <string name="speed_unit_suffix_knots">kts</string>
 
+    <string name="tracking_service_tracking_started_message">Route tracking service started.</string>
+    <string name="tracking_service_description">Location tracking service used by the Road Trip Tracker application to log GPS location for route tracking.</string>
+    <string name="error_no_location_permissions">Location permissions are required in order to enable route tracking.</string>
 </resources>

@@ -50,7 +50,7 @@
 
     <style name="AppTheme.LockButton" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:background">@drawable/round_lock_button</item>
+        <item name="android:background">@drawable/shape_round_lock_button</item>
 
     </style>
 
