@@ -63,8 +63,6 @@ dependencies {
     implementation "androidx.room:room-ktx:$rootProject.roomLibraryVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomLibraryVersion"
 
-    implementation "androidx.localbroadcastmanager:localbroadcastmanager:$rootProject.localBroadcastManagerLibraryVersion"
-
     implementation "com.google.android.gms:play-services-maps:$rootProject.googleMapsLibraryVersion"
 
     testImplementation 'junit:junit:4.12'

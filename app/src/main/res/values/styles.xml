@@ -22,11 +22,11 @@
         <item name="actionMenuTextColor">@color/primaryTextColor</item>
         <item name="actionModeBackground">@color/primaryColor</item>
 
-        <item name="tabStyle">@style/AppTheme.TabLayout</item>
-        <item name="bottomNavigationStyle">@style/AppTheme.BottomNavigationView</item>
+        <item name="tabStyle">@style/RoadTripTracker.TabLayout</item>
+        <item name="bottomNavigationStyle">@style/RoadTripTracker.BottomNavigationView</item>
     </style>
 
-    <style name="AppTheme.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+    <style name="RoadTripTracker.TabLayout" parent="Widget.MaterialComponents.TabLayout">
         <item name="tabTextColor">@color/primaryTextColor</item>
         <item name="tabSelectedTextColor">@color/secondaryColor</item>
         <item name="tabIndicatorColor">@color/secondaryColor</item>
@@ -39,16 +39,15 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+    <style name="RoadTripTracker.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
     </style>
 
-    <style name="AppTheme.TrackingButton" parent="Widget.AppCompat.Button.Borderless.Colored">
+    <style name="RoadTripTracker.TrackingButton" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="AppTheme.LockButton" parent="Widget.AppCompat.Button.Borderless.Colored">
+    <style name="RoadTripTracker.LockButton" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:background">@drawable/shape_round_lock_button</item>
 

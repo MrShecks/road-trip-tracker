@@ -56,10 +56,10 @@ class TrackingService : Service() {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    val state: LiveData<State> by lazy { trackingState }
+    val state: LiveData<State> = MutableLiveData<State>(State.TRACKING_STOPPED)
 
     private val serviceBinder = ServiceBinder()
-    private val trackingState = MutableLiveData<State>(State.TRACKING_STOPPED)
+    //private val trackingState = MutableLiveData<State>(State.TRACKING_STOPPED)
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -111,8 +111,8 @@ class TrackingService : Service() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun startTracking(config: Config) {
-        check(trackingState.value == State.TRACKING_STOPPED) {
-            "Tracking service can only be started from the stopped state (state=$trackingState)"
+        check(state.value == State.TRACKING_STOPPED) {
+            "Tracking service can only be started from the stopped state (state=${state.value})"
         }
 
         showServiceNotification()
@@ -120,8 +120,8 @@ class TrackingService : Service() {
     }
 
     fun stopTracking(saveRoute: Boolean = true) {
-        check(trackingState.value == State.TRACKING_STARTED || trackingState.value == State.TRACKING_PAUSED) {
-            "Tracking service can only be stopped from the started or paused state (state=$trackingState)"
+        check(state.value == State.TRACKING_STARTED || state.value == State.TRACKING_PAUSED) {
+            "Tracking service can only be stopped from the started or paused state (state=${state.value})"
         }
 
         removeServiceNotification()
@@ -129,20 +129,22 @@ class TrackingService : Service() {
     }
 
     fun pauseTracking() {
-        check(trackingState.value == State.TRACKING_STARTED) {
-            "Tracking service can only be paused from the started state (state=$trackingState)"
+        check(state.value == State.TRACKING_STARTED) {
+            "Tracking service can only be paused from the started state (state=${state.value})"
         }
 
         setServiceState(State.TRACKING_PAUSED)
     }
 
     fun resumeTracking() {
-        check(trackingState.value == State.TRACKING_PAUSED) {
-            "Tracking service can only be resumed from the paused state (state=$trackingState)"
+        check(state.value == State.TRACKING_PAUSED) {
+            "Tracking service can only be resumed from the paused state (state=${state.value})"
         }
 
         setServiceState(State.TRACKING_STARTED)
     }
+
+    fun getCurrentState(): TrackingService.State = state.value ?: State.TRACKING_STOPPED
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -184,9 +186,9 @@ class TrackingService : Service() {
     }
 
     private fun setServiceState(newState: State) {
-        check(newState != trackingState.value) { "Attempt to set service state to current state (newState=$newState, oldState=${trackingState.value})" }
+        check(newState != state.value) { "Attempt to set service state to current state (newState=$newState, oldState=${state.value})" }
 
-        trackingState.value = newState
+        (state as MutableLiveData).value = newState
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -32,6 +32,9 @@ class TrackingActivity
 
     private var trackingService: TrackingService? = null
 
+    private var previousTrackingState = TrackingService.State.TRACKING_STOPPED
+    private var currentTrackingState = TrackingService.State.TRACKING_STOPPED
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +45,7 @@ class TrackingActivity
 
         startStopButton.setOnClickListener {
             trackingService?.let { service ->
-                when(service.state.value) {
+                when(service.getCurrentState()) {
                     TrackingService.State.TRACKING_STOPPED ->
                         requestPermissionForAction(REQUEST_CODE_ACTION_START_TRACKING)
 
@@ -55,7 +58,7 @@ class TrackingActivity
 
         pauseResumeButton.setOnClickListener {
             trackingService?.let { service ->
-                when(service.state.value) {
+                when(service.getCurrentState()) {
                     TrackingService.State.TRACKING_STARTED ->
                         requestPermissionForAction(REQUEST_CODE_ACTION_PAUSE_TRACKING)
 
@@ -99,11 +102,17 @@ class TrackingActivity
 
                             setPositiveButton(R.string.tracking_stop_prompt_save_button) { _, _ ->
                                 it.stopTracking(true)
+
+                                // TODO: Set return code to tell parent activity that the route was saved
+
                                 finish()
                             }
 
                             setNegativeButton(R.string.tracking_stop_prompt_discard_button) { _, _ ->
                                 it.stopTracking(false)
+
+                                // TODO: Set return code to tell parent activity that the route was discarded
+
                                 finish()
                             }
 
@@ -130,20 +139,12 @@ class TrackingActivity
         Log.d(TAG, "onServiceConnected(name=$componentName) Called")
 
         (service as TrackingService.ServiceBinder).getService().also {
+
             it.state.observe(this, Observer { state ->
-                when(state) {
-                    TrackingService.State.TRACKING_STARTED -> {
+                previousTrackingState = currentTrackingState
+                currentTrackingState = state
 
-                    }
-
-                    TrackingService.State.TRACKING_STOPPED -> {
-
-                    }
-
-                    TrackingService.State.TRACKING_PAUSED -> {
-
-                    }
-                }
+                onServiceStateChanged(previousTrackingState, currentTrackingState)
             })
 
             trackingService = it
@@ -163,6 +164,41 @@ class TrackingActivity
 
     private fun onServiceStateChanged(oldState: TrackingService.State, newState: TrackingService.State) {
 
+        Log.i(TAG, "onServiceStateChanged(oldState=$oldState, newState=$newState): State Changed")
+
+        when(newState) {
+            TrackingService.State.TRACKING_STARTED -> {
+                when(oldState) {
+                    TrackingService.State.TRACKING_STOPPED -> {
+                        startStopButton.setText(R.string.tracking_stop_button_title)
+                        startStopButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDarkRed))
+
+                        pauseResumeButton.visibility = View.VISIBLE
+                        lockButton.visibility = View.VISIBLE
+                    }
+
+                    TrackingService.State.TRACKING_PAUSED -> {
+                        pauseResumeButton.setText(R.string.tracking_pause_button_title)
+                    }
+
+                    else -> {
+                        Log.w(TAG, "onServiceStateChanged(oldState=$oldState, newState=$newState): Unexpected state change")
+                    }
+                }
+            }
+
+            TrackingService.State.TRACKING_PAUSED -> {
+                pauseResumeButton.setText(R.string.tracking_resume_button_title)
+            }
+
+            TrackingService.State.TRACKING_STOPPED -> {
+                startStopButton.setTextColor(R.string.tracking_start_button_title)
+                startStopButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDarkGreen))
+
+                lockButton.visibility = View.GONE
+                pauseResumeButton.visibility = View.GONE
+            }
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
