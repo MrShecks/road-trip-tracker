@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--    <color name="primaryColor">#344955</color>-->
-<!--    <color name="primaryLightColor">#4a6572</color>-->
-<!--    <color name="primaryDarkColor">#232f34</color>-->
-<!--    <color name="secondaryColor">#f9aa33</color>-->
-<!--    <color name="secondaryLightColor">#e2f1f8</color>-->
-<!--    <color name="secondaryDarkColor">#808e95</color>-->
-<!--    <color name="primaryTextColor">#fafafa</color>-->
-<!--    <color name="secondaryTextColor">#000000</color>-->
+    <!--
+        Application palette colours
+    -->
 
-    <color name="windowBackgroundColor">#ffffff</color>
+    <!-- https://material.io/resources/color/#!/?view.left=1&view.right=0&primary.color=1565C0&secondary.color=CFD8DC -->
+    <!-- https://material.io/design/color/dark-theme.html -->
 
-    <color name="primaryColor">#0288d1</color>
-    <color name="primaryLightColor">#5eb8ff</color>
-    <color name="primaryDarkColor">#005b9f</color>
-    <color name="secondaryColor">#b0bec5</color>
-    <color name="secondaryLightColor">#e2f1f8</color>
-    <color name="secondaryDarkColor">#808e95</color>
-    <color name="primaryTextColor">#fafafa</color>
-    <color name="secondaryTextColor">#808E95</color>
+    <color name="primaryColor">#1565c0</color>
+    <color name="primaryLightColor">#5e92f3</color>
+    <color name="primaryDarkColor">#003c8f</color>
+    <color name="secondaryColor">#cfd8dc</color>
+    <color name="secondaryLightColor">#fafafa</color>
+    <color name="secondaryDarkColor">#9ea7aa</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+
+    <!-- Tracking control button colors -->
 
     <color name="colorDarkGreen">#007700</color>
     <color name="colorDarkRed">#880000</color>

@@ -59,7 +59,6 @@ class TrackingService : Service() {
     val state: LiveData<State> = MutableLiveData<State>(State.TRACKING_STOPPED)
 
     private val serviceBinder = ServiceBinder()
-    //private val trackingState = MutableLiveData<State>(State.TRACKING_STOPPED)
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -126,6 +125,7 @@ class TrackingService : Service() {
 
         removeServiceNotification()
         setServiceState(State.TRACKING_STOPPED)
+        stopSelf()
     }
 
     fun pauseTracking() {

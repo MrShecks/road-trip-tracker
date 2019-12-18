@@ -10,4 +10,5 @@
 
     <dimen name="tracking_lock_button_width">48dp</dimen>
     <dimen name="tracking_lock_button_height">48dp</dimen>
+    <dimen name="tracking_button_min_width">120dp</dimen>
 </resources>

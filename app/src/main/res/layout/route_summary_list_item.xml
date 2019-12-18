@@ -20,7 +20,6 @@
         android:clickable="true"
         android:focusable="true"
 
-        app:cardBackgroundColor="?android:attr/colorBackground"
         app:cardElevation="3dp">
 
         <LinearLayout

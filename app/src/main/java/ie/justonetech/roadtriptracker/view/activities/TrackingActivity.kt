@@ -32,12 +32,10 @@ class TrackingActivity
 
     private var trackingService: TrackingService? = null
 
-    private var previousTrackingState = TrackingService.State.TRACKING_STOPPED
-    private var currentTrackingState = TrackingService.State.TRACKING_STOPPED
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i(TAG, "onCreate() - Called")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tracking_activity)
 
@@ -70,12 +68,32 @@ class TrackingActivity
                 }
             }
         }
-
-        bindService(Intent(this, TrackingService::class.java), this, Context.BIND_AUTO_CREATE)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStart() {
+        Log.i(TAG, "onStart() - Called")
+        super.onStart()
+
+        val serviceIntent = Intent(this, TrackingService::class.java)
+
+        // We need to explicitly start the tracking service so that it remains running until
+        // it is explicitly stopped. If we just bind to the service it will be stopped when
+        // we unbind in onStop(). This will mean that the service will be stopped during
+        // device configuration changes (e.g rotations) which we don't want. By explicitly
+        // starting the service it will remain running through configuration changes and
+        // will only be stopped when want to stop it (e.g TrackingService.stopTracking())
+
+        startService(serviceIntent)
+        bindService(serviceIntent, this, Context.BIND_AUTO_CREATE)
+    }
+
+    override fun onStop() {
+        Log.i(TAG, "onStop() - Called")
+        super.onStop()
+
+        // Unbind from the service when the activity is stopped.
+        // Note: Because we explicitly started the service in onStart() it will remain
+        // running and the activity will just re-bind when onStart() is called.
 
         unbindService(this)
     }
@@ -141,16 +159,11 @@ class TrackingActivity
         (service as TrackingService.ServiceBinder).getService().also {
 
             it.state.observe(this, Observer { state ->
-                previousTrackingState = currentTrackingState
-                currentTrackingState = state
-
-                onServiceStateChanged(previousTrackingState, currentTrackingState)
+                onServiceStateChanged(state)
             })
 
             trackingService = it
         }
-
-        startStopButton.isEnabled = true
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
@@ -162,41 +175,36 @@ class TrackingActivity
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private fun onServiceStateChanged(oldState: TrackingService.State, newState: TrackingService.State) {
+    private fun onServiceStateChanged(newState: TrackingService.State) {
 
-        Log.i(TAG, "onServiceStateChanged(oldState=$oldState, newState=$newState): State Changed")
+        Log.i(TAG, "onServiceStateChanged(newState=$newState): State Changed")
 
         when(newState) {
             TrackingService.State.TRACKING_STARTED -> {
-                when(oldState) {
-                    TrackingService.State.TRACKING_STOPPED -> {
-                        startStopButton.setText(R.string.tracking_stop_button_title)
-                        startStopButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDarkRed))
+                startStopButton.setText(R.string.tracking_stop_button_title)
+                startStopButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_tracking_button_tint))
+                pauseResumeButton.setText(R.string.tracking_pause_button_title)
 
-                        pauseResumeButton.visibility = View.VISIBLE
-                        lockButton.visibility = View.VISIBLE
-                    }
-
-                    TrackingService.State.TRACKING_PAUSED -> {
-                        pauseResumeButton.setText(R.string.tracking_pause_button_title)
-                    }
-
-                    else -> {
-                        Log.w(TAG, "onServiceStateChanged(oldState=$oldState, newState=$newState): Unexpected state change")
-                    }
-                }
-            }
-
-            TrackingService.State.TRACKING_PAUSED -> {
-                pauseResumeButton.setText(R.string.tracking_resume_button_title)
+                pauseResumeButton.visibility = View.VISIBLE
+                lockButton.visibility = View.VISIBLE
             }
 
             TrackingService.State.TRACKING_STOPPED -> {
-                startStopButton.setTextColor(R.string.tracking_start_button_title)
-                startStopButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDarkGreen))
+                startStopButton.setText(R.string.tracking_start_button_title)
+                startStopButton.setBackgroundColor(ContextCompat.getColor(this, R.color.green_tracking_button_tint))
 
-                lockButton.visibility = View.GONE
+
                 pauseResumeButton.visibility = View.GONE
+                lockButton.visibility = View.GONE
+            }
+
+            TrackingService.State.TRACKING_PAUSED -> {
+                startStopButton.setText(R.string.tracking_stop_button_title)
+                startStopButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_tracking_button_tint))
+                pauseResumeButton.setText(R.string.tracking_resume_button_title)
+
+                pauseResumeButton.visibility = View.VISIBLE
+                lockButton.visibility = View.VISIBLE
             }
         }
     }

@@ -7,8 +7,9 @@
     android:orientation="vertical"
     tools:context=".view.activities.TrackingActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/statsCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -211,98 +212,115 @@
             </TableLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/routeMap"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="false"
-        android:layout_marginTop="4dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+    </com.google.android.material.card.MaterialCardView>
 
     <ProgressBar
         android:id="@+id/lockProgress"
-        style="@style/AppTheme.LockProgressBar"
-        android:layout_width="411dp"
+        style="@style/AppTheme.Theme.LockProgressBar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statsCardView" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/routeCardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/lockProgress">
 
-    <Button
-        android:id="@+id/startStopButton"
-        style="@style/RoadTripTracker.TrackingButton"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/routeMap"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignParentBottom="false"
 
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="32dp"
-        android:layout_toStartOf="@id/lockButton"
-        android:layout_toLeftOf="@id/lockButton"
-        android:background="@color/colorDarkGreen"
-        android:text="@string/tracking_start_button_title"
-        app:backgroundTint="@color/colorDarkGreen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/pauseResumeButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/routeMap" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <ie.justonetech.roadtriptracker.view.widgets.LockButton
-        android:id="@+id/lockButton"
-        style="@style/RoadTripTracker.LockButton"
+            </androidx.fragment.app.FragmentContainerView>
 
-        android:layout_width="@dimen/tracking_lock_button_width"
-        android:layout_height="@dimen/tracking_lock_button_height"
+            <Button
+                android:id="@+id/startStopButton"
 
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-        android:layout_marginBottom="32dp"
 
-        android:padding="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="32dp"
+                android:minWidth="@dimen/tracking_button_min_width"
+                android:text="@string/tracking_start_button_title"
+                android:textColor="@color/tracking_button_text_color"
+                app:backgroundTint="@color/green_tracking_button_tint"
+                app:elevation="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/lockButton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        android:scaleType="fitCenter"
-        android:translationZ="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/routeMap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+            <ie.justonetech.roadtriptracker.view.widgets.LockButton
+                android:id="@+id/lockButton"
+                style="@style/RoadTripTracker.Theme.LockButton"
 
-    <Button
-        android:id="@+id/pauseResumeButton"
-        style="@style/RoadTripTracker.TrackingButton"
+                android:layout_width="@dimen/tracking_lock_button_width"
+                android:layout_height="@dimen/tracking_lock_button_height"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="12dp"
+                android:layout_centerHorizontal="true"
 
-        android:layout_marginLeft="12dp"
-        android:layout_marginBottom="32dp"
-        android:layout_toEndOf="@id/lockButton"
-        android:layout_toRightOf="@id/lockButton"
-        android:background="@color/colorDarkGreen"
-        android:text="@string/tracking_pause_button_title"
-        app:backgroundTint="@color/colorDarkGreen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/routeMap"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/startStopButton" />
+                android:layout_marginBottom="32dp"
+                android:padding="8dp"
+
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pauseResumeButton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/startStopButton" />
+
+            <Button
+                android:id="@+id/pauseResumeButton"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="32dp"
+                android:minWidth="@dimen/tracking_button_min_width"
+                android:text="@string/tracking_pause_button_title"
+                android:textColor="@color/tracking_button_text_color"
+                app:backgroundTint="@color/green_tracking_button_tint"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/lockButton" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

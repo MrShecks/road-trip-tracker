@@ -1,37 +1,26 @@
 <resources>
 
+    <!-- https://material.io/develop/android/theming/color/ -->
+
     <style name="RoadTripTracker.Theme" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorAccent">@color/secondaryColor</item>
-
         <item name="colorOnPrimary">@color/primaryTextColor</item>
+
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+
+
+        <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
 
-        <item name="android:textColorPrimary">@color/primaryTextColor</item>
-        <!-- The DrawerLayout ArrowToggleIcon uses textColorSecondary for its color
-             but the grey is too dark against the primary blue, need to fix that
+        <item name="colorSurface">@color/secondaryLightColor</item>
+
+        <!--
+            Custom styles for individual widgets
         -->
-<!--        <item name="android:textColorSecondary">@color/secondaryTextColor</item>-->
-        <item name="android:textColorSecondary">@color/primaryTextColor</item>
 
-        <item name="android:windowBackground">@color/windowBackgroundColor</item>
-        <item name="android:colorBackground">#FFFAFAFA</item>
+        <item name="toolbarStyle">@style/RoadTripTracker.Theme.Toolbar</item>
+        <item name="bottomNavigationStyle">@style/RoadTripTracker.Theme.BottomNavigationView</item>
 
-        <item name="windowActionModeOverlay">true</item>
-        <item name="actionMenuTextColor">@color/primaryTextColor</item>
-        <item name="actionModeBackground">@color/primaryColor</item>
-
-        <item name="tabStyle">@style/RoadTripTracker.TabLayout</item>
-        <item name="bottomNavigationStyle">@style/RoadTripTracker.BottomNavigationView</item>
-    </style>
-
-    <style name="RoadTripTracker.TabLayout" parent="Widget.MaterialComponents.TabLayout">
-        <item name="tabTextColor">@color/primaryTextColor</item>
-        <item name="tabSelectedTextColor">@color/secondaryColor</item>
-        <item name="tabIndicatorColor">@color/secondaryColor</item>
-        <item name="android:background">@color/primaryDarkColor</item>
-        <item name="tabMode">scrollable</item>
     </style>
 
     <style name="RoadTripTracker.Theme.NoActionBar" parent="RoadTripTracker.Theme">
@@ -39,21 +28,47 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="RoadTripTracker.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+
+    <!--
+        Custom style for Toolbar widget
+        At the moment I am just setting the toolbar title text color to "colorOnPrimary" as
+        the material theme to uses "colorPrimary" for the toolbar background and the default
+        "colorPrimaryText" (black) for the title color, but setting "colorPrimaryText" will
+        also affect other widgets.
+
+        Note: According the the material guidelines "colorOnPrimary" is supposed to be used
+        for text drawn on the primary color so I don't know why the material toolbar doesn't
+        already use "colorOnPrimary"
+    -->
+
+    <style name="RoadTripTracker.Theme.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextColor">?colorOnPrimary</item>
     </style>
 
-    <style name="RoadTripTracker.TrackingButton" parent="Widget.AppCompat.Button.Borderless.Colored">
-        <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:textSize">18sp</item>
+    <!--
+        Custom style foe BottomNavigationView widget
+        Using the coloured variation of the Material theme which uses "colorPrimary" for the background
+        and "colorOnPrimary" for the text and icons
+    -->
+
+    <style name="RoadTripTracker.Theme.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
     </style>
 
-    <style name="RoadTripTracker.LockButton" parent="Widget.AppCompat.Button.Borderless.Colored">
+    <!--
+        Tracking buttons
+    -->
+
+<!--    <style name="RoadTripTracker.Theme.TrackingButton" parent="Widget.MaterialComponents.Button">-->
+<!--        <item name="android:textColor">@color/tracking_button_text_color</item>-->
+<!--    </style>-->
+
+    <style name="RoadTripTracker.Theme.LockButton" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:background">@drawable/shape_round_lock_button</item>
 
     </style>
 
-    <style name="AppTheme.LockProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="AppTheme.Theme.LockProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressBackgroundTint">@color/primaryTextColor</item>
         <item name="android:progressTint">@color/primaryColor</item>
         <item name="android:minHeight">16dp</item>

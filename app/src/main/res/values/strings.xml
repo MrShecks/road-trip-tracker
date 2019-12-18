@@ -61,7 +61,7 @@
     <string name="tracking_screen_unlocked">Screen Unlocked</string>
 
     <string name="tracking_stop_prompt_title">Stop Tracking</string>
-    <string name="tracking_stop_prompt_message">Would you like to stop route tracking?</string>
+    <string name="tracking_stop_prompt_message">Would you like to stop tracking and save the current route?</string>
     <string name="tracking_stop_prompt_save_button">Save</string>
     <string name="tracking_stop_prompt_discard_button">Discard</string>
     <string name="tracking_stop_prompt_cancel_button">Cancel</string>
