@@ -20,6 +20,10 @@
 
         <item name="toolbarStyle">@style/RoadTripTracker.Theme.Toolbar</item>
         <item name="bottomNavigationStyle">@style/RoadTripTracker.Theme.BottomNavigationView</item>
+        <item name="actionModeStyle">@style/RoadTripTracker.Theme.ActionMode</item>
+
+        <!-- ActionMode should be overlaid on the toolbar rather than above it -->
+        <item name="windowActionModeOverlay">true</item>
 
     </style>
 
@@ -46,7 +50,7 @@
     </style>
 
     <!--
-        Custom style foe BottomNavigationView widget
+        Custom style for BottomNavigationView widget
         Using the coloured variation of the Material theme which uses "colorPrimary" for the background
         and "colorOnPrimary" for the text and icons
     -->
@@ -55,12 +59,27 @@
     </style>
 
     <!--
-        Tracking buttons
+        Custom style for ActionMode widget
     -->
 
-<!--    <style name="RoadTripTracker.Theme.TrackingButton" parent="Widget.MaterialComponents.Button">-->
-<!--        <item name="android:textColor">@color/tracking_button_text_color</item>-->
-<!--    </style>-->
+    <style name="RoadTripTracker.Theme.ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="actionMenuTextColor">?colorOnPrimary</item>
+        <item name="background">?colorPrimary</item>
+        <item name="titleTextStyle">@style/RoadTripTracker.Theme.TextAppearance.ActionMode.Title</item>
+        <item name="subtitleTextStyle">@style/RoadTripTracker.Theme.TextAppearance.ActionMode.Subtitle</item>
+    </style>
+
+    <style name="RoadTripTracker.Theme.TextAppearance.ActionMode.Title" parent="TextAppearance.AppCompat.Widget.ActionMode.Title">
+        <item name="android:textColor">?colorOnPrimary</item>
+    </style>
+
+    <style name="RoadTripTracker.Theme.TextAppearance.ActionMode.Subtitle" parent="TextAppearance.AppCompat.Widget.ActionMode.Subtitle">
+        <item name="android:textColor">?colorOnPrimary</item>
+    </style>
+
+    <!--
+        Tracking buttons
+    -->
 
     <style name="RoadTripTracker.Theme.LockButton" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/primaryTextColor</item>

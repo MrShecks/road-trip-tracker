@@ -2,7 +2,6 @@ package ie.justonetech.roadtriptracker.service
 
 import android.location.Location
 import ie.justonetech.roadtriptracker.utils.ElapsedTimer
-import java.util.*
 import kotlin.collections.ArrayList
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,12 +37,6 @@ class TrackingState {
     var activeDuration = ElapsedTimer()
         private set
 
-    val startTimestamp: Date
-        get() = totalDuration.startTimestamp
-
-    val endTimestamp: Date
-        get() = totalDuration.endTimestamp
-
     var locationPoints = ArrayList<Location>()
         private set
 
@@ -52,6 +45,9 @@ class TrackingState {
 
     val avgSpeed: Float
         get() = 0.0f            // FIXME: Calculate from location points
+
+    val startTimestamp get() = totalDuration.startTimestamp
+    val endTimestamp get() = totalDuration.endTimestamp
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

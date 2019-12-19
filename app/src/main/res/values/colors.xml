@@ -17,10 +17,24 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
 
-    <!-- Tracking control button colors -->
+
+    <!--
+        Profile tag colours
+    -->
+    
+    <color name="colorProfile_Walking">#00ff00</color>
+    <color name="colorProfile_Running">#007700</color>
+    <color name="colorProfile_Cycling">#ff7700</color>
+    <color name="colorProfile_Driving">#ff0000</color>
+    <color name="colorProfile_Boating">#6200ee</color>
+    <color name="colorProfile_Motorcycling">#007777</color>
+
+    <!--
+        Tracking control button colours
+    -->
 
     <color name="colorDarkGreen">#007700</color>
     <color name="colorDarkRed">#880000</color>
-    <color name="colorDarkOrange">#AA7700</color>
+    <color name="colorDarkOrange">#ff7700</color>
 
 </resources>
