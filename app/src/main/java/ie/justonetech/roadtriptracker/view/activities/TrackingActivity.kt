@@ -1,6 +1,7 @@
 package ie.justonetech.roadtriptracker.view.activities
 
 import android.Manifest
+import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
 import android.os.Build
@@ -15,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.service.TrackingService
+import ie.justonetech.roadtriptracker.utils.ProfileType
 import ie.justonetech.roadtriptracker.view.widgets.ImageToast
 import ie.justonetech.roadtriptracker.view.widgets.LockButton
 import kotlinx.android.synthetic.main.tracking_activity.*
@@ -49,7 +52,7 @@ class TrackingActivity
 
                     TrackingService.State.TRACKING_STARTED,
                     TrackingService.State.TRACKING_PAUSED ->
-                        requestPermissionForAction(REQUEST_CODE_ACTION_STOP_TRACKING)
+                        requestStopTrackingWithPrompt(R.string.tracking_save_prompt_message)
                 }
             }
         }
@@ -98,6 +101,26 @@ class TrackingActivity
         unbindService(this)
     }
 
+    override fun onBackPressed() {
+
+        if(lockButton.locked) {
+            // The screen is currently locked
+            showLockMessage(this, R.string.tracking_screen_locked_message, true)
+
+        } else if(trackingService != null && trackingService?.getCurrentState() != TrackingService.State.TRACKING_STOPPED) {
+            requestStopTrackingWithPrompt(R.string.tracking_stop_and_save_prompt_message)
+
+        } else {
+
+            // If we get here it means that no route has been started so we just let the
+            // calling activity know that no new route has been created and continue
+            // with the back press call.
+
+            setResult(Activity.RESULT_CANCELED)
+            super.onBackPressed()
+        }
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         Log.d(TAG, "onRequestPermissionResult(requestCode=$requestCode, permissions=$permissions, grantResults=$grantResults) Called")
 
@@ -106,40 +129,37 @@ class TrackingActivity
                 when (requestCode) {
 
                     //
-                    // FIXME: Pass config object
+                    // FIXME: Pass valid config object
                     //
 
-                    REQUEST_CODE_ACTION_START_TRACKING  -> it.startTracking(TrackingService.Config())
+                    REQUEST_CODE_ACTION_START_TRACKING  -> {
+                        it.startTracking(TrackingService.Config(
+                            ProfileType.PROFILE_TYPE_CYCLING.id,
+                            0
+                        ))
+                    }
+
                     REQUEST_CODE_ACTION_PAUSE_TRACKING  -> it.pauseTracking()
                     REQUEST_CODE_ACTION_RESUME_TRACKING -> it.resumeTracking()
 
-                    REQUEST_CODE_ACTION_STOP_TRACKING -> {
-                        AlertDialog.Builder(this).apply {
-                            setTitle(R.string.tracking_stop_prompt_title)
-                            setMessage(R.string.tracking_stop_prompt_message)
+                    REQUEST_CODE_ACTION_STOP_TRACKING_SAVE -> {
+                        it.stopTracking(true)
 
-                            setPositiveButton(R.string.tracking_stop_prompt_save_button) { _, _ ->
-                                it.stopTracking(true)
+                        // FIXME: I might change how the application works and allow the user to start another tracking session without
+                        // FIXME: exiting and re-entering the TrackingActivity, so this will most likely be removed.
 
-                                // TODO: Set return code to tell parent activity that the route was saved
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
 
-                                finish()
-                            }
+                    REQUEST_CODE_ACTION_STOP_TRACKING_DISCARD -> {
+                        it.stopTracking(false)
 
-                            setNegativeButton(R.string.tracking_stop_prompt_discard_button) { _, _ ->
-                                it.stopTracking(false)
+                        // FIXME: I might change how the application works and allow the user to start another tracking session without
+                        // FIXME: exiting and re-entering the TrackingActivity, so this will most likely be removed
 
-                                // TODO: Set return code to tell parent activity that the route was discarded
-
-                                finish()
-                            }
-
-                            setNeutralButton(R.string.tracking_stop_prompt_cancel_button) { dialog, _ ->
-                                dialog.cancel()
-                            }
-
-                            create().show()
-                        }
+                        setResult(Activity.RESULT_CANCELED)
+                        finish()
                     }
 
                     else -> Log.e(TAG, "onRequestPermissionsResult(): Unexpected action request code (requestCode=$requestCode)")
@@ -183,7 +203,9 @@ class TrackingActivity
             TrackingService.State.TRACKING_STARTED -> {
                 startStopButton.setText(R.string.tracking_stop_button_title)
                 startStopButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_tracking_button_tint))
+
                 pauseResumeButton.setText(R.string.tracking_pause_button_title)
+                pauseResumeButton.setBackgroundColor(ContextCompat.getColor(this, R.color.green_tracking_button_tint))
 
                 pauseResumeButton.visibility = View.VISIBLE
                 lockButton.visibility = View.VISIBLE
@@ -193,7 +215,6 @@ class TrackingActivity
                 startStopButton.setText(R.string.tracking_start_button_title)
                 startStopButton.setBackgroundColor(ContextCompat.getColor(this, R.color.green_tracking_button_tint))
 
-
                 pauseResumeButton.visibility = View.GONE
                 lockButton.visibility = View.GONE
             }
@@ -201,7 +222,9 @@ class TrackingActivity
             TrackingService.State.TRACKING_PAUSED -> {
                 startStopButton.setText(R.string.tracking_stop_button_title)
                 startStopButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red_tracking_button_tint))
+
                 pauseResumeButton.setText(R.string.tracking_resume_button_title)
+                pauseResumeButton.setBackgroundColor(ContextCompat.getColor(this, R.color.orange_tracking_button_tint))
 
                 pauseResumeButton.visibility = View.VISIBLE
                 lockButton.visibility = View.VISIBLE
@@ -296,15 +319,38 @@ class TrackingActivity
         }
     }
 
+    private fun requestStopTrackingWithPrompt(@StringRes messageId: Int) {
+
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.tracking_stop_prompt_title)
+            setMessage(messageId)
+
+            setPositiveButton(R.string.tracking_stop_prompt_save_button) { _, _ ->
+                requestPermissionForAction(REQUEST_CODE_ACTION_STOP_TRACKING_SAVE)
+            }
+
+            setNegativeButton(R.string.tracking_stop_prompt_discard_button) { _, _ ->
+                requestPermissionForAction(REQUEST_CODE_ACTION_STOP_TRACKING_DISCARD)
+            }
+
+            setNeutralButton(R.string.tracking_stop_prompt_cancel_button) { dialog, _ ->
+                dialog.cancel()
+            }
+
+            create().show()
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     companion object {
         private val TAG = TrackingActivity::class.java.simpleName
 
-        private const val REQUEST_CODE_ACTION_START_TRACKING      = 1000
-        private const val REQUEST_CODE_ACTION_PAUSE_TRACKING      = 1001
-        private const val REQUEST_CODE_ACTION_RESUME_TRACKING     = 1002
-        private const val REQUEST_CODE_ACTION_STOP_TRACKING       = 1003
+        private const val REQUEST_CODE_ACTION_START_TRACKING            = 1000
+        private const val REQUEST_CODE_ACTION_PAUSE_TRACKING            = 1001
+        private const val REQUEST_CODE_ACTION_RESUME_TRACKING           = 1002
+        private const val REQUEST_CODE_ACTION_STOP_TRACKING_SAVE        = 1003
+        private const val REQUEST_CODE_ACTION_STOP_TRACKING_DISCARD     = 1004
 
         @JvmStatic
         fun newInstance(context: Context) {

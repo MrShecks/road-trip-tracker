@@ -26,9 +26,9 @@ data class RouteDetail(
     @ColumnInfo(name = "active_duration")   val activeDuration: Long,
 
     @ColumnInfo(name = "distance")          val distance: Double,
+    @ColumnInfo(name = "max_climb")         val maxClimb: Double,
     @ColumnInfo(name = "max_speed")         val maxSpeed: Float,
     @ColumnInfo(name = "avg_speed")         val avgSpeed: Float,
-    @ColumnInfo(name = "max_climb")         val maxClimb: Double,
 
     @ColumnInfo(name = "is_favourite")      val isFavourite: Boolean,
 

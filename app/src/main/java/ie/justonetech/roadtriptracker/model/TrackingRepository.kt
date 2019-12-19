@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import ie.justonetech.roadtriptracker.model.db.TrackingDatabase
+import ie.justonetech.roadtriptracker.model.db.dao.RouteDetailDao
 import ie.justonetech.roadtriptracker.model.db.entities.DbRouteDetail
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
 import ie.justonetech.roadtriptracker.utils.ThreadUtils
@@ -57,6 +58,7 @@ class TrackingRepository(context: Context) {
         }
     }
 
+    @Deprecated("Not needed, TrackingService will use addRoute(DbRouteDetail, List<DbRoutePoint>")
     fun addRoute(route: RouteDetail) {
         ThreadUtils().runOnDiskThread {
             with(database) {
@@ -75,9 +77,9 @@ class TrackingRepository(context: Context) {
                             route.activeDuration,
 
                             route.distance,
+                            route.maxClimb,
                             route.maxSpeed,
                             route.avgSpeed,
-                            route.maxClimb,
 
                             route.isFavourite
                         )
@@ -107,6 +109,21 @@ class TrackingRepository(context: Context) {
                             }
                         )
                     }
+                }
+            }
+        }
+    }
+
+    fun addRoute(route: DbRouteDetail, routePoints: List<DbRoutePoint>) {
+        ThreadUtils().runOnDiskThread {
+            with(database) {
+                runInTransaction {
+                    val routeId = routeDetailDao().insert(route)
+
+                    Log.d(TAG, "New route with id=$routeId inserted successfully")
+
+                    if(routePoints.isNotEmpty())
+                        routePointDao().insertAll(routePoints)
                 }
             }
         }

@@ -21,5 +21,6 @@
 
     <color name="colorDarkGreen">#007700</color>
     <color name="colorDarkRed">#880000</color>
+    <color name="colorDarkOrange">#AA7700</color>
 
 </resources>

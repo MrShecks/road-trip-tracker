@@ -12,9 +12,20 @@ import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import ie.justonetech.roadtriptracker.R
+import ie.justonetech.roadtriptracker.model.RouteDetail
+import ie.justonetech.roadtriptracker.model.TrackingRepository
+import ie.justonetech.roadtriptracker.model.db.entities.DbRouteDetail
+import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
+import ie.justonetech.roadtriptracker.utils.ElapsedTimer
+import ie.justonetech.roadtriptracker.utils.ProfileType
 import ie.justonetech.roadtriptracker.view.activities.TrackingActivity
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,15 +42,18 @@ class TrackingService : Service() {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //
+    // Config
+    // Configuration settings passed to the service when starting a new tracking session
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    class Config {
-        // TODO: Add tracking config
-    }
+    data class Config(
+        val profileId: Int,
+        val gpsResolution: Int
+    )
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Stats
+    // Live stats gathered by the service during a tracking session
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     class Stats {
@@ -59,6 +73,19 @@ class TrackingService : Service() {
     val state: LiveData<State> = MutableLiveData<State>(State.TRACKING_STOPPED)
 
     private val serviceBinder = ServiceBinder()
+    private val trackingState = TrackingState()
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private val locationCallback: LocationCallback = object: LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult?) {
+
+            // TODO: Track location change here!
+            Log.i(TAG, "onLocationResult(): Location Fix=$locationResult")
+
+            super.onLocationResult(locationResult)
+        }
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -83,8 +110,9 @@ class TrackingService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.i(TAG, "onStartCommand() Called: startId=$startId")
+        // FIXME: Not sure if I need this since the service is not being explicitly started via startService()
 
+        Log.i(TAG, "onStartCommand() Called: startId=$startId")
 
         return START_STICKY
     }
@@ -114,7 +142,10 @@ class TrackingService : Service() {
             "Tracking service can only be started from the stopped state (state=${state.value})"
         }
 
+        trackingState.start()
+        startLocationListener()
         showServiceNotification()
+
         setServiceState(State.TRACKING_STARTED)
     }
 
@@ -123,9 +154,34 @@ class TrackingService : Service() {
             "Tracking service can only be stopped from the started or paused state (state=${state.value})"
         }
 
+        stopLocationListener()
         removeServiceNotification()
+        trackingState.stop()
+
+        if(saveRoute) {
+            TrackingRepository(this).addRoute(
+                DbRouteDetail(
+                    null,
+                    ProfileType.PROFILE_TYPE_CYCLING.id,                // FIXME: Get from Config object
+                    trackingState.startTimestamp,
+                    trackingState.endTimestamp,
+                    trackingState.totalDuration.getElapsedTime(),
+                    trackingState.activeDuration.getElapsedTime(),
+                    trackingState.distance,
+                    trackingState.maxClimb,
+                    trackingState.maxSpeed,
+                    trackingState.avgSpeed,
+                    false
+                ),
+
+                emptyList()
+            )
+        }
+
         setServiceState(State.TRACKING_STOPPED)
         stopSelf()
+
+        Log.i(TAG, "Route State: $trackingState")
     }
 
     fun pauseTracking() {
@@ -133,6 +189,12 @@ class TrackingService : Service() {
             "Tracking service can only be paused from the started state (state=${state.value})"
         }
 
+        // TODO: I might want to add an auto stop/start based on movement in the future, if so I will need
+        // TODO: to keep listening for location fixes while tracking is paused so that I can detect when
+        // TODO: to auto re-start tracking.
+
+        trackingState.pause()
+        stopLocationListener()
         setServiceState(State.TRACKING_PAUSED)
     }
 
@@ -141,6 +203,8 @@ class TrackingService : Service() {
             "Tracking service can only be resumed from the paused state (state=${state.value})"
         }
 
+        trackingState.resume()
+        startLocationListener()
         setServiceState(State.TRACKING_STARTED)
     }
 
@@ -168,7 +232,7 @@ class TrackingService : Service() {
             setSmallIcon(R.drawable.ic_service_notification_white_24dp)    // the status icon
             setTicker(text)                                                // the status text
             setContentText(text)                                           // the contents of the entry
-            setContentTitle(getText(R.string.app_name))                    // the label of the entry
+            setContentTitle(getText(R.string.app_name))                           // the label of the entry
             setWhen(System.currentTimeMillis())                            // the time stamp
             setContentIntent(contentIntent)                                // The intent to send when the entry is clicked
             setOngoing(true)
@@ -185,6 +249,25 @@ class TrackingService : Service() {
         stopForeground(true)
     }
 
+    private fun startLocationListener() {
+        val locationService = LocationServices.getFusedLocationProviderClient(this)
+
+        with(LocationRequest.create()) {
+            interval = UPDATE_INTERVAL
+            fastestInterval = FASTEST_UPDATE_INTERVAL
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+
+            if(ContextCompat.checkSelfPermission(this@TrackingService, android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED)
+                locationService.requestLocationUpdates(this, locationCallback, android.os.Looper.myLooper())
+        }
+    }
+
+    private fun stopLocationListener() {
+        val locationService = LocationServices.getFusedLocationProviderClient(this)
+
+        locationService.removeLocationUpdates(locationCallback)
+    }
+
     private fun setServiceState(newState: State) {
         check(newState != state.value) { "Attempt to set service state to current state (newState=$newState, oldState=${state.value})" }
 
@@ -198,5 +281,8 @@ class TrackingService : Service() {
 
         private const val NOTIFICATION_ID                   = 1
         private const val NOTIFICATION_CHANNEL              = "Road Trip Tracker Notifications"
+
+        private const val UPDATE_INTERVAL: Long             = 10000
+        private const val FASTEST_UPDATE_INTERVAL: Long     = 5000
     }
 }
