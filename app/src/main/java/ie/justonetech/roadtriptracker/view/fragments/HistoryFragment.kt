@@ -113,8 +113,8 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-        routeSummaryList.getSelection().forEach {
-            Log.i(TAG, "Selected Route=$it")
+        routeSummaryList.getSelectedIds().forEach {
+            Log.i(TAG, "Selected RouteId=$it")
         }
 
         routeSummaryList.endMultiSelect()

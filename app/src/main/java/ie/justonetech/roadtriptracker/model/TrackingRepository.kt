@@ -46,6 +46,10 @@ class TrackingRepository(context: Context) {
             .toLiveData(pagedListConfig)
     }
 
+    fun getProfileList(): LiveData<List<RouteProfile>> {
+        return database.routeProfileDao().getList()
+    }
+
     fun setFavouriteRoute(routeId: Int?, isFavourite: Boolean) {
         routeId?.let {
             ThreadUtils().runOnDiskThread {
@@ -77,9 +81,9 @@ class TrackingRepository(context: Context) {
                             route.activeDuration,
 
                             route.distance,
-                            route.maxClimb,
                             route.maxSpeed,
                             route.avgSpeed,
+                            route.avgActiveSpeed,
 
                             route.isFavourite
                         )
@@ -102,7 +106,6 @@ class TrackingRepository(context: Context) {
 
                                     it.speed,
                                     it.bearing,
-                                    it.accuracy,
 
                                     it.barometricAltitude
                                 )
@@ -120,10 +123,29 @@ class TrackingRepository(context: Context) {
                 runInTransaction {
                     val routeId = routeDetailDao().insert(route)
 
-                    Log.d(TAG, "New route with id=$routeId inserted successfully")
+                    if(routePoints.isNotEmpty()) {
+                        routePointDao().insertAll(
+                            routePoints.map {
+                                DbRoutePoint(
+                                    it.id,
+                                    routeId.toInt(),
 
-                    if(routePoints.isNotEmpty())
-                        routePointDao().insertAll(routePoints)
+                                    it.timeStamp,
+
+                                    it.latitude,
+                                    it.longitude,
+                                    it.altitude,
+
+                                    it.speed,
+                                    it.bearing,
+
+                                    it.barometricAltitude
+                                )
+                            }
+                        )
+                    }
+
+                    Log.d(TAG, "New route with id=$routeId inserted successfully")
                 }
             }
         }

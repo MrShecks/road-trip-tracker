@@ -21,7 +21,7 @@ class RouteDetailFormatter(context: Context, data: RouteDetail) : ModelFormatter
         get() = formatDistance(data.distance, data.profile.distanceUnit)
 
     val climb: String
-        get() = formatDistance(data.maxClimb, DistanceUnit.METERS)
+        get() = "<TODO>"
 
     val totalDuration: String
         get() = formatDuration(data.totalDuration)

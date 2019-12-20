@@ -15,10 +15,10 @@ open class ModelFormatter<T>(protected val context: Context, val data: T) {
     }
 
     protected fun formatDistance(distance: Double, targetUnit: DistanceUnit, withSuffix: Boolean = true): String {
-        return FormatUtils().formatDistance(context, distance, DistanceUnit.KILOMETERS, targetUnit, withSuffix)
+        return FormatUtils().formatDistance(context, distance, DistanceUnit.METERS, targetUnit, withSuffix)
     }
 
     protected fun formatSpeed(speed: Float, targetUnit: SpeedUnit, withSuffix: Boolean = true): String {
-        return FormatUtils().formatSpeed(context, speed, SpeedUnit.KPH, targetUnit, withSuffix)
+        return FormatUtils().formatSpeed(context, speed, SpeedUnit.MPS, targetUnit, withSuffix)
     }
 }

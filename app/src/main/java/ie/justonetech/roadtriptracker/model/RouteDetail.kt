@@ -26,9 +26,9 @@ data class RouteDetail(
     @ColumnInfo(name = "active_duration")   val activeDuration: Long,
 
     @ColumnInfo(name = "distance")          val distance: Double,
-    @ColumnInfo(name = "max_climb")         val maxClimb: Double,
     @ColumnInfo(name = "max_speed")         val maxSpeed: Float,
     @ColumnInfo(name = "avg_speed")         val avgSpeed: Float,
+    @ColumnInfo(name = "avg_active_speed")  val avgActiveSpeed: Float,
 
     @ColumnInfo(name = "is_favourite")      val isFavourite: Boolean,
 
@@ -51,7 +51,7 @@ data class RouteDetail(
 
     data class Point (
         @ColumnInfo(name = "_id")               val id: Int?,
-        @ColumnInfo(name = "timestamp")         val timeStamp: Date,
+        @ColumnInfo(name = "timestamp")         val timeStamp: Long,
 
         @ColumnInfo(name = "latitude")          val latitude: Double,
         @ColumnInfo(name = "longitude")         val longitude: Double,
@@ -59,9 +59,8 @@ data class RouteDetail(
 
         @ColumnInfo(name = "speed")             val speed: Float,
         @ColumnInfo(name = "bearing")           val bearing: Float,
-        @ColumnInfo(name = "accuracy")          val accuracy: Float,
 
-        @ColumnInfo(name = "barometric_alt")    var barometricAltitude: Double
+        @ColumnInfo(name = "barometric_alt")    var barometricAltitude: Float
 
     ) {
 

@@ -46,7 +46,7 @@ class RouteDetailStatsTabFragment : Fragment() {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun setupRouteDetailObserver(model: RouteViewModel) {
-        model.routeDetail.observe(this, Observer<RouteDetail> { routeDetail ->
+        model.routeDetail.observe(viewLifecycleOwner, Observer<RouteDetail> { routeDetail ->
             viewBinding.routeDetail = RouteDetailFormatter(viewBinding.root.context, routeDetail)
         })
     }

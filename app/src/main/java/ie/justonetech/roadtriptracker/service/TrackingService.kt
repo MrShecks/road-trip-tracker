@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.hardware.SensorManager
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
@@ -20,12 +21,9 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import ie.justonetech.roadtriptracker.R
-import ie.justonetech.roadtriptracker.model.RouteDetail
 import ie.justonetech.roadtriptracker.model.TrackingRepository
 import ie.justonetech.roadtriptracker.model.db.entities.DbRouteDetail
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
-import ie.justonetech.roadtriptracker.utils.ElapsedTimer
-import ie.justonetech.roadtriptracker.utils.ProfileType
 import ie.justonetech.roadtriptracker.view.activities.TrackingActivity
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +70,8 @@ class TrackingService : Service() {
 
     val state: LiveData<State> = MutableLiveData<State>(State.TRACKING_STOPPED)
 
+    private lateinit var sensorManager: SensorManager
+
     private val serviceBinder = ServiceBinder()
     private val trackingState = TrackingState()
 
@@ -80,8 +80,13 @@ class TrackingService : Service() {
     private val locationCallback: LocationCallback = object: LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
 
-            // TODO: Track location change here!
-            Log.i(TAG, "onLocationResult(): Location Fix=$locationResult")
+            locationResult?.lastLocation?.let {
+                val barometricAltitude = 0.0f //SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, 0.0f)
+
+                trackingState.update(it, barometricAltitude)
+
+                Log.i(TAG, "onLocationResult(): Location Fix=$it")
+            }
 
             super.onLocationResult(locationResult)
         }
@@ -107,6 +112,8 @@ class TrackingService : Service() {
                 it.createNotificationChannel(channel)
             }
         }
+
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -142,7 +149,8 @@ class TrackingService : Service() {
             "Tracking service can only be started from the stopped state (state=${state.value})"
         }
 
-        trackingState.start()
+        trackingState.start(config.profileId, config.gpsResolution)
+
         startLocationListener()
         showServiceNotification()
 
@@ -162,19 +170,35 @@ class TrackingService : Service() {
             TrackingRepository(this).addRoute(
                 DbRouteDetail(
                     null,
-                    ProfileType.PROFILE_TYPE_CYCLING.id,                // FIXME: Get from Config object
-                    trackingState.startTimestamp,
-                    trackingState.endTimestamp,
+                    trackingState.profileId,
+                    trackingState.totalDuration.startTime,
+                    trackingState.totalDuration.endTime,
                     trackingState.totalDuration.getElapsedTime(),
                     trackingState.activeDuration.getElapsedTime(),
                     trackingState.distance,
-                    trackingState.maxClimb,
                     trackingState.maxSpeed,
                     trackingState.avgSpeed,
+                    trackingState.avgActiveSpeed,
                     false
                 ),
 
-                emptyList()
+                trackingState.locationPoints.map {
+                    DbRoutePoint(
+                        null,
+                        0,
+
+                        it.time,
+
+                        it.latitude,
+                        it.longitude,
+                        it.altitude,
+
+                        it.speed,
+                        it.bearing,
+
+                        it.getBarometricAltitude()
+                    )
+                }
             )
         }
 

@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.service.TrackingService
+import ie.justonetech.roadtriptracker.utils.Preferences
 import ie.justonetech.roadtriptracker.utils.ProfileType
 import ie.justonetech.roadtriptracker.view.widgets.ImageToast
 import ie.justonetech.roadtriptracker.view.widgets.LockButton
@@ -134,7 +135,7 @@ class TrackingActivity
 
                     REQUEST_CODE_ACTION_START_TRACKING  -> {
                         it.startTracking(TrackingService.Config(
-                            ProfileType.PROFILE_TYPE_CYCLING.id,
+                            Preferences(this).currentProfile.id,
                             0
                         ))
                     }

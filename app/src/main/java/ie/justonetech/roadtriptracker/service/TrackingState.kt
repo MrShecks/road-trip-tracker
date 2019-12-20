@@ -2,7 +2,8 @@ package ie.justonetech.roadtriptracker.service
 
 import android.location.Location
 import ie.justonetech.roadtriptracker.utils.ElapsedTimer
-import kotlin.collections.ArrayList
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TrackingState
@@ -10,52 +11,66 @@ import kotlin.collections.ArrayList
 
 class TrackingState {
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // LocationPoint
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    class LocationPointEx(location: Location, private val barometricAltitude: Float) : Location(location) {
+        fun getBarometricAltitude(): Float = barometricAltitude
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Stats
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    data class Stats(
+        val startTimestamp: Date,
+        val endTimestamp: Date,
+        val totalDuration: Long,
+        val activeDuration: Long,
+
+        val maxSpeed: Float,
+        val avgSpeed: Float
+    )
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    var profileId: Int = 0
+        private set
+
+    val totalDuration = ElapsedTimer()
+    val activeDuration = ElapsedTimer()
+
     var distance: Double = 0.0
-        private set
-
-    var maxSpeed: Float = 0.0f
-        private set
-
-    var totalSpeed: Float = 0.0f
         private set
 
     var currentSpeed: Float = 0.0f
         private set
 
-    var currentPace: Float = 0.0f
+    var maxSpeed: Float = 0.0f
         private set
 
-    var minAltitude: Double = Double.MAX_VALUE
+    var avgSpeed: Float = 0.0f
         private set
 
-    var maxAltitude: Double = Double.MIN_VALUE
+    var avgActiveSpeed: Float = 0.0f
         private set
 
-    var totalDuration = ElapsedTimer()
+    var locationPoints = mutableListOf<LocationPointEx>()
         private set
 
-    var activeDuration = ElapsedTimer()
-        private set
+    private var gpsResolution: Int = 0
 
-    var locationPoints = ArrayList<Location>()
-        private set
-
-    val maxClimb: Double
-        get() = 0.0             // FIXME: Calculate from location points and altitude
-
-    val avgSpeed: Float
-        get() = 0.0f            // FIXME: Calculate from location points
-
-    val startTimestamp get() = totalDuration.startTimestamp
-    val endTimestamp get() = totalDuration.endTimestamp
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun start() {
-        reset()
+    fun start(profileId: Int, gpsResolution: Int) {
 
         totalDuration.start()
         activeDuration.start()
+
+        this.profileId = profileId
+        this.gpsResolution = gpsResolution
     }
 
     fun stop() {
@@ -71,28 +86,36 @@ class TrackingState {
         activeDuration.resume()
     }
 
-    fun update(locations: List<Location>, minChangeInMeters: Int = 0): Boolean {
-        return false
-    }
+    fun update(location: Location, barometricAltitude: Float): Boolean {
+        val distanceMoved = if(locationPoints.isNotEmpty()) locationPoints.last().distanceTo(location) else 0.0f
+        var result = false
 
-    fun reset() {
-        distance = 0.0
-        maxSpeed = 0.0f
-        totalSpeed = 0.0f
-        currentSpeed = 0.0f
-        currentPace = 0.0f
+        if(locationPoints.isEmpty() || distanceMoved > gpsResolution) {
+            LocationPointEx(location, barometricAltitude).also {
+                distance += distanceMoved
+                currentSpeed = it.speed
 
-        minAltitude = Double.MAX_VALUE
-        maxAltitude = Double.MIN_VALUE
+                if(currentSpeed > maxSpeed)
+                    maxSpeed = it.speed
 
-        locationPoints.clear()
-        totalDuration = ElapsedTimer()
-        activeDuration = ElapsedTimer()
+                if(totalDuration.getElapsedTime() > 0)
+                    avgSpeed = (distance / totalDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
+
+                if(activeDuration.getElapsedTime() > 0)
+                    avgActiveSpeed = (distance / activeDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
+
+                locationPoints.add(it)
+            }
+
+            result = true
+        }
+
+        return result
     }
 
     override fun toString(): String {
-        return "Started=$startTimestamp, " +
-                "Stopped=$endTimestamp, " +
+        return "Started=${totalDuration.startTime}, " +
+                "Stopped=${totalDuration.endTime}, " +
                 "totalDuration=${totalDuration.getElapsedTime()}, " +
                 "activeDuration=${activeDuration.getElapsedTime()}"
     }

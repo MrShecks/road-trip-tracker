@@ -161,12 +161,8 @@ class RouteSummaryRecyclerView @JvmOverloads constructor(context: Context, attrs
         }
     }
 
-    fun getSelection(): List<RouteSummary> {
-        return itemSelectionTracker.selection.mapNotNull { selectedId ->
-            selectedId?.let {
-                getItem(it.toInt())
-            }
-        }
+    fun getSelectedIds(): List<Int> {
+        return itemSelectionTracker.selection.map { it.toInt() }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////

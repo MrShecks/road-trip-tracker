@@ -24,7 +24,7 @@ data class RouteSummary(
     @ColumnInfo(name = "distance")          var distance: Double,
     @ColumnInfo(name = "max_speed")         var maxSpeed: Float,
     @ColumnInfo(name = "avg_speed")         var avgSpeed: Float,
-    @ColumnInfo(name = "max_climb")         var maxClimb: Double,
+    @ColumnInfo(name = "avg_active_speed")  var avgActiveSpeed: Float,
 
     @ColumnInfo(name = "is_favourite")      var isFavourite: Boolean,
 

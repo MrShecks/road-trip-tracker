@@ -22,7 +22,7 @@ data class DbRoutePoint(
     @ColumnInfo(name = "_id")               val id: Int?,
     @ColumnInfo(name = "route_id")          val routeId: Int,
 
-    @ColumnInfo(name = "timestamp")         var timeStamp: Date,
+    @ColumnInfo(name = "timestamp")         var timeStamp: Long,
 
     @ColumnInfo(name = "latitude")          var latitude: Double,
     @ColumnInfo(name = "longitude")         var longitude: Double,
@@ -30,7 +30,6 @@ data class DbRoutePoint(
 
     @ColumnInfo(name = "speed")             var speed: Float,
     @ColumnInfo(name = "bearing")           var bearing: Float,
-    @ColumnInfo(name = "accuracy")          var accuracy: Float,
 
-    @ColumnInfo(name = "barometric_alt")    var barometricAltitude: Double
+    @ColumnInfo(name = "barometric_alt")    var barometricAltitude: Float
 )
