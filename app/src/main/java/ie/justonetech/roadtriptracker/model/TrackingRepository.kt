@@ -50,6 +50,10 @@ class TrackingRepository(context: Context) {
         return database.routeProfileDao().getList()
     }
 
+    fun getProfile(id: Int): LiveData<RouteProfile> {
+        return database.routeProfileDao().getProfileById(id)
+    }
+
     fun setFavouriteRoute(routeId: Int?, isFavourite: Boolean) {
         routeId?.let {
             ThreadUtils().runOnDiskThread {

@@ -18,4 +18,7 @@ interface RouteProfileDao : BaseDao<DbRouteProfile> {
     @Transaction
     @Query("SELECT * FROM TRouteProfile ORDER BY _id ASC")
     fun getList(): LiveData<List<RouteProfile>>
+
+    @Query("SELECT * FROM TRouteProfile WHERE _id=:id LIMIT 1")
+    fun getProfileById(id: Int): LiveData<RouteProfile>
 }

@@ -15,8 +15,7 @@
     <color name="secondaryLightColor">#fafafa</color>
     <color name="secondaryDarkColor">#9ea7aa</color>
     <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#000000</color>
-
+    <color name="secondaryTextColor">@color/secondary_text_default_material_light</color>
 
     <!--
         Profile tag colours

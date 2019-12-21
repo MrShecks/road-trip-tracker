@@ -6,6 +6,9 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Binder
 import android.os.Build
@@ -50,15 +53,6 @@ class TrackingService : Service() {
     )
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Stats
-    // Live stats gathered by the service during a tracking session
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    class Stats {
-
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ServiceBinder
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -70,10 +64,10 @@ class TrackingService : Service() {
 
     val state: LiveData<State> = MutableLiveData<State>(State.TRACKING_STOPPED)
 
-    private lateinit var sensorManager: SensorManager
-
     private val serviceBinder = ServiceBinder()
     private val trackingState = TrackingState()
+
+    private var currentAirPressure: Float = 0.0f
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,14 +75,26 @@ class TrackingService : Service() {
         override fun onLocationResult(locationResult: LocationResult?) {
 
             locationResult?.lastLocation?.let {
-                val barometricAltitude = 0.0f //SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, 0.0f)
+                val barometricAltitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, currentAirPressure)
 
                 trackingState.update(it, barometricAltitude)
 
-                Log.i(TAG, "onLocationResult(): Location Fix=$it")
+                Log.i(TAG, "onLocationResult(): Location Fix=$it, Barometric Altitude=$barometricAltitude")
             }
 
             super.onLocationResult(locationResult)
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private val pressureSensorListener = object : SensorEventListener {
+        override fun onSensorChanged(event: SensorEvent?) {
+            currentAirPressure = event?.values?.first() ?: 0.0f
+        }
+
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+            // Not used
         }
     }
 
@@ -112,8 +118,6 @@ class TrackingService : Service() {
                 it.createNotificationChannel(channel)
             }
         }
-
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -151,7 +155,9 @@ class TrackingService : Service() {
 
         trackingState.start(config.profileId, config.gpsResolution)
 
+        startSensorListeners()
         startLocationListener()
+
         showServiceNotification()
 
         setServiceState(State.TRACKING_STARTED)
@@ -163,6 +169,8 @@ class TrackingService : Service() {
         }
 
         stopLocationListener()
+        stopSensorListeners()
+
         removeServiceNotification()
         trackingState.stop()
 
@@ -204,8 +212,6 @@ class TrackingService : Service() {
 
         setServiceState(State.TRACKING_STOPPED)
         stopSelf()
-
-        Log.i(TAG, "Route State: $trackingState")
     }
 
     fun pauseTracking() {
@@ -218,7 +224,10 @@ class TrackingService : Service() {
         // TODO: to auto re-start tracking.
 
         trackingState.pause()
+
         stopLocationListener()
+        stopSensorListeners()
+
         setServiceState(State.TRACKING_PAUSED)
     }
 
@@ -228,7 +237,10 @@ class TrackingService : Service() {
         }
 
         trackingState.resume()
+
         startLocationListener()
+        startSensorListeners()
+
         setServiceState(State.TRACKING_STARTED)
     }
 
@@ -290,6 +302,20 @@ class TrackingService : Service() {
         val locationService = LocationServices.getFusedLocationProviderClient(this)
 
         locationService.removeLocationUpdates(locationCallback)
+    }
+
+    private fun startSensorListeners() {
+        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+        sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)?.let {
+            sensorManager.registerListener(pressureSensorListener, it, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+    }
+
+    private fun stopSensorListeners() {
+        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+        sensorManager.unregisterListener(pressureSensorListener)
     }
 
     private fun setServiceState(newState: State) {

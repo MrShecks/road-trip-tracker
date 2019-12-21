@@ -57,7 +57,6 @@
 
                         android:text="@{routeDetail.profileName}"
                         android:textAllCaps="true"
-                        android:textColor="@color/secondaryTextColor"
 
                         android:textSize="16sp"
                         app:drawableTint="@color/secondaryTextColor"
@@ -187,7 +186,6 @@
                         android:gravity="center_vertical"
                         android:text="@string/route_detail_stat_time_title"
                         android:textAllCaps="true"
-                        android:textColor="@color/secondaryTextColor"
                         android:textSize="16sp"
                         app:drawableTint="@color/secondaryTextColor"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -319,7 +317,6 @@
                         android:gravity="center_vertical"
                         android:text="@string/route_detail_stat_speed_title"
                         android:textAllCaps="true"
-                        android:textColor="@color/secondaryTextColor"
                         android:textSize="16sp"
                         app:drawableTint="@color/secondaryTextColor"
                         app:layout_constraintEnd_toEndOf="parent"

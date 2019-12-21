@@ -8,7 +8,6 @@
 
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
 
-
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
 

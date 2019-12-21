@@ -7,6 +7,7 @@
     <dimen name="route_detail_profile_height">84dp</dimen>
 
     <dimen name="profile_tag_width">8dp</dimen>
+    <dimen name="profile_selection_list_item_height">48dp</dimen>
 
     <dimen name="tracking_lock_button_width">48dp</dimen>
     <dimen name="tracking_lock_button_height">48dp</dimen>
