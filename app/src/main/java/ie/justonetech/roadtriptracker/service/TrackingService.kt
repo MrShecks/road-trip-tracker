@@ -121,10 +121,6 @@ class TrackingService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // FIXME: Not sure if I need this since the service is not being explicitly started via startService()
-
-        Log.i(TAG, "onStartCommand() Called: startId=$startId")
-
         return START_STICKY
     }
 
@@ -193,7 +189,7 @@ class TrackingService : Service() {
                 trackingState.locationPoints.map {
                     DbRoutePoint(
                         null,
-                        0,
+                        0,      // Route ID will be set during Db insert
 
                         it.time,
 

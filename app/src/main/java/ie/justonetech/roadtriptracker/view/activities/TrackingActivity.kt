@@ -72,6 +72,21 @@ class TrackingActivity
                 }
             }
         }
+
+        // TODO: Will still need to get the ProfileConfig for the current profile from the DB so
+        // TODO: we can display the stats with the correct unit metrics.
+
+        Preferences(this).currentProfile.also { profile ->
+            profileName.setText(profile.nameId)
+            profileName.setCompoundDrawablesWithIntrinsicBounds(
+                ContextCompat.getDrawable(this, profile.drawableId),
+                null,
+                null,
+                null
+            )
+
+            profileTag.setBackgroundColor(ContextCompat.getColor(this, profile.colorId))
+        }
     }
 
     override fun onStart() {

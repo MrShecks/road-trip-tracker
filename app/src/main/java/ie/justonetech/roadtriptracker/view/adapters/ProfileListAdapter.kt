@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import ie.justonetech.roadtriptracker.R
-import ie.justonetech.roadtriptracker.model.RouteProfile
 import ie.justonetech.roadtriptracker.utils.ProfileType
 import kotlinx.android.synthetic.main.profile_selection_list_item.view.*
 
@@ -17,25 +17,64 @@ import kotlinx.android.synthetic.main.profile_selection_list_item.view.*
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class ProfileListAdapter(context: Context)
-    : ArrayAdapter<RouteProfile>(context, R.layout.profile_selection_list_item) {
+    : ArrayAdapter<ProfileType>(context, R.layout.profile_selection_list_item) {
+
+    private val layoutInflater = LayoutInflater.from(context)
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // ProfileViewHolder
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    data class ProfileViewHolder(
+        val profileTag: View,
+        val profileName: TextView
+    )
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    init {
+
+        addAll(
+            ProfileType.PROFILE_TYPE_WALKING,
+            ProfileType.PROFILE_TYPE_RUNNING,
+            ProfileType.PROFILE_TYPE_CYCLING,
+            ProfileType.PROFILE_TYPE_DRIVING,
+            ProfileType.PROFILE_TYPE_BOATING,
+            ProfileType.PROFILE_TYPE_MOTORCYCLING
+        )
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val layoutInflater = LayoutInflater.from(parent.context)
+        val itemView: View
+        val viewHolder: ProfileViewHolder
 
         //
-        // FIXME: Do we really need to implement the ViewHolder pattern for 6 list items?
+        // Ah ... manually implementing the ViewHolder pattern ... it's been a while
+        //
+        // The adapter currently only hold 6 items but lint was complaining about
+        // not using the ViewHolder pattern to recycle views for efficiency.
+        //
+        // This is what we did before RecyclerView.Adapter kids ;)
         //
 
-        return layoutInflater.inflate(R.layout.profile_selection_list_item, parent, false).apply {
-            getItem(position)?.let {
-                val profileType = ProfileType.fromId(it.id)
+        if(convertView == null) {
+            itemView = layoutInflater.inflate(R.layout.profile_selection_list_item, parent, false)
+            viewHolder = ProfileViewHolder(itemView.profileTag, itemView.profileName)
+            itemView.tag = viewHolder
 
-                profileName.setText(profileType.nameId)
-                profileName.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(context, profileType.drawableId), null, null, null
+        } else {
+            itemView = convertView
+            viewHolder = convertView.tag as ProfileViewHolder
+        }
+
+        return itemView.also {
+            getItem(position)?.let { profile ->
+                viewHolder.profileName.setText(profile.nameId)
+                viewHolder.profileName.setCompoundDrawablesWithIntrinsicBounds(
+                    ContextCompat.getDrawable(context, profile.drawableId), null, null, null
                 )
 
-                profileTag.setBackgroundColor(it.tagColor)
+                viewHolder.profileTag.setBackgroundColor(profile.getColor(parent.context))
             }
         }
     }

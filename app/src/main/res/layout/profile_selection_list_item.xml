@@ -1,62 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/profile_selection_list_item_height"
+    android:orientation="horizontal"
+    android:paddingLeft="4dp"
+    android:paddingTop="2dp"
+    android:paddingRight="4dp"
+    android:paddingBottom="2dp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/profile_selection_list_item_height"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="2dp"
-        app:cardElevation="3dp">
+    <View
+        android:id="@+id/profileTag"
+        android:layout_width="@dimen/profile_tag_width"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorDarkOrange" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/profileName"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignEnd="@id/profileTag"
+        android:layout_alignRight="@id/profileTag"
 
-            <View
-                android:id="@+id/profileTag"
-                android:layout_width="@dimen/profile_tag_width"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:background="@color/primaryColor" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
 
-            <TextView
-                android:id="@+id/profileName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/profileTag"
+        android:layout_toRightOf="@+id/profileTag"
+        android:background="?attr/colorSurface"
+        android:drawablePadding="4dp"
 
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingEnd="0dp"
 
-                android:layout_alignParentEnd="true"
+        android:paddingRight="0dp"
+        android:textAllCaps="true"
+        android:textSize="18sp"
 
-                android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        app:drawableTint="@color/secondaryTextColor"
 
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_toEndOf="@+id/profileTag"
-                android:layout_toRightOf="@+id/profileTag"
-                android:drawablePadding="4dp"
-                android:gravity="center_vertical"
-                android:text="@string/profile_name_running"
-                android:textAllCaps="true"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:drawableTint="@color/secondaryTextColor"
-                tools:drawableLeft="@drawable/ic_profile_running_white_24dp" />
-
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
-</LinearLayout>
+        tools:drawableLeft="@drawable/ic_profile_running_white_24dp"
+        tools:text="@string/profile_name_running" />
+</RelativeLayout>
