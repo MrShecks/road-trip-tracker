@@ -1,6 +1,7 @@
 package ie.justonetech.roadtriptracker.utils
 
 import android.content.Context
+import androidx.annotation.ColorInt
 import ie.justonetech.roadtriptracker.model.RouteSummary
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,5 +30,5 @@ class RouteSummaryFormatter(context: Context, data: RouteSummary) : ModelFormatt
         get() = ProfileType.fromId(data.profileId).getName(context)
 
     val profileColor: Int
-        get() = data.profile.tagColor
+        get() = ProfileType.fromId(data.profileId).getColor(context)
 }

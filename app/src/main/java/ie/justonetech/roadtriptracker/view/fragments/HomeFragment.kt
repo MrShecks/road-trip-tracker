@@ -3,12 +3,10 @@ package ie.justonetech.roadtriptracker.view.fragments
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.utils.Preferences
 import ie.justonetech.roadtriptracker.utils.ProfileType
@@ -20,15 +18,16 @@ import kotlinx.android.synthetic.main.home_fragment.*
 // HomeFragment
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class HomeFragment : Fragment() {
+class HomeFragment : MapViewHostFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState, routeMap)
 
+        routeMap.onCreate(savedInstanceState)
         profileCardView.setOnClickListener {
             val profileListAdapter = ProfileListAdapter(it.context)
 

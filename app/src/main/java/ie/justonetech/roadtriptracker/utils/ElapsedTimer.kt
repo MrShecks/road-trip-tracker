@@ -41,7 +41,15 @@ class ElapsedTimer {
     fun stop() {
         check(state == State.STARTED || state == State.PAUSED) { "Elapsed timer can only be stopped from the started or paused state (state=$state)" }
 
-        endTimeInMillis = System.currentTimeMillis()
+        //
+        // If the timer is currently running then set the end time to the current system time
+        // otherwise the timer is in the paused state and the end time should be the time
+        // at which the timer was initially paused (set in pause())
+        //
+
+        if(state == State.STARTED)
+            endTimeInMillis = System.currentTimeMillis()
+
         state = State.STOPPED
     }
 

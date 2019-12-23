@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger
 // Singleton utility class providing threading helper functions
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class ThreadUtils internal constructor() {
+class ThreadUtils private constructor() {
 
     private val mainThreadExecutor = MainThreadExecutor()
     private val networkThreadExecutor = Executors.newSingleThreadExecutor()

@@ -27,8 +27,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         setSupportActionBar(toolBar)
 
-        toolBar.setTitle("Hello")
-
         Navigation.findNavController(this, R.id.navHostFragment).also { navController ->
             appBarConfiguration = AppBarConfiguration(setOf(R.id.destination_home, R.id.destination_history, R.id.destination_favourites), drawerLayout)
 

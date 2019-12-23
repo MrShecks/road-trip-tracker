@@ -17,7 +17,7 @@ class Preferences private constructor(context: Context) {
         get() {
             return ProfileType.fromId(
                 prefs.getInt(PREF_KEY_PROFILE_TYPE,
-                    ProfileType.PROFILE_TYPE_CYCLING.id)
+                    ProfileType.PROFILE_TYPE_WALKING.id)
             )
         }
 

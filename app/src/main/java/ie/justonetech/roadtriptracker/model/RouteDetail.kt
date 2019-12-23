@@ -1,8 +1,6 @@
 package ie.justonetech.roadtriptracker.model
 
-import androidx.annotation.ColorInt
 import androidx.room.ColumnInfo
-import androidx.room.Ignore
 import androidx.room.Relation
 import com.google.android.gms.maps.model.LatLng
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint

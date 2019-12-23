@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.profile_selection_list_item.view.*
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class ProfileListAdapter(context: Context)
-    : ArrayAdapter<ProfileType>(context, R.layout.profile_selection_list_item) {
+    : ArrayAdapter<ProfileType>(context,0, ProfileType.values()) {
 
     private val layoutInflater = LayoutInflater.from(context)
 
@@ -31,18 +31,6 @@ class ProfileListAdapter(context: Context)
     )
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    init {
-
-        addAll(
-            ProfileType.PROFILE_TYPE_WALKING,
-            ProfileType.PROFILE_TYPE_RUNNING,
-            ProfileType.PROFILE_TYPE_CYCLING,
-            ProfileType.PROFILE_TYPE_DRIVING,
-            ProfileType.PROFILE_TYPE_BOATING,
-            ProfileType.PROFILE_TYPE_MOTORCYCLING
-        )
-    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val itemView: View
