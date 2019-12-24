@@ -28,16 +28,25 @@ class RouteViewModel(application: Application)
     }
 
     val routeDetail = Transformations.switchMap(currentRouteId) {
-        repository.getRouteDetail(it)
+        if(currentRouteId.value != LATEST_ROUTE_ID)
+            repository.getRouteDetail(it)
+        else
+            repository.getLatestRoute()
     }
 
     fun fetchRouteDetail(routeId: Int) {
         currentRouteId.value = routeId
     }
 
+    fun fetchLatestRouteDetail() {
+        currentRouteId.value = LATEST_ROUTE_ID
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     companion object {
         private val TAG = RouteViewModel::class.java.simpleName
+
+        private val LATEST_ROUTE_ID = -1
     }
 }

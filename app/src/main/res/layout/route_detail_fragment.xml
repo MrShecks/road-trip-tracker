@@ -1,33 +1,476 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+        <variable
+            name="routeDetail"
+            type="ie.justonetech.roadtriptracker.utils.RouteDetailFormatter" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/route_detail_stat_tab_title" />
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="8dp"
+            app:cardElevation="3dp">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/route_detail_map_tab_title" />
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/routeMap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-    </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    <androidx.viewpager.widget.ViewPager
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-</LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardElevation="3dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="@dimen/profile_tag_width"
+                            android:layout_height="0dp"
+                            android:profileColor="@{routeDetail.profileColor}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:background="@color/primaryColor" />
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+
+                            android:layout_marginTop="4dp"
+                            android:drawablePadding="4dp"
+                            android:gravity="center_vertical"
+                            android:profileDrawable="@{routeDetail.data.profileId}"
+
+                            android:text="@{routeDetail.profileName}"
+                            android:textAllCaps="true"
+
+                            android:textSize="16sp"
+                            app:drawableTint="@color/secondaryTextColor"
+                            app:layout_constraintStart_toEndOf="@+id/view"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:drawableLeft="@drawable/ic_profile_cycling_white_24dp"
+                            tools:drawableStart="@drawable/ic_profile_cycling_white_24dp"
+                            tools:text="Cycling" />
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:gravity="center_vertical|end"
+                            android:text="@{routeDetail.startTime}"
+                            android:textAllCaps="true"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView3"
+
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="14 December 2019 18:30" />
+
+                        <TextView
+                            android:id="@+id/totalDistance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@{routeDetail.distance}"
+                            android:textSize="36sp"
+                            app:layout_constraintBottom_toTopOf="@+id/textView7"
+                            app:layout_constraintStart_toEndOf="@+id/view"
+                            app:layout_constraintTop_toBottomOf="@+id/textView3"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            tools:text="100 KM" />
+
+                        <TextView
+                            android:id="@+id/totalClimb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@{routeDetail.climb}"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toTopOf="@+id/textView6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            tools:text="25 MTS" />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/route_detail_stat_climb"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primaryColor"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/totalClimb" />
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/route_detail_stat_distance"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primaryColor"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/totalDistance"
+                            app:layout_constraintStart_toStartOf="@+id/totalDistance"
+                            app:layout_constraintTop_toBottomOf="@+id/totalDistance" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="visible"
+                    app:cardElevation="3dp"
+                    tools:visibility="visible">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <View
+                            android:id="@+id/view2"
+                            android:layout_width="@dimen/profile_tag_width"
+                            android:layout_height="0dp"
+                            android:background="@color/primaryColor"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/durationTitle_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:drawableStart="@drawable/ic_stat_time_24dp"
+                            android:drawableLeft="@drawable/ic_stat_time_24dp"
+                            android:drawablePadding="4dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/route_detail_stat_time_title"
+                            android:textAllCaps="true"
+                            android:textSize="16sp"
+                            app:drawableTint="@color/secondaryTextColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/view2"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/totalDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@{routeDetail.totalDuration}"
+                            android:textSize="36sp"
+                            app:layout_constraintBottom_toTopOf="@+id/totalDuration_label"
+                            app:layout_constraintStart_toEndOf="@+id/view2"
+                            app:layout_constraintTop_toBottomOf="@+id/durationTitle_label"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            tools:text="00:00:00" />
+
+                        <TextView
+                            android:id="@+id/totalDuration_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/route_detail_stat_total_time"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/totalDuration"
+                            app:layout_constraintStart_toStartOf="@+id/totalDuration"
+                            app:layout_constraintTop_toBottomOf="@+id/totalDuration"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <TextView
+                            android:id="@+id/activeDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@{routeDetail.activeDuration}"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toTopOf="@+id/activeDuration_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/durationTitle_label"
+                            tools:text="00:00:00" />
+
+                        <TextView
+                            android:id="@+id/activeDuration_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@string/route_detail_stat_active_time"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toTopOf="@+id/pausedDuration"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/activeDuration" />
+
+                        <TextView
+                            android:id="@+id/pausedDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@{routeDetail.pausedDuration}"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toTopOf="@+id/pausedDuration_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/activeDuration_label"
+                            tools:text="00:00:00" />
+
+                        <TextView
+                            android:id="@+id/pausedDuration_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/route_detail_stat_paused_time"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/pausedDuration" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardElevation="3dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <View
+                            android:id="@+id/view3"
+                            android:layout_width="@dimen/profile_tag_width"
+                            android:layout_height="0dp"
+                            android:background="@color/primaryColor"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/speedTitle_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:drawableStart="@drawable/ic_stat_speed_white_24dp"
+                            android:drawableLeft="@drawable/ic_stat_speed_white_24dp"
+                            android:drawablePadding="4dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/route_detail_stat_speed_title"
+                            android:textAllCaps="true"
+                            android:textSize="16sp"
+                            app:drawableTint="@color/secondaryTextColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/view3"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/maxSpeed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@{routeDetail.maxSpeed}"
+                            android:textSize="36sp"
+                            app:layout_constraintBottom_toTopOf="@+id/maxSpeed_label"
+                            app:layout_constraintStart_toEndOf="@+id/view3"
+                            app:layout_constraintTop_toBottomOf="@+id/speedTitle_label"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            tools:text="25 KPH" />
+
+                        <TextView
+                            android:id="@+id/maxSpeed_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/route_detail_stat_max_speed"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/maxSpeed"
+                            app:layout_constraintStart_toStartOf="@+id/maxSpeed"
+                            app:layout_constraintTop_toBottomOf="@+id/maxSpeed"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <TextView
+                            android:id="@+id/avgSpeed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@{routeDetail.avgSpeed}"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toTopOf="@+id/avgSpeed_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintTop_toBottomOf="@+id/speedTitle_label"
+                            tools:text="15 KPH" />
+
+                        <TextView
+                            android:id="@+id/avgSpeed_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@string/route_detail_stat_avg_speed"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toTopOf="@+id/avgPace"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintTop_toBottomOf="@+id/avgSpeed" />
+
+                        <TextView
+                            android:id="@+id/avgPace"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@{routeDetail.pace}"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toTopOf="@+id/pace_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintTop_toBottomOf="@+id/avgSpeed_label"
+                            tools:text="0 KPH" />
+
+                        <TextView
+                            android:id="@+id/pace_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/route_detail_stat_pace"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintTop_toBottomOf="@+id/avgPace" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>
+
+
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical">-->
+
+
+    <!--<com.google.android.material.tabs.TabLayout-->
+    <!--    android:id="@+id/tabLayout"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content">-->
+
+    <!--    <com.google.android.material.tabs.TabItem-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        tools:text="@string/route_detail_stat_tab_title" />-->
+
+    <!--    <com.google.android.material.tabs.TabItem-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        tools:text="@string/route_detail_map_tab_title" />-->
+
+    <!--</com.google.android.material.tabs.TabLayout>-->
+
+    <!--<androidx.viewpager.widget.ViewPager-->
+
+    <!--    android:id="@+id/viewPager"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent" />-->
+
+    <!--</LinearLayout>-->

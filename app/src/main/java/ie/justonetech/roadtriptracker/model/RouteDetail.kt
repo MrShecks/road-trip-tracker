@@ -5,6 +5,7 @@ import androidx.room.Relation
 import com.google.android.gms.maps.model.LatLng
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
 import ie.justonetech.roadtriptracker.model.db.entities.DbRouteProfile
+import ie.justonetech.roadtriptracker.utils.ProfileType
 import java.util.*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,6 +40,9 @@ data class RouteDetail(
 ) {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    val profileType
+        get() = ProfileType.fromId(profileId)
 
     val pausedDuration
         get() = totalDuration - activeDuration

@@ -22,6 +22,10 @@ class TrackingRepository(context: Context) {
         return database.routeDetailDao().getById(id)
     }
 
+    fun getLatestRoute(): LiveData<RouteDetail> {
+        return database.routeDetailDao().getLatest()
+    }
+
     fun getRouteList(): LiveData<PagedList<RouteSummary>> {
         val pagedListConfig = PagedList.Config.Builder()
             .setEnablePlaceholders(true)

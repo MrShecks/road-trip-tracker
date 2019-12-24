@@ -151,7 +151,7 @@ class TrackingActivity
                     REQUEST_CODE_ACTION_START_TRACKING  -> {
                         it.startTracking(TrackingService.Config(
                             Preferences(this).currentProfile.id,
-                            0
+                            1
                         ))
                     }
 
