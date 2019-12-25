@@ -9,29 +9,22 @@ My devblog, ramblings and rants for this years festivities can be found [here](h
 
 The finished application will use/demonstrate the MVVM architecture and the following components/libraries: -
 
-- Android Room Database
-- Android Architecture Components
-- Android View Models
-- Navigation Library
-- View Binding
-- LiveData
-- Paging Library
-- Lifecycle Components
-- Google Location Services
-- Google Maps
+- [X] Android Room Database
+- [X] Android Architecture Components
+- [X] Android View Models
+- [X] Navigation Library
+- [X] View Binding
+- [X] LiveData
+- [X] Paging Library
+- [X] Lifecycle Components
+- [X] Google Location Services
+- [X] Google Maps
 
 ## Screenshots
+The UI and design work is still on going but this is how it looks so far.
 
-### Current Application
-TODO: Add screenshots of a hopefully more modern looking material style application
-
-#### History and Favourites
+### History and Favourites
 ![Road Trip Tracker](docs/screenshots/road-trip-tracker-001.png)
 
-#### Application Theme (A little more modern?)
+### Application Theme
 ![Road Trip Tracker](docs/screenshots/road-trip-tracker-002.png)
-
-### Original Prototype
-Yep ... I know, it looks horrible ... but that will be fixed (hopefully).
-
-![Old Road Trip Tracker](docs/screenshots/screenshot-000.png)
