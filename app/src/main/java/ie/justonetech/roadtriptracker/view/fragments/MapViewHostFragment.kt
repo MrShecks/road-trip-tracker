@@ -61,6 +61,11 @@ open class MapViewHostFragment : Fragment() {
         super.onDestroy()
     }
 
+    override fun onLowMemory() {
+        super.onLowMemory()
+        childMapViews.forEach { it.onLowMemory() }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         childMapViews.forEach { it.onSaveInstanceState(outState) }
