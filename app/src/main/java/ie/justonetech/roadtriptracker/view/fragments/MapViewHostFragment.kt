@@ -11,7 +11,8 @@ import com.google.android.gms.maps.MapView
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // MapViewHostFragment
-// Utility base class for fragments that host a MapView
+// Utility base class for fragments that host a MapView, automatically handles forwarding Fragment
+// lifecycle calls to all child MapViews contained in the Fragment
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 open class MapViewHostFragment : Fragment() {
@@ -31,8 +32,6 @@ open class MapViewHostFragment : Fragment() {
 
             childMapViews = it
         }
-
-        Log.i(TAG, "Maps Found: $childMapViews")
     }
 
     override fun onStart() {

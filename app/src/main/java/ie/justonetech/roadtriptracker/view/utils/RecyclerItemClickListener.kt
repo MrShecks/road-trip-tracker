@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 // Utility class to translate touch events into item click event for a RecyclerView
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class RecyclerItemClickListener(context: Context, private val recyclerView: RecyclerView) : RecyclerView.OnItemTouchListener {
+class RecyclerItemClickListener(context: Context, private val recyclerView: RecyclerView)
+    : RecyclerView.OnItemTouchListener {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 

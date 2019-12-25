@@ -76,10 +76,6 @@ class HomeFragment : MapViewHostFragment() {
 
     override fun onMapReady(mapView: MapView, map: GoogleMap) {
 
-        //
-        // FIXME: Need to handle case where no routes exist in the database
-        //
-
         ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
             model.routeDetail.observe(viewLifecycleOwner, Observer {
                 if(it != null)
@@ -91,10 +87,6 @@ class HomeFragment : MapViewHostFragment() {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun setupLatestRouteObserver(context: Context, model: RouteViewModel) {
-
-        //
-        // FIXME: Need to handle case where no routes exist in the database
-        //
 
         model.routeDetail.observe(viewLifecycleOwner, Observer {
             if(it != null) {
@@ -108,6 +100,17 @@ class HomeFragment : MapViewHostFragment() {
 
                 latestRouteStartTime?.text = FormatUtils().formatDate(it.startTime, format = FormatUtils.DateFormat.FORMAT_SHORT_SHORT_TIME)
                 latestRouteProfileTag?.setBackgroundColor(ContextCompat.getColor(context, it.profileType.colorId))
+
+            } else {
+                latestRouteProfileName?.text = getString(R.string.home_fragment_no_route_available_message)
+                latestRouteProfileName?.setCompoundDrawablesWithIntrinsicBounds(
+                    ContextCompat.getDrawable(context, R.drawable.ic_info_outline_white_24dp),
+                    null,
+                    null,
+                    null
+                )
+
+                latestRouteStartTime?.visibility = View.GONE
             }
         })
     }

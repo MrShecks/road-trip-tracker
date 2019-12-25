@@ -4,6 +4,8 @@
     <string name="home_fragment_title">Home</string>
     <string name="home_fragment_start_route_button">Start New Route</string>
     <string name="home_fragment_profile_dialog_title">Select Profile</string>
+    <string name="home_fragment_current_location_title">Current Location</string>
+    <string name="home_fragment_no_route_available_message">Latest route not available</string>
 
     <string name="history_fragment_title">History</string>
 
