@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import ie.justonetech.roadtriptracker.R
@@ -27,6 +28,8 @@ import kotlinx.android.synthetic.main.home_fragment.*
 
 class HomeFragment : MapViewHostFragment() {
 
+    private lateinit var viewModel: RouteViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
@@ -34,9 +37,10 @@ class HomeFragment : MapViewHostFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
+        viewModel = ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
             setupLatestRouteObserver(view.context, model)
             model.fetchLatestRouteDetail()
+            //model.fetchRouteDetail(2000)
         }
 
         profileCardView.setOnClickListener {
@@ -88,18 +92,24 @@ class HomeFragment : MapViewHostFragment() {
 
     private fun setupLatestRouteObserver(context: Context, model: RouteViewModel) {
 
-        model.routeDetail.observe(viewLifecycleOwner, Observer {
-            if(it != null) {
-                latestRouteProfileName?.setText(it.profileType.nameId)
+        model.routeDetail.observe(viewLifecycleOwner, Observer { routeDetail ->
+            if(routeDetail != null) {
+                latestRouteProfileName?.setText(routeDetail.profileType.nameId)
                 latestRouteProfileName?.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(context, it.profileType.drawableId),
+                    ContextCompat.getDrawable(context, routeDetail.profileType.drawableId),
                     null,
                     null,
                     null
                 )
 
-                latestRouteStartTime?.text = FormatUtils().formatDate(it.startTime, format = FormatUtils.DateFormat.FORMAT_SHORT_SHORT_TIME)
-                latestRouteProfileTag?.setBackgroundColor(ContextCompat.getColor(context, it.profileType.colorId))
+                latestRouteStartTime?.text = FormatUtils().formatDate(routeDetail.startTime, format = FormatUtils.DateFormat.FORMAT_SHORT_SHORT_TIME)
+                latestRouteProfileTag?.setBackgroundColor(ContextCompat.getColor(context,routeDetail.profileType.colorId))
+
+                actionOpenRouteDetail?.setOnClickListener {
+                    HomeFragmentDirections.actionDestinationHomeToRouteDetail(routeDetail.id!!).also { action ->
+                        Navigation.findNavController(it).navigate(action)
+                    }
+                }
 
             } else {
                 latestRouteProfileName?.text = getString(R.string.home_fragment_no_route_available_message)
@@ -111,6 +121,7 @@ class HomeFragment : MapViewHostFragment() {
                 )
 
                 latestRouteStartTime?.visibility = View.GONE
+                actionOpenRouteDetail?.visibility = View.GONE
             }
         })
     }

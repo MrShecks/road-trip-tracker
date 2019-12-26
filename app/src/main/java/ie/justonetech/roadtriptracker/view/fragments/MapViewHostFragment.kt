@@ -54,11 +54,14 @@ open class MapViewHostFragment : Fragment() {
         childMapViews.forEach { it.onStop() }
     }
 
-    override fun onDestroy() {
-        // FIXME: For MapBox this needed to be done in onDestroyView(), need to check if this is the case with Google Maps
+    override fun onDestroyView() {
+
+        //
+        // Note: For fragments we call MapView.onDestroy() in onDestroyView()
+        //
 
         childMapViews.forEach { it.onDestroy() }
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     override fun onLowMemory() {

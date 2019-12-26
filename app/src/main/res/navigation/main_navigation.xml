@@ -6,7 +6,11 @@
     <fragment
         android:id="@+id/destination_home"
         android:name="ie.justonetech.roadtriptracker.view.fragments.HomeFragment"
-        android:label="@string/home_fragment_title" />
+        android:label="@string/home_fragment_title" >
+        <action
+            android:id="@+id/action_destination_home_to_route_detail"
+            app:destination="@id/destination_route_detail" />
+    </fragment>
     <fragment
         android:id="@+id/destination_history"
         android:name="ie.justonetech.roadtriptracker.view.fragments.HistoryFragment"
@@ -25,7 +29,7 @@
         android:label="@string/favourites_fragment_title" >
         <action
             android:id="@+id/action_destination_favourites_to_route_detail"
-            app:destination="@id/destination_route_detail" />
+            app:destination="@+id/destination_route_detail" />
     </fragment>
     <fragment
         android:id="@+id/destination_route_detail"

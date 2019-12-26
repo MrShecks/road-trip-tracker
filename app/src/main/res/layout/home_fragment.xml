@@ -59,10 +59,23 @@
                 android:gravity="end"
                 android:textAllCaps="true"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/actionOpenRouteDetail"
                 app:layout_constraintStart_toEndOf="@+id/latestRouteProfileName"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="24 Dec 2019 14:00" />
+
+            <ImageView
+                android:id="@+id/actionOpenRouteDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:contentDescription="@string/home_fragment_open_route_detail_action_description"
+                android:src="@drawable/ic_open_in_new_white_24dp"
+                android:tint="@color/secondaryTextColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/latestRouteMap"

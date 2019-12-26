@@ -19,6 +19,9 @@ class RouteViewModel(application: Application)
     private val repository = TrackingRepository(application)
     private val currentRouteId = MutableLiveData<Int>()
 
+    val routeId
+        get() = currentRouteId.value
+
     val routeList: LiveData<PagedList<RouteSummary>> by lazy {
         repository.getRouteList()
     }
@@ -47,6 +50,6 @@ class RouteViewModel(application: Application)
     companion object {
         private val TAG = RouteViewModel::class.java.simpleName
 
-        private val LATEST_ROUTE_ID = -1
+        private const val LATEST_ROUTE_ID = -1
     }
 }

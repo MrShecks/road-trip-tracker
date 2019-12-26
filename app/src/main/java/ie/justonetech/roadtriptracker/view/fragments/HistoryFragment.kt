@@ -65,7 +65,7 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
                 }
             })
 
-            model.routeList.observe(this, Observer {
+            model.routeList.observe(viewLifecycleOwner, Observer {
                 routeSummaryList.submitList(it)
             })
         }

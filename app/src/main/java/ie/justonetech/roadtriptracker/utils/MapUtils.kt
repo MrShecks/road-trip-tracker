@@ -80,8 +80,7 @@ object MapUtils {
         get() = LatLng(northeast.latitude, southwest.longitude)
 
     private val LatLngBounds.northwest: LatLng
-        get() = LatLng(southwest.longitude, northeast.longitude)
-
+        get() = LatLng(southwest.latitude, northeast.longitude)
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
