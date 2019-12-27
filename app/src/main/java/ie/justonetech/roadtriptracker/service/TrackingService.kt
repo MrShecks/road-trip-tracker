@@ -49,7 +49,7 @@ class TrackingService : Service() {
 
     data class Config(
         val profileId: Int,
-        val gpsResolution: Int
+        val sampleInterval: Float
     )
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,7 +149,7 @@ class TrackingService : Service() {
             "Tracking service can only be started from the stopped state (state=${state.value})"
         }
 
-        trackingState.start(config.profileId, config.gpsResolution)
+        trackingState.start(config.profileId, config.sampleInterval)
 
         startSensorListeners()
         startLocationListener()
@@ -183,7 +183,11 @@ class TrackingService : Service() {
                     trackingState.maxSpeed,
                     trackingState.avgSpeed,
                     trackingState.avgActiveSpeed,
-                    false
+                    false,
+
+                    // FIXME: OCD - Move to before isFavourite after next DB drop
+                    trackingState.maxElevationGain,
+                    trackingState.totalElevationGain
                 ),
 
                 trackingState.locationPoints.map {

@@ -15,24 +15,27 @@ import java.util.*
 
 data class RouteDetail(
 
-    @ColumnInfo(name = "_id")               val id: Int?,
-    @ColumnInfo(name = "profile_id")        val profileId: Int,
+    @ColumnInfo(name = "_id")                   val id: Int?,
+    @ColumnInfo(name = "profile_id")            val profileId: Int,
 
-    @ColumnInfo(name = "start_time")        val startTime: Date,
-    @ColumnInfo(name = "end_time")          val endTime: Date,
+    @ColumnInfo(name = "start_time")            val startTime: Date,
+    @ColumnInfo(name = "end_time")              val endTime: Date,
 
-    @ColumnInfo(name = "total_duration")    val totalDuration: Long,
-    @ColumnInfo(name = "active_duration")   val activeDuration: Long,
+    @ColumnInfo(name = "total_duration")        val totalDuration: Long,
+    @ColumnInfo(name = "active_duration")       val activeDuration: Long,
 
-    @ColumnInfo(name = "distance")          val distance: Double,
-    @ColumnInfo(name = "max_speed")         val maxSpeed: Float,
-    @ColumnInfo(name = "avg_speed")         val avgSpeed: Float,
-    @ColumnInfo(name = "avg_active_speed")  val avgActiveSpeed: Float,
+    @ColumnInfo(name = "distance")              val distance: Double,
+    @ColumnInfo(name = "max_speed")             val maxSpeed: Float,
+    @ColumnInfo(name = "avg_speed")             val avgSpeed: Float,
+    @ColumnInfo(name = "avg_active_speed")      val avgActiveSpeed: Float,
 
-    @ColumnInfo(name = "is_favourite")      val isFavourite: Boolean,
+    @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Float,
+    @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Float,
+
+    @ColumnInfo(name = "is_favourite")          val isFavourite: Boolean,
 
     @Relation(parentColumn = "profile_id", entityColumn = "_id", entity = DbRouteProfile::class)
-    val profile: RouteProfile,
+    val profile: ProfileConfig,
 
     @Relation(parentColumn = "_id", entityColumn = "route_id", entity = DbRoutePoint::class)
     val points: List<Point>

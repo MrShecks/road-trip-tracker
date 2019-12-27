@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import ie.justonetech.roadtriptracker.model.db.TrackingDatabase
-import ie.justonetech.roadtriptracker.model.db.dao.RouteDetailDao
 import ie.justonetech.roadtriptracker.model.db.entities.DbRouteDetail
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
 import ie.justonetech.roadtriptracker.utils.ThreadUtils
@@ -50,11 +49,11 @@ class TrackingRepository(context: Context) {
             .toLiveData(pagedListConfig)
     }
 
-    fun getProfileList(): LiveData<List<RouteProfile>> {
+    fun getProfileList(): LiveData<List<ProfileConfig>> {
         return database.routeProfileDao().getList()
     }
 
-    fun getProfile(id: Int): LiveData<RouteProfile> {
+    fun getProfile(id: Int): LiveData<ProfileConfig> {
         return database.routeProfileDao().getProfileById(id)
     }
 
@@ -93,7 +92,11 @@ class TrackingRepository(context: Context) {
                             route.avgSpeed,
                             route.avgActiveSpeed,
 
-                            route.isFavourite
+                            route.isFavourite,
+
+                            // FIXME: OCD - Move to before isFavourite after next DB drop
+                            route.maxElevationGain,
+                            route.totalElevationGain
                         )
                     )
 

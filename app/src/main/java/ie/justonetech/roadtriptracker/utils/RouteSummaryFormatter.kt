@@ -1,7 +1,6 @@
 package ie.justonetech.roadtriptracker.utils
 
 import android.content.Context
-import androidx.annotation.ColorInt
 import ie.justonetech.roadtriptracker.model.RouteSummary
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,10 +20,10 @@ class RouteSummaryFormatter(context: Context, data: RouteSummary) : ModelFormatt
         get() = formatDuration(data.totalDuration)
 
     val distance: String
-        get() = formatDistance(data.distance, data.profile.distanceUnit)
+        get() = formatDistance(data.distance, data.profileConfig.distanceUnit)
 
     val avgSpeed: String
-        get() = formatSpeed(data.avgSpeed, data.profile.speedUnit)
+        get() = formatSpeed(data.avgSpeed, data.profileConfig.speedUnit)
 
     val profileName: String
         get() = ProfileType.fromId(data.profileId).getName(context)

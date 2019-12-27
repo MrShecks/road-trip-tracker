@@ -21,9 +21,6 @@ class RouteDetailFormatter(context: Context, data: RouteDetail) : ModelFormatter
     val distance: String
         get() = formatDistance(data.distance, data.profile.distanceUnit)
 
-    val climb: String
-        get() = "<TODO>"
-
     val totalDuration: String
         get() = formatDuration(data.totalDuration)
 
@@ -41,9 +38,15 @@ class RouteDetailFormatter(context: Context, data: RouteDetail) : ModelFormatter
 
     // TODO: Pace is total time/total distance and is a fraction read as "x <time unit> per <distance unit>"
     // E.g 10 minutes per mile, 0.01 hrs per kilometer, 2 seconds per meter
-
     val pace: String
         get() = "<TODO>"
+
+    // FIXME: Does it make sense to make the elevation distance metric configurable?
+    val maxElevationGain: String
+        get() = formatDistance(data.maxElevationGain.toDouble(), DistanceUnit.METERS)
+
+    val totalElevationGain: String
+        get() = formatDistance(data.totalElevationGain.toDouble(), DistanceUnit.METERS)
 
     val profileName: String
         get() = ProfileType.fromId(data.profileId).getName(context)

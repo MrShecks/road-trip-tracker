@@ -56,21 +56,31 @@ class TrackingState {
     var avgActiveSpeed: Float = 0.0f
         private set
 
+    var maxElevationGain: Float = 0.0f
+        private set
+
+    var totalElevationGain: Float = 0.0f
+        private set
+
     var locationPoints = mutableListOf<LocationPointEx>()
         private set
 
-    private var gpsResolution: Int = 0
+    private var sampleInterval: Float = 0f
 
+    private var currentElevationGain: Float = 0f
+    private var previousAltitude: Float = 0f
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun start(profileId: Int, gpsResolution: Int) {
+    fun start(profileId: Int, sampleInterval: Float) {
+
+        reset()
 
         totalDuration.start()
         activeDuration.start()
 
         this.profileId = profileId
-        this.gpsResolution = gpsResolution
+        this.sampleInterval = sampleInterval
     }
 
     fun stop() {
@@ -90,7 +100,7 @@ class TrackingState {
         val distanceMoved = if(locationPoints.isNotEmpty()) locationPoints.last().distanceTo(location) else 0.0f
         var result = false
 
-        if(locationPoints.isEmpty() || distanceMoved > gpsResolution) {
+        if(locationPoints.isEmpty() || distanceMoved > sampleInterval) {
             LocationPointEx(location, barometricAltitude).also {
                 distance += distanceMoved
                 currentSpeed = it.speed
@@ -104,6 +114,19 @@ class TrackingState {
                 if(activeDuration.getElapsedTime() > 0)
                     avgActiveSpeed = (distance / activeDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
 
+                if(previousAltitude > 0) {
+                    if(barometricAltitude > previousAltitude) {
+                        currentElevationGain += barometricAltitude - previousAltitude
+                        totalElevationGain += barometricAltitude - previousAltitude
+                    }
+                    else
+                        currentElevationGain = 0f
+
+                    if(currentElevationGain > maxElevationGain)
+                        maxElevationGain = currentElevationGain
+                }
+
+                previousAltitude = barometricAltitude
                 locationPoints.add(it)
             }
 
@@ -111,6 +134,23 @@ class TrackingState {
         }
 
         return result
+    }
+
+    private fun reset() {
+        distance = 0.0
+
+        currentSpeed = 0.0f
+        maxSpeed = 0.0f
+        avgSpeed = 0.0f
+        avgActiveSpeed = 0.0f
+
+        maxElevationGain = 0.0f
+        totalElevationGain = 0.0f
+        currentElevationGain = 0f
+
+        previousAltitude = 0f
+
+        locationPoints.clear()
     }
 
     override fun toString(): String {

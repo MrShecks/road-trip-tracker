@@ -91,6 +91,30 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/latestRouteProfileTag"
                 app:layout_constraintTop_toBottomOf="@+id/latestRouteProfileName" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/map_overlay_button_width"
+                android:layout_height="@dimen/map_overlay_button_height"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:tint="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/latestRouteMap"
+                app:layout_constraintEnd_toEndOf="@+id/latestRouteMap"
+                app:srcCompat="@drawable/ic_open_in_new_white_24dp" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="@dimen/map_overlay_button_width"
+                android:layout_height="@dimen/map_overlay_button_height"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:tint="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/latestRouteMap"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:srcCompat="@drawable/ic_fullscreen_white_24dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

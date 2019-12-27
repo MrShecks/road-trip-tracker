@@ -125,13 +125,13 @@
                             tools:text="100 KM" />
 
                         <TextView
-                            android:id="@+id/totalClimb"
+                            android:id="@+id/maxElevationGain"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginRight="8dp"
-                            android:text="@{routeDetail.climb}"
+                            android:text="@{routeDetail.maxElevationGain}"
                             android:textSize="24sp"
                             app:layout_constraintBottom_toTopOf="@+id/textView6"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -145,13 +145,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:layout_marginRight="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/route_detail_stat_climb"
+                            android:text="@string/route_detail_stat_max_elevation_gain"
                             android:textAllCaps="true"
                             android:textColor="@color/primaryColor"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/totalElevationGain"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/totalClimb" />
+                            app:layout_constraintTop_toBottomOf="@+id/maxElevationGain"
+                            app:layout_constraintVertical_chainStyle="packed" />
 
                         <TextView
                             android:id="@+id/textView7"
@@ -165,6 +165,35 @@
                             app:layout_constraintEnd_toEndOf="@+id/totalDistance"
                             app:layout_constraintStart_toStartOf="@+id/totalDistance"
                             app:layout_constraintTop_toBottomOf="@+id/totalDistance" />
+
+                        <TextView
+                            android:id="@+id/totalElevationGain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@{routeDetail.totalElevationGain}"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toTopOf="@+id/textView5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView6"
+                            app:layout_constraintVertical_chainStyle="packed"
+                            tools:text="0 MTS" />
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/route_detail_stat_total_elevation_gain"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primaryColor"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/totalElevationGain"
+                            app:layout_constraintVertical_chainStyle="packed" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
