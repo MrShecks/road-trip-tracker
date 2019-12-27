@@ -87,12 +87,12 @@ abstract class TrackingDatabase protected constructor()
                 // Add static reference data for default route profile configurations
                 //
 
-                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_WALKING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KPH.id}, 1.0)")
-                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_RUNNING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.FPS.id}, 1.0))")
-                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_CYCLING.id}, ${DistanceUnit.MILES.id}, ${SpeedUnit.MPH.id}, 1.0))")
-                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_DRIVING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KPH.id}, 1.0))")
-                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_BOATING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KNOTS.id}, 1.0))")
-                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_MOTORCYCLING.id}, ${DistanceUnit.MILES.id}, ${SpeedUnit.MPH.id}, 1.0))")
+                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_WALKING.id}, 0, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KPH.id}, 1.0)")
+                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_RUNNING.id}, 0, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.FPS.id}, 1.0)")
+                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_CYCLING.id}, 0, ${DistanceUnit.MILES.id}, ${SpeedUnit.MPH.id}, 1.0)")
+                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_DRIVING.id}, 0, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KPH.id}, 1.0)")
+                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_BOATING.id}, 0, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KNOTS.id}, 1.0)")
+                db.execSQL("INSERT INTO TRouteProfile VALUES(${ProfileType.PROFILE_TYPE_MOTORCYCLING.id}, 0, ${DistanceUnit.MILES.id}, ${SpeedUnit.MPH.id}, 1.0)")
 
                 //
                 // DEBUG: Adding some test routes
