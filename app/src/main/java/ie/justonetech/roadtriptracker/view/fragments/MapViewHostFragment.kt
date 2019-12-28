@@ -54,24 +54,19 @@ open class MapViewHostFragment : Fragment() {
         childMapViews.forEach { it.onStop() }
     }
 
-    override fun onDestroyView() {
-
-        //
-        // Note: For fragments we call MapView.onDestroy() in onDestroyView()
-        //
-
-        childMapViews.forEach { it.onDestroy() }
-        super.onDestroyView()
-    }
-
     override fun onLowMemory() {
         super.onLowMemory()
         childMapViews.forEach { it.onLowMemory() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         childMapViews.forEach { it.onSaveInstanceState(outState) }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        childMapViews.forEach { it.onDestroy() }
+        super.onDestroy()
     }
 
     open fun onMapReady(mapView: MapView, map: GoogleMap) {
@@ -101,7 +96,6 @@ open class MapViewHostFragment : Fragment() {
 
         return maps
     }
-
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
