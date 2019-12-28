@@ -6,23 +6,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<!--    <fragment-->
-<!--        android:id="@+id/routeMap"-->
-<!--        android:name="com.google.android.gms.maps.SupportMapFragment"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <com.google.android.gms.maps.MapView
-        android:id="@+id/routeMap"
+        android:id="@+id/latestRouteMap"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/actionOpenFullScreenMap"
+        android:layout_width="@dimen/map_overlay_button_width"
+        android:layout_height="@dimen/map_overlay_button_height"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/mapOverlayBackgroundColor"
+        android:contentDescription="@string/home_fragment_open_fullscreen_map_action_description"
+        android:src="@drawable/ic_fullscreen_white_24dp"
+        android:tint="@color/secondaryTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
@@ -61,10 +65,11 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:drawableLeft="@drawable/ic_profile_running_white_24dp"
+                android:drawableStart="@drawable/ic_profile_running_white_24dp"
                 android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
                 android:drawablePadding="4dp"
                 android:gravity="center_vertical"
-                android:text="TextView"
                 android:textAllCaps="true"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -82,7 +87,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:drawableTint="@color/primaryTextColor"
         android:text="@string/home_fragment_start_route_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/profileCardView"

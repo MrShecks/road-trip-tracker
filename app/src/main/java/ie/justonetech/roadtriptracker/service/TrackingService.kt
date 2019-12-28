@@ -28,6 +28,7 @@ import ie.justonetech.roadtriptracker.model.TrackingRepository
 import ie.justonetech.roadtriptracker.model.db.entities.DbRouteDetail
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
 import ie.justonetech.roadtriptracker.view.activities.TrackingActivity
+import kotlin.math.absoluteValue
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // TrackingService
@@ -77,9 +78,15 @@ class TrackingService : Service() {
             locationResult?.lastLocation?.let {
                 val barometricAltitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, currentAirPressure)
 
-                trackingState.update(it, barometricAltitude)
+                //
+                // Note: SensorManager.getAltitude() can return a negative value if the current air pressure
+                // is less than PRESSURE_STANDARD_ATMOSPHERE so we take the absolute value. This should be
+                // ok since we are only using the barometric altitude to calculated relative elevation changes.
+                //
 
-                Log.i(TAG, "onLocationResult(): Location Fix=$it, Barometric Altitude=$barometricAltitude")
+                trackingState.update(it, barometricAltitude.absoluteValue)
+
+                Log.i(TAG, "onLocationResult(): Location Fix=$it, Barometric Altitude=$barometricAltitude, currentAirPressure=$currentAirPressure")
             }
 
             super.onLocationResult(locationResult)
@@ -244,7 +251,7 @@ class TrackingService : Service() {
         setServiceState(State.TRACKING_STARTED)
     }
 
-    fun getCurrentState(): TrackingService.State = state.value ?: State.TRACKING_STOPPED
+    fun getCurrentState(): State = state.value ?: State.TRACKING_STOPPED
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

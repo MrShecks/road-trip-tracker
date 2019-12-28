@@ -38,6 +38,11 @@
             android:theme="@style/RoadTripTracker.Theme"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".view.activities.MapActivity"
+            android:label="@string/map_activity_title"
+            android:theme="@style/RoadTripTracker.Theme.NoActionBar" />
+
         <service
             android:name=".service.TrackingService"
             android:description="@string/tracking_service_description" />

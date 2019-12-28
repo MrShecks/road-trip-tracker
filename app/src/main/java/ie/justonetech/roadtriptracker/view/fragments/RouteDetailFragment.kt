@@ -1,7 +1,6 @@
 package ie.justonetech.roadtriptracker.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,8 +43,6 @@ class RouteDetailFragment : MapViewHostFragment() {
     }
 
     override fun onMapReady(mapView: MapView, map: GoogleMap) {
-        // https://www.zoftino.com/android-mapview-tutorial
-
         ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
             model.routeDetail.observe(viewLifecycleOwner, Observer {
                 MapUtils.drawRoute(it.points, map)
@@ -59,33 +56,13 @@ class RouteDetailFragment : MapViewHostFragment() {
         model.routeDetail.observe(viewLifecycleOwner, Observer { routeDetail ->
             viewBinding.routeDetail = RouteDetailFormatter(viewBinding.root.context, routeDetail)
 
-            routeDetail.points.forEach {
-                Log.i(TAG, "Route Point: $it")
-            }
+//            Log.i(TAG, "setupRouteDetailObserver(): Route=$routeDetail")
+//            routeDetail.points.forEach {
+//                Log.i(TAG, "Route Point: $it")
+//            }
+
         })
     }
-
-//    private fun setupRouteDetailTabs(context: Context) {
-//        val adapter = ViewPagerAdapter<Fragment>(childFragmentManager).apply {
-//
-//            addPage(
-//                context,
-//                R.string.route_detail_stat_tab_title,
-//                RouteDetailStatsTabFragment.newInstance()
-//            )
-//
-//            addPage(
-//                context,
-//                R.string.route_detail_map_tab_title,
-//                RouteDetailMapTabFragment.newInstance()
-//            )
-//        }
-//
-//        viewPager.adapter = adapter
-//        viewPager.offscreenPageLimit = adapter.count
-//
-//        tabLayout.setupWithViewPager(viewPager)
-//    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 

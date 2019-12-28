@@ -6,11 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.PagedList
+import ie.justonetech.roadtriptracker.model.RouteDetail
 import ie.justonetech.roadtriptracker.model.RouteSummary
 import ie.justonetech.roadtriptracker.model.TrackingRepository
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // RouteViewModel
+// Route detail and route list model
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 class RouteViewModel(application: Application)
@@ -18,9 +20,6 @@ class RouteViewModel(application: Application)
 
     private val repository = TrackingRepository(application)
     private val currentRouteId = MutableLiveData<Int>()
-
-    val routeId
-        get() = currentRouteId.value
 
     val routeList: LiveData<PagedList<RouteSummary>> by lazy {
         repository.getRouteList()
@@ -31,7 +30,7 @@ class RouteViewModel(application: Application)
     }
 
     val routeDetail = Transformations.switchMap(currentRouteId) {
-        if(currentRouteId.value != LATEST_ROUTE_ID)
+        if(currentRouteId.value != RouteDetail.INVALID_ID)
             repository.getRouteDetail(it)
         else
             repository.getLatestRoute()
@@ -42,14 +41,12 @@ class RouteViewModel(application: Application)
     }
 
     fun fetchLatestRouteDetail() {
-        currentRouteId.value = LATEST_ROUTE_ID
+        currentRouteId.value = RouteDetail.INVALID_ID
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     companion object {
         private val TAG = RouteViewModel::class.java.simpleName
-
-        private const val LATEST_ROUTE_ID = -1
     }
 }

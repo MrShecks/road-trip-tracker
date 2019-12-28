@@ -46,6 +46,11 @@ object MapUtils {
         }
     }
 
+    fun drawLocation(location: LatLng, map: GoogleMap, mapZoom: Float = DEFAULT_MAP_ZOOM) {
+        // TODO: Set marker at location and move camera
+
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun getBoundingRect(routePoints: List<RouteDetail.Point>): LatLngBounds {

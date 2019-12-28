@@ -36,4 +36,10 @@
     <color name="colorDarkRed">#880000</color>
     <color name="colorDarkOrange">#ff7700</color>
 
+    <!--
+        Misc
+    -->
+
+    <color name="mapOverlayBackgroundColor">#bbfafafa</color>
+
 </resources>

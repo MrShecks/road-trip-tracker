@@ -1,6 +1,7 @@
 package ie.justonetech.roadtriptracker.service
 
 import android.location.Location
+import android.util.Log
 import ie.justonetech.roadtriptracker.utils.ElapsedTimer
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -68,7 +69,7 @@ class TrackingState {
     private var sampleInterval: Float = 0f
 
     private var currentElevationGain: Float = 0f
-    private var previousAltitude: Float = 0f
+    private var previousAltitude: Float = Float.NaN
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -114,7 +115,7 @@ class TrackingState {
                 if(activeDuration.getElapsedTime() > 0)
                     avgActiveSpeed = (distance / activeDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
 
-                if(previousAltitude > 0) {
+                if(!previousAltitude.isNaN()) {
                     if(barometricAltitude > previousAltitude) {
                         currentElevationGain += barometricAltitude - previousAltitude
                         totalElevationGain += barometricAltitude - previousAltitude
@@ -128,6 +129,8 @@ class TrackingState {
 
                 previousAltitude = barometricAltitude
                 locationPoints.add(it)
+
+                Log.i(TAG, "BarometricAltitude=$barometricAltitude, previousAltitude=$previousAltitude, maxElevationGain=$maxElevationGain, totalElevationGain=$totalElevationGain, currentElevationGain=$currentElevationGain")
             }
 
             result = true
@@ -148,7 +151,7 @@ class TrackingState {
         totalElevationGain = 0.0f
         currentElevationGain = 0f
 
-        previousAltitude = 0f
+        previousAltitude = Float.NaN
 
         locationPoints.clear()
     }

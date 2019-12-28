@@ -73,4 +73,9 @@ data class RouteDetail(
             get() = LatLng(latitude, longitude)
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    companion object {
+        const val INVALID_ID: Int = -1
+    }
 }

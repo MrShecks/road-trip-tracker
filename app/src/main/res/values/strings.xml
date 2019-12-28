@@ -6,7 +6,9 @@
     <string name="home_fragment_profile_dialog_title">Select Profile</string>
     <string name="home_fragment_current_location_title">Current Location</string>
     <string name="home_fragment_no_route_available_message">Latest route not available</string>
+
     <string name="home_fragment_open_route_detail_action_description">Open route detail</string>
+    <string name="home_fragment_open_fullscreen_map_action_description">Open fullscreen route map</string>
 
     <string name="history_fragment_title">History</string>
 
@@ -35,6 +37,7 @@
     <string name="route_detail_stat_pace">Avg Pace</string>
 
     <string name="route_detail_map_tab_title">Map</string>
+
 
 
     <string name="route_summary_list_time_title">Time</string>
@@ -73,6 +76,8 @@
     <string name="tracking_stop_prompt_cancel_button">Cancel</string>
     <string name="tracking_save_prompt_message">Would you like to save the current route?</string>
     <string name="tracking_stop_and_save_prompt_message">A route tracking session is currently in progress, would you like to save the route before continuing?</string>
+
+    <string name="map_activity_title">Map</string>
 
     <string name="profile_name_walking">Walking</string>
     <string name="profile_name_running">Running</string>
