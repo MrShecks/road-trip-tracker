@@ -39,6 +39,6 @@ data class DbRouteDetail(
     @ColumnInfo(name = "is_favourite")          val isFavourite: Boolean,
 
     // FIXME: OCD - Move these columns before is_favourite next time the DB is dropped
-    @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Float,
-    @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Float
+    @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Double,
+    @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Double
 )

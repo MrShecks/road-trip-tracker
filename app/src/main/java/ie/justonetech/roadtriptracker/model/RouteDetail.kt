@@ -29,8 +29,8 @@ data class RouteDetail(
     @ColumnInfo(name = "avg_speed")             val avgSpeed: Float,
     @ColumnInfo(name = "avg_active_speed")      val avgActiveSpeed: Float,
 
-    @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Float,
-    @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Float,
+    @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Double,
+    @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Double,
 
     @ColumnInfo(name = "is_favourite")          val isFavourite: Boolean,
 
@@ -65,7 +65,7 @@ data class RouteDetail(
         @ColumnInfo(name = "speed")             val speed: Float,
         @ColumnInfo(name = "bearing")           val bearing: Float,
 
-        @ColumnInfo(name = "barometric_alt")    var barometricAltitude: Float
+        @ColumnInfo(name = "barometric_alt")    var barometricAltitude: Double
 
     ) {
 

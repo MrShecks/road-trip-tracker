@@ -1,6 +1,5 @@
 package ie.justonetech.roadtriptracker.service
 
-import android.location.Location
 import android.util.Log
 import ie.justonetech.roadtriptracker.utils.ElapsedTimer
 import java.util.*
@@ -11,14 +10,6 @@ import java.util.concurrent.TimeUnit
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class TrackingState {
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // LocationPoint
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    class LocationPointEx(location: Location, private val barometricAltitude: Float) : Location(location) {
-        fun getBarometricAltitude(): Float = barometricAltitude
-    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     // LiveStats
@@ -57,19 +48,19 @@ class TrackingState {
     var avgActiveSpeed: Float = 0.0f
         private set
 
-    var maxElevationGain: Float = 0.0f
+    var maxElevationGain: Double = 0.0
         private set
 
-    var totalElevationGain: Float = 0.0f
+    var totalElevationGain: Double = 0.0
         private set
 
-    var locationPoints = mutableListOf<LocationPointEx>()
+    var locationPoints = mutableListOf<LocationFix>()
         private set
 
     private var sampleInterval: Float = 0f
 
-    private var currentElevationGain: Float = 0f
-    private var previousAltitude: Float = Float.NaN
+    private var currentElevationGain: Double = 0.0
+    private var previousAltitude: Double = Double.NaN
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -97,41 +88,41 @@ class TrackingState {
         activeDuration.resume()
     }
 
-    fun update(location: Location, barometricAltitude: Float): Boolean {
+    fun update(location: LocationFix): Boolean {
         val distanceMoved = if(locationPoints.isNotEmpty()) locationPoints.last().distanceTo(location) else 0.0f
         var result = false
 
         if(locationPoints.isEmpty() || distanceMoved > sampleInterval) {
-            LocationPointEx(location, barometricAltitude).also {
-                distance += distanceMoved
-                currentSpeed = it.speed
+            distance += distanceMoved
+            currentSpeed = location.speed
 
-                if(currentSpeed > maxSpeed)
-                    maxSpeed = it.speed
+            if(currentSpeed > maxSpeed)
+                maxSpeed = location.speed
 
-                if(totalDuration.getElapsedTime() > 0)
-                    avgSpeed = (distance / totalDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
+            if(totalDuration.getElapsedTime() > 0)
+                avgSpeed = (distance / totalDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
 
-                if(activeDuration.getElapsedTime() > 0)
-                    avgActiveSpeed = (distance / activeDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
+            if(activeDuration.getElapsedTime() > 0)
+                avgActiveSpeed = (distance / activeDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
 
-                if(!previousAltitude.isNaN()) {
-                    if(barometricAltitude > previousAltitude) {
-                        currentElevationGain += barometricAltitude - previousAltitude
-                        totalElevationGain += barometricAltitude - previousAltitude
-                    }
-                    else
-                        currentElevationGain = 0f
+            if(!previousAltitude.isNaN()) {
+                if(location.altitude > previousAltitude) {
+                    val altitudeGain = location.altitude - previousAltitude
 
-                    if(currentElevationGain > maxElevationGain)
-                        maxElevationGain = currentElevationGain
+                    currentElevationGain += altitudeGain
+                    totalElevationGain += altitudeGain
                 }
+                else
+                    currentElevationGain = 0.0
 
-                previousAltitude = barometricAltitude
-                locationPoints.add(it)
-
-                Log.i(TAG, "BarometricAltitude=$barometricAltitude, previousAltitude=$previousAltitude, maxElevationGain=$maxElevationGain, totalElevationGain=$totalElevationGain, currentElevationGain=$currentElevationGain")
+                if(currentElevationGain > maxElevationGain)
+                    maxElevationGain = currentElevationGain
             }
+
+            previousAltitude = location.altitude
+            locationPoints.add(location)
+
+            Log.i(TAG, "BarometricAltitude=${location.altitude}, previousAltitude=$previousAltitude, maxElevationGain=$maxElevationGain, totalElevationGain=$totalElevationGain, currentElevationGain=$currentElevationGain")
 
             result = true
         }
@@ -147,11 +138,11 @@ class TrackingState {
         avgSpeed = 0.0f
         avgActiveSpeed = 0.0f
 
-        maxElevationGain = 0.0f
-        totalElevationGain = 0.0f
-        currentElevationGain = 0f
+        maxElevationGain = 0.0
+        totalElevationGain = 0.0
+        currentElevationGain = 0.0
 
-        previousAltitude = Float.NaN
+        previousAltitude = Double.NaN
 
         locationPoints.clear()
     }

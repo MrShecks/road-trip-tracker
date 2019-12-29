@@ -31,5 +31,5 @@ data class DbRoutePoint(
     @ColumnInfo(name = "speed")             var speed: Float,
     @ColumnInfo(name = "bearing")           var bearing: Float,
 
-    @ColumnInfo(name = "barometric_alt")    var barometricAltitude: Float
+    @ColumnInfo(name = "barometric_alt")    var barometricAltitude: Double
 )

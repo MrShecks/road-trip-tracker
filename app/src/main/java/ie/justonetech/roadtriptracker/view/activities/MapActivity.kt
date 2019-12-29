@@ -79,14 +79,14 @@ class MapActivity
         if(routeId != RouteDetail.INVALID_ID) {
             ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
                 model.routeDetail.observe(this, Observer {
-                    MapUtils.drawRoute(it.points, map)
+                    MapUtils.drawRoute(it.points, map, DEFAULT_MAP_ZOOM)
                 })
 
                 model.fetchRouteDetail(routeId)
             }
 
         } else if(currentLocation != null) {
-            MapUtils.drawLocation(currentLocation!!, map)
+            MapUtils.drawLocation(currentLocation!!, map, DEFAULT_MAP_ZOOM)
         }
     }
 
@@ -94,6 +94,8 @@ class MapActivity
 
     companion object {
         private val TAG = MapActivity::class.java.simpleName
+
+        private const val DEFAULT_MAP_ZOOM: Float   = 13.5f
 
         private const val ARG_ROUTE_ID = "_route_id"
         private const val ARG_CURRENT_LOCATION = "_current_location"

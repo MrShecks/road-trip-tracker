@@ -28,7 +28,6 @@ import ie.justonetech.roadtriptracker.model.TrackingRepository
 import ie.justonetech.roadtriptracker.model.db.entities.DbRouteDetail
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
 import ie.justonetech.roadtriptracker.view.activities.TrackingActivity
-import kotlin.math.absoluteValue
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // TrackingService
@@ -68,7 +67,7 @@ class TrackingService : Service() {
     private val serviceBinder = ServiceBinder()
     private val trackingState = TrackingState()
 
-    private var currentAirPressure: Float = 0.0f
+    private var currentAirPressure: Float = Float.NaN
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,15 +75,9 @@ class TrackingService : Service() {
         override fun onLocationResult(locationResult: LocationResult?) {
 
             locationResult?.lastLocation?.let {
-                val barometricAltitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, currentAirPressure)
+                val barometricAltitude = getBarometricAltitude(currentAirPressure)
 
-                //
-                // Note: SensorManager.getAltitude() can return a negative value if the current air pressure
-                // is less than PRESSURE_STANDARD_ATMOSPHERE so we take the absolute value. This should be
-                // ok since we are only using the barometric altitude to calculated relative elevation changes.
-                //
-
-                trackingState.update(it, barometricAltitude.absoluteValue)
+                trackingState.update(LocationFix(it, barometricAltitude))
 
                 Log.i(TAG, "onLocationResult(): Location Fix=$it, Barometric Altitude=$barometricAltitude, currentAirPressure=$currentAirPressure")
             }
@@ -97,7 +90,7 @@ class TrackingService : Service() {
 
     private val pressureSensorListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent?) {
-            currentAirPressure = event?.values?.first() ?: 0.0f
+            currentAirPressure = event?.values?.first() ?: Float.NaN
         }
 
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -206,7 +199,7 @@ class TrackingService : Service() {
 
                         it.latitude,
                         it.longitude,
-                        it.altitude,
+                        it.getGpsAltitude(),
 
                         it.speed,
                         it.bearing,
@@ -329,6 +322,13 @@ class TrackingService : Service() {
         check(newState != state.value) { "Attempt to set service state to current state (newState=$newState, oldState=${state.value})" }
 
         (state as MutableLiveData).value = newState
+    }
+
+    private fun getBarometricAltitude(pressure: Float) : Double {
+        return if(!pressure.isNaN())
+            SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, pressure).toDouble()
+        else
+            0.0
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////

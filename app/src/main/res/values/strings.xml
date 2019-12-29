@@ -21,10 +21,10 @@
     <string name="route_detail_stat_tab_title">Stats</string>
 
     <string name="route_detail_stat_distance_title">Distance</string>
-    <string name="route_detail_stat_distance">Distance</string>
+    <string name="route_detail_stat_total_distance">Total</string>
     <string name="route_detail_stat_climb">Climb</string>
-    <string name="route_detail_stat_max_elevation_gain">Max Elv. Gain</string>
-    <string name="route_detail_stat_total_elevation_gain">Total Elv. Gain</string>
+    <string name="route_detail_stat_max_elevation_gain">Max Elevation</string>
+    <string name="route_detail_stat_total_elevation_gain">Total Elevation</string>
 
     <string name="route_detail_stat_time_title">Time</string>
     <string name="route_detail_stat_total_time">Total</string>
