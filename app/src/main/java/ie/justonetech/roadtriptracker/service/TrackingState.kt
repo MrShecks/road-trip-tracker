@@ -2,30 +2,14 @@ package ie.justonetech.roadtriptracker.service
 
 import android.util.Log
 import ie.justonetech.roadtriptracker.utils.ElapsedTimer
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TrackingState
+// Helper class use to calculated running stats while tracking is in progress
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class TrackingState {
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // LiveStats
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    data class LiveStats(
-        val startTimestamp: Date,
-        val endTimestamp: Date,
-        val totalDuration: Long,
-        val activeDuration: Long,
-
-        val maxSpeed: Float,
-        val avgSpeed: Float
-    )
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     var profileId: Int = 0
         private set
@@ -54,7 +38,7 @@ class TrackingState {
     var totalElevationGain: Double = 0.0
         private set
 
-    var locationPoints = mutableListOf<LocationFix>()
+    var locationPoints = mutableListOf<GeoLocation>()
         private set
 
     private var sampleInterval: Float = 0f
@@ -88,7 +72,7 @@ class TrackingState {
         activeDuration.resume()
     }
 
-    fun update(location: LocationFix): Boolean {
+    fun update(location: GeoLocation): Boolean {
         val distanceMoved = if(locationPoints.isNotEmpty()) locationPoints.last().distanceTo(location) else 0.0f
         var result = false
 
@@ -128,6 +112,24 @@ class TrackingState {
         }
 
         return result
+    }
+
+    fun getStats(): LiveStats {
+        return LiveStats(
+            totalDuration.startTime,
+            totalDuration.getElapsedTime(),
+            activeDuration.getElapsedTime(),
+
+            distance,
+
+            maxSpeed,
+            avgSpeed,
+            avgActiveSpeed,
+            currentSpeed,
+
+            maxElevationGain,
+            totalElevationGain
+        )
     }
 
     private fun reset() {

@@ -246,9 +246,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/routeMap"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_alignParentBottom="false"
@@ -258,7 +257,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-            </androidx.fragment.app.FragmentContainerView>
+            </com.google.android.gms.maps.MapView>
 
             <Button
                 android:id="@+id/startStopButton"

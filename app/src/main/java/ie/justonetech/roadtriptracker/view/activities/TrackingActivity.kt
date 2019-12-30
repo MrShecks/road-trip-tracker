@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -16,11 +17,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.*
 import ie.justonetech.roadtriptracker.R
+import ie.justonetech.roadtriptracker.service.GeoLocation
+import ie.justonetech.roadtriptracker.service.LiveStats
 import ie.justonetech.roadtriptracker.service.TrackingService
 import ie.justonetech.roadtriptracker.utils.Preferences
-import ie.justonetech.roadtriptracker.utils.ProfileType
 import ie.justonetech.roadtriptracker.view.widgets.ImageToast
 import ie.justonetech.roadtriptracker.view.widgets.LockButton
 import kotlinx.android.synthetic.main.tracking_activity.*
@@ -35,6 +39,10 @@ class TrackingActivity
     : AppCompatActivity(), ServiceConnection {
 
     private var trackingService: TrackingService? = null
+    private var map: GoogleMap? = null
+
+    private var currentLocationMarker: Marker? = null
+    private var currentAccuracyCircle: Circle? = null
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,6 +50,8 @@ class TrackingActivity
         Log.i(TAG, "onCreate() - Called")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tracking_activity)
+
+        mapView?.onCreate(savedInstanceState)
 
         setupLockButtonStateChangedListener()
 
@@ -87,11 +97,15 @@ class TrackingActivity
 
             profileTag.setBackgroundColor(ContextCompat.getColor(this, profile.colorId))
         }
+
+        mapView?.getMapAsync {
+            map = it
+        }
     }
 
     override fun onStart() {
-        Log.i(TAG, "onStart() - Called")
         super.onStart()
+        mapView?.onStart()
 
         val serviceIntent = Intent(this, TrackingService::class.java)
 
@@ -107,14 +121,39 @@ class TrackingActivity
     }
 
     override fun onStop() {
-        Log.i(TAG, "onStop() - Called")
         super.onStop()
+        mapView?.onStop()
 
         // Unbind from the service when the activity is stopped.
         // Note: Because we explicitly started the service in onStart() it will remain
         // running and the activity will just re-bind when onStart() is called.
 
         unbindService(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView?.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView?.onResume()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView?.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        mapView?.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        mapView?.onDestroy()
+        super.onDestroy()
     }
 
     override fun onBackPressed() {
@@ -151,7 +190,8 @@ class TrackingActivity
                     REQUEST_CODE_ACTION_START_TRACKING  -> {
                         it.startTracking(TrackingService.Config(
                             Preferences(this).currentProfile.id,
-                            1.0f
+                            1.0f,
+                            STAT_UPDATE_INTERVAL
                         ))
                     }
 
@@ -196,6 +236,14 @@ class TrackingActivity
 
             it.state.observe(this, Observer { state ->
                 onServiceStateChanged(state)
+            })
+
+            it.liveStats.observe(this, Observer { stats ->
+                onServiceStatsChanged(stats)
+            })
+
+            it.currentLocation.observe(this, Observer { location ->
+                onServiceLocationChanged(location)
             })
 
             trackingService = it
@@ -244,6 +292,46 @@ class TrackingActivity
 
                 pauseResumeButton.visibility = View.VISIBLE
                 lockButton.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun onServiceStatsChanged(stats: LiveStats) {
+        Log.d(TAG, "onServiceStatsChanged(stats=$stats)")
+    }
+
+    private fun onServiceLocationChanged(location: GeoLocation) {
+        Log.i(TAG, "onServiceLocationChanged(newLocation=$location): Location Changed")
+
+        map?.let {
+            if(currentAccuracyCircle == null) {
+                currentAccuracyCircle = it.addCircle(
+                    CircleOptions()
+                        .center(location.latLng)
+                        .fillColor(ContextCompat.getColor(this, R.color.mapAccuracyCircleColor))
+                        .strokeColor(ContextCompat.getColor(this, R.color.mapAccuracyCircleColor))
+                        .strokeWidth(0.0f)
+                        .radius(location.accuracy.toDouble())
+                )
+
+            } else {
+                currentAccuracyCircle?.center = location.latLng
+            }
+
+            if (currentLocationMarker == null) {
+                currentLocationMarker = it.addMarker(
+                    MarkerOptions()
+                        .position(location.latLng)
+                        .anchor(0.5f, 0.5f)
+                        .flat(true)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.current_location_marker))
+                )
+
+                it.animateCamera(CameraUpdateFactory.newLatLngZoom(location.latLng, 17.5f))
+
+            } else {
+                currentLocationMarker?.position = location.latLng
+                it.animateCamera(CameraUpdateFactory.newLatLng(location.latLng))
             }
         }
     }
@@ -368,6 +456,8 @@ class TrackingActivity
         private const val REQUEST_CODE_ACTION_STOP_TRACKING_SAVE        = 1003
         private const val REQUEST_CODE_ACTION_STOP_TRACKING_DISCARD     = 1004
 
+        private const val STAT_UPDATE_INTERVAL                          = 1000
+
         @JvmStatic
         fun newInstance(context: Context) {
             val intent = Intent(context, TrackingActivity::class.java)
@@ -375,6 +465,4 @@ class TrackingActivity
             context.startActivity(intent)
         }
     }
-
-
 }

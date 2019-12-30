@@ -49,7 +49,8 @@ class TrackingService : Service() {
 
     data class Config(
         val profileId: Int,
-        val sampleInterval: Float
+        val sampleInterval: Float,
+        val updateInterval: Int
     )
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,6 +64,8 @@ class TrackingService : Service() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     val state: LiveData<State> = MutableLiveData<State>(State.TRACKING_STOPPED)
+    val liveStats: LiveData<LiveStats> = MutableLiveData<LiveStats>()
+    val currentLocation: LiveData<GeoLocation> = MutableLiveData<GeoLocation>()
 
     private val serviceBinder = ServiceBinder()
     private val trackingState = TrackingState()
@@ -76,10 +79,12 @@ class TrackingService : Service() {
 
             locationResult?.lastLocation?.let {
                 val barometricAltitude = getBarometricAltitude(currentAirPressure)
+                val location = GeoLocation(it, barometricAltitude)
 
-                trackingState.update(LocationFix(it, barometricAltitude))
-
-                Log.i(TAG, "onLocationResult(): Location Fix=$it, Barometric Altitude=$barometricAltitude, currentAirPressure=$currentAirPressure")
+                if(trackingState.update(location)) {
+                    (currentLocation as MutableLiveData).value = location
+                    (liveStats as MutableLiveData).value = trackingState.getStats()
+                }
             }
 
             super.onLocationResult(locationResult)

@@ -1,13 +1,18 @@
 package ie.justonetech.roadtriptracker.service
 
 import android.location.Location
+import com.google.android.gms.maps.model.LatLng
 import kotlin.math.absoluteValue
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-// LocationFix
+// GeoLocation
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class LocationFix(location: Location, private val barometricAltitude: Double) : Location(location) {
+class GeoLocation(location: Location, private val barometricAltitude: Double) : Location(location) {
+
+    val latLng by lazy {
+        LatLng(latitude, longitude)
+    }
 
     fun getGpsAltitude(): Double {
         return super.getAltitude()

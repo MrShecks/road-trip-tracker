@@ -40,6 +40,7 @@
         Misc
     -->
 
-    <color name="mapOverlayBackgroundColor">#bbfafafa</color>
+    <color name="mapOverlayBackgroundColor">#aafafafa</color>
+    <color name="mapAccuracyCircleColor">#33005eb8</color>
 
 </resources>
