@@ -1,6 +1,7 @@
 package ie.justonetech.roadtriptracker.service
 
 import android.util.Log
+import ie.justonetech.roadtriptracker.model.TrackingStats
 import ie.justonetech.roadtriptracker.utils.ElapsedTimer
 import java.util.concurrent.TimeUnit
 
@@ -114,8 +115,8 @@ class TrackingState {
         return result
     }
 
-    fun getStats(): LiveStats {
-        return LiveStats(
+    fun getStats(): TrackingStats {
+        return TrackingStats(
             totalDuration.startTime,
             totalDuration.getElapsedTime(),
             activeDuration.getElapsedTime(),

@@ -5,20 +5,20 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ie.justonetech.roadtriptracker.model.ProfileConfig
-import ie.justonetech.roadtriptracker.model.db.entities.DbRouteProfile
+import ie.justonetech.roadtriptracker.model.db.entities.DbProfileConfig
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// RouteProfileDao
-// Data Access Object for DbRouteProfile
+// ProfileConfigDao
+// Data Access Object for DbProfileConfig
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Dao
-interface RouteProfileDao : BaseDao<DbRouteProfile> {
+interface ProfileConfigDao : BaseDao<DbProfileConfig> {
 
     @Transaction
-    @Query("SELECT * FROM TRouteProfile ORDER BY _id ASC")
+    @Query("SELECT * FROM TProfileConfig ORDER BY _id ASC")
     fun getList(): LiveData<List<ProfileConfig>>
 
-    @Query("SELECT * FROM TRouteProfile WHERE _id=:id LIMIT 1")
+    @Query("SELECT * FROM TProfileConfig WHERE _id=:id LIMIT 1")
     fun getProfileById(id: Int): LiveData<ProfileConfig>
 }

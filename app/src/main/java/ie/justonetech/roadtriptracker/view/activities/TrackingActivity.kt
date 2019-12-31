@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -22,9 +21,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.service.GeoLocation
-import ie.justonetech.roadtriptracker.service.LiveStats
+import ie.justonetech.roadtriptracker.model.TrackingStats
 import ie.justonetech.roadtriptracker.service.TrackingService
 import ie.justonetech.roadtriptracker.utils.Preferences
+import ie.justonetech.roadtriptracker.view.fragments.tracking.BaseDashFragment
 import ie.justonetech.roadtriptracker.view.widgets.ImageToast
 import ie.justonetech.roadtriptracker.view.widgets.LockButton
 import kotlinx.android.synthetic.main.tracking_activity.*
@@ -83,19 +83,11 @@ class TrackingActivity
             }
         }
 
-        // TODO: Will still need to get the ProfileConfig for the current profile from the DB so
-        // TODO: we can display the stats with the correct unit metrics.
+        // TODO: In the future I might want to have different stats displayed depending on the selected
+        // TODO: profile. In this case we should instantiate the appropriate Fragment here.
 
-        Preferences(this).currentProfile.also { profile ->
-            profileName.setText(profile.nameId)
-            profileName.setCompoundDrawablesWithIntrinsicBounds(
-                ContextCompat.getDrawable(this, profile.drawableId),
-                null,
-                null,
-                null
-            )
-
-            profileTag.setBackgroundColor(ContextCompat.getColor(this, profile.colorId))
+        Preferences(this).currentProfile.also { profileType ->
+            (statsFragment as BaseDashFragment<*>).setProfile(profileType)
         }
 
         mapView?.getMapAsync {
@@ -296,7 +288,7 @@ class TrackingActivity
         }
     }
 
-    private fun onServiceStatsChanged(stats: LiveStats) {
+    private fun onServiceStatsChanged(stats: TrackingStats) {
         Log.d(TAG, "onServiceStatsChanged(stats=$stats)")
     }
 

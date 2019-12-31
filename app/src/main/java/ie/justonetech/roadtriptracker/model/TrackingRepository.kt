@@ -50,11 +50,11 @@ class TrackingRepository(context: Context) {
     }
 
     fun getProfileList(): LiveData<List<ProfileConfig>> {
-        return database.routeProfileDao().getList()
+        return database.profileConfigDao().getList()
     }
 
     fun getProfile(id: Int): LiveData<ProfileConfig> {
-        return database.routeProfileDao().getProfileById(id)
+        return database.profileConfigDao().getProfileById(id)
     }
 
     fun setFavouriteRoute(routeId: Int?, isFavourite: Boolean) {
@@ -79,7 +79,7 @@ class TrackingRepository(context: Context) {
                     val routeId = routeDetailDao().insert(
                         DbRouteDetail(
                             null,
-                            route.profile.id,
+                            route.profileConfig.id,
 
                             route.startTime,
                             route.endTime,
@@ -88,15 +88,14 @@ class TrackingRepository(context: Context) {
                             route.activeDuration,
 
                             route.distance,
+                            route.maxElevationGain,
+                            route.totalElevationGain,
+
                             route.maxSpeed,
                             route.avgSpeed,
                             route.avgActiveSpeed,
 
-                            route.isFavourite,
-
-                            // FIXME: OCD - Move to before isFavourite after next DB drop
-                            route.maxElevationGain,
-                            route.totalElevationGain
+                            route.isFavourite
                         )
                     )
 

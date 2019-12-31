@@ -2,7 +2,7 @@ package ie.justonetech.roadtriptracker.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Relation
-import ie.justonetech.roadtriptracker.model.db.entities.DbRouteProfile
+import ie.justonetech.roadtriptracker.model.db.entities.DbProfileConfig
 import java.util.*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,6 +31,6 @@ data class RouteSummary(
 
     @ColumnInfo(name = "is_favourite")          var isFavourite: Boolean,
 
-    @Relation(parentColumn = "profile_id", entityColumn = "_id", entity = DbRouteProfile::class)
+    @Relation(parentColumn = "profile_id", entityColumn = "_id", entity = DbProfileConfig::class)
     val profileConfig: ProfileConfig
 )

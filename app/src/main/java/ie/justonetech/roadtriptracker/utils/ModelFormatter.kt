@@ -10,8 +10,8 @@ import java.util.concurrent.TimeUnit
 
 open class ModelFormatter<T>(protected val context: Context, val data: T) {
 
-    protected fun formatDuration(duration: Long, sourceUnits: TimeUnit = TimeUnit.MILLISECONDS): String {
-        return FormatUtils().formatDuration(duration, sourceUnits)
+    protected fun formatDuration(duration: Long, sourceUnits: TimeUnit = TimeUnit.MILLISECONDS, showZeroHours: Boolean = false): String {
+        return FormatUtils().formatDuration(duration, sourceUnits, showZeroHours)
     }
 
     protected fun formatDistance(distance: Double, targetUnit: DistanceUnit, withSuffix: Boolean = true): String {

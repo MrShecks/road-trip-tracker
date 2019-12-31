@@ -50,13 +50,13 @@ class FormatUtils private constructor() {
         }
     }
 
-    fun formatDuration(duration: Long, sourceUnit: TimeUnit): String {
+    fun formatDuration(duration: Long, sourceUnit: TimeUnit, showZeroHours: Boolean = false): String {
         val hours = sourceUnit.toHours(duration)
         val minutes = sourceUnit.toMinutes(duration) - TimeUnit.HOURS.toMinutes(hours)
         val seconds = sourceUnit.toSeconds(duration) - TimeUnit.HOURS.toSeconds(hours) - TimeUnit.MINUTES.toSeconds(minutes)
 
-        return if(hours > 0)
-            String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, seconds)
+        return if(hours > 0 || showZeroHours)
+            String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
         else
             String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
     }

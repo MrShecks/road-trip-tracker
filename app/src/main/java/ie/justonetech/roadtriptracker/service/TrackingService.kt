@@ -24,6 +24,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import ie.justonetech.roadtriptracker.R
+import ie.justonetech.roadtriptracker.model.TrackingStats
 import ie.justonetech.roadtriptracker.model.TrackingRepository
 import ie.justonetech.roadtriptracker.model.db.entities.DbRouteDetail
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
@@ -64,7 +65,7 @@ class TrackingService : Service() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     val state: LiveData<State> = MutableLiveData<State>(State.TRACKING_STOPPED)
-    val liveStats: LiveData<LiveStats> = MutableLiveData<LiveStats>()
+    val liveStats: LiveData<TrackingStats> = MutableLiveData<TrackingStats>()
     val currentLocation: LiveData<GeoLocation> = MutableLiveData<GeoLocation>()
 
     private val serviceBinder = ServiceBinder()
@@ -185,14 +186,12 @@ class TrackingService : Service() {
                     trackingState.totalDuration.getElapsedTime(),
                     trackingState.activeDuration.getElapsedTime(),
                     trackingState.distance,
+                    trackingState.maxElevationGain,
+                    trackingState.totalElevationGain,
                     trackingState.maxSpeed,
                     trackingState.avgSpeed,
                     trackingState.avgActiveSpeed,
-                    false,
-
-                    // FIXME: OCD - Move to before isFavourite after next DB drop
-                    trackingState.maxElevationGain,
-                    trackingState.totalElevationGain
+                    false
                 ),
 
                 trackingState.locationPoints.map {

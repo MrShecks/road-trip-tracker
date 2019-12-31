@@ -1,9 +1,6 @@
 package ie.justonetech.roadtriptracker.model.db.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import java.util.*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -14,10 +11,11 @@ import java.util.*
 @Entity(
     tableName = "TRouteDetail",
     indices = [
-        androidx.room.Index(value = ["profile_id"], name = "IDX_RouteDetail_Profile_Id")
+        Index(value = ["profile_id"], name = "IDX_RouteDetail_Profile_Id"),
+        Index(value = ["is_favourite"], name = "IDX_RouteDetail_Is_Favourite")
     ],
     foreignKeys = [
-        ForeignKey(entity = DbRouteProfile::class, parentColumns = ["_id"], childColumns = ["profile_id"], onDelete = ForeignKey.NO_ACTION)
+        ForeignKey(entity = DbProfileConfig::class, parentColumns = ["_id"], childColumns = ["profile_id"], onDelete = ForeignKey.NO_ACTION)
     ]
 )
 data class DbRouteDetail(
@@ -32,13 +30,12 @@ data class DbRouteDetail(
     @ColumnInfo(name = "active_duration")       val activeDuration: Long,
 
     @ColumnInfo(name = "distance")              val distance: Double,
+    @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Double,
+    @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Double,
+
     @ColumnInfo(name = "max_speed")             val maxSpeed: Float,
     @ColumnInfo(name = "avg_speed")             val avgSpeed: Float,
     @ColumnInfo(name = "avg_active_speed")      val avgActiveSpeed: Float,
 
-    @ColumnInfo(name = "is_favourite")          val isFavourite: Boolean,
-
-    // FIXME: OCD - Move these columns before is_favourite next time the DB is dropped
-    @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Double,
-    @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Double
+    @ColumnInfo(name = "is_favourite")          val isFavourite: Boolean
 )

@@ -1,7 +1,6 @@
 package ie.justonetech.roadtriptracker.utils
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import ie.justonetech.roadtriptracker.model.RouteDetail
 
 
@@ -19,7 +18,7 @@ class RouteDetailFormatter(context: Context, data: RouteDetail) : ModelFormatter
         get() = FormatUtils().formatDate(data.endTime, format = FormatUtils.DateFormat.FORMAT_SHORT_SHORT_TIME)
 
     val distance: String
-        get() = formatDistance(data.distance, data.profile.distanceUnit)
+        get() = formatDistance(data.distance, data.profileConfig.distanceUnit)
 
     val totalDuration: String
         get() = formatDuration(data.totalDuration)
@@ -31,10 +30,10 @@ class RouteDetailFormatter(context: Context, data: RouteDetail) : ModelFormatter
         get() = formatDuration(data.pausedDuration)
 
     val maxSpeed: String
-        get() = formatSpeed(data.maxSpeed, data.profile.speedUnit)
+        get() = formatSpeed(data.maxSpeed, data.profileConfig.speedUnit)
 
     val avgSpeed: String
-        get() = formatSpeed(data.avgSpeed, data.profile.speedUnit)
+        get() = formatSpeed(data.avgSpeed, data.profileConfig.speedUnit)
 
     // TODO: Pace is total time/total distance and is a fraction read as "x <time unit> per <distance unit>"
     // E.g 10 minutes per mile, 0.01 hrs per kilometer, 2 seconds per meter

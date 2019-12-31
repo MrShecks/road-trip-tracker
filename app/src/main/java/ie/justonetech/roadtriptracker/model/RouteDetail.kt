@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Relation
 import com.google.android.gms.maps.model.LatLng
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
-import ie.justonetech.roadtriptracker.model.db.entities.DbRouteProfile
+import ie.justonetech.roadtriptracker.model.db.entities.DbProfileConfig
 import ie.justonetech.roadtriptracker.utils.ProfileType
 import java.util.*
 
@@ -25,17 +25,17 @@ data class RouteDetail(
     @ColumnInfo(name = "active_duration")       val activeDuration: Long,
 
     @ColumnInfo(name = "distance")              val distance: Double,
+    @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Double,
+    @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Double,
+
     @ColumnInfo(name = "max_speed")             val maxSpeed: Float,
     @ColumnInfo(name = "avg_speed")             val avgSpeed: Float,
     @ColumnInfo(name = "avg_active_speed")      val avgActiveSpeed: Float,
 
-    @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Double,
-    @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Double,
-
     @ColumnInfo(name = "is_favourite")          val isFavourite: Boolean,
 
-    @Relation(parentColumn = "profile_id", entityColumn = "_id", entity = DbRouteProfile::class)
-    val profile: ProfileConfig,
+    @Relation(parentColumn = "profile_id", entityColumn = "_id", entity = DbProfileConfig::class)
+    val profileConfig: ProfileConfig,
 
     @Relation(parentColumn = "_id", entityColumn = "route_id", entity = DbRoutePoint::class)
     val points: List<Point>
