@@ -29,6 +29,8 @@ import ie.justonetech.roadtriptracker.model.TrackingRepository
 import ie.justonetech.roadtriptracker.model.db.entities.DbRouteDetail
 import ie.justonetech.roadtriptracker.model.db.entities.DbRoutePoint
 import ie.justonetech.roadtriptracker.view.activities.TrackingActivity
+import java.util.*
+import kotlin.math.max
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // TrackingService
@@ -51,7 +53,7 @@ class TrackingService : Service() {
     data class Config(
         val profileId: Int,
         val sampleInterval: Float,
-        val updateInterval: Int
+        val updateInterval: Long
     )
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,6 +72,7 @@ class TrackingService : Service() {
 
     private val serviceBinder = ServiceBinder()
     private val trackingState = TrackingState()
+    private val updateTimer = Timer()
 
     private var currentAirPressure: Float = Float.NaN
 
@@ -156,6 +159,12 @@ class TrackingService : Service() {
         }
 
         trackingState.start(config.profileId, config.sampleInterval)
+        updateTimer.scheduleAtFixedRate(object: TimerTask() {
+            override fun run() {
+                (liveStats as MutableLiveData).postValue(trackingState.getStats())
+            }
+
+        }, 0, max(MIN_STAT_UPDATE_INTERVAL, config.updateInterval))
 
         startSensorListeners()
         startLocationListener()
@@ -174,6 +183,7 @@ class TrackingService : Service() {
         stopSensorListeners()
 
         removeServiceNotification()
+        updateTimer.cancel()
         trackingState.stop()
 
         if(saveRoute) {
@@ -343,7 +353,9 @@ class TrackingService : Service() {
         private const val NOTIFICATION_ID                   = 1
         private const val NOTIFICATION_CHANNEL              = "Road Trip Tracker Notifications"
 
-        private const val UPDATE_INTERVAL: Long             = 10000
-        private const val FASTEST_UPDATE_INTERVAL: Long     = 5000
+        private const val UPDATE_INTERVAL: Long             = 10000         // Acceptable location update interval in milliseconds
+        private const val FASTEST_UPDATE_INTERVAL: Long     = 5000          // Fastest location update interval in milliseconds
+
+        private const val MIN_STAT_UPDATE_INTERVAL: Long    = 1000          // Minimum stat update timer interval in milliseconds
     }
 }

@@ -86,22 +86,22 @@ abstract class TrackingDatabase protected constructor()
                 // Add static reference data for default route profile configurations
                 //
 
-                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_WALKING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KPH.id}, 1.0)")
-                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_RUNNING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.FPS.id}, 1.0)")
-                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_CYCLING.id}, ${DistanceUnit.MILES.id}, ${SpeedUnit.MPH.id}, 1.0)")
-                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_DRIVING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KPH.id}, 1.0)")
-                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_BOATING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KNOTS.id}, 1.0)")
-                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_MOTORCYCLING.id}, ${DistanceUnit.MILES.id}, ${SpeedUnit.MPH.id}, 1.0)")
+                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_WALKING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KPH.id}, 1.0, 1000)")
+                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_RUNNING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.FPS.id}, 1.0, 1000)")
+                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_CYCLING.id}, ${DistanceUnit.MILES.id}, ${SpeedUnit.MPH.id}, 1.0, 1000)")
+                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_DRIVING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KPH.id}, 1.0, 1000)")
+                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_BOATING.id}, ${DistanceUnit.KILOMETERS.id}, ${SpeedUnit.KNOTS.id}, 1.0, 1000)")
+                db.execSQL("INSERT INTO TProfileConfig VALUES(${ProfileType.PROFILE_TYPE_MOTORCYCLING.id}, ${DistanceUnit.MILES.id}, ${SpeedUnit.MPH.id}, 1.0, 1000)")
 
                 //
                 // DEBUG: Adding some test routes
                 //
 
-                for(n in 0..1500) {
+                for(n in 0..150) {
                     insertTestRoute(db, false)
                 }
 
-                for(n in 0..500) {
+                for(n in 0..50) {
                     insertTestRoute(db, true)
                 }
             }

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
@@ -27,6 +28,7 @@ import ie.justonetech.roadtriptracker.utils.Preferences
 import ie.justonetech.roadtriptracker.view.fragments.tracking.BaseDashFragment
 import ie.justonetech.roadtriptracker.view.widgets.ImageToast
 import ie.justonetech.roadtriptracker.view.widgets.LockButton
+import ie.justonetech.roadtriptracker.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.tracking_activity.*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,7 +49,6 @@ class TrackingActivity
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i(TAG, "onCreate() - Called")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tracking_activity)
 
@@ -83,12 +84,20 @@ class TrackingActivity
             }
         }
 
+        ViewModelProviders.of(this).get(ProfileViewModel::class.java).also { model ->
+            model.profile.observe(this, Observer { profileConfig ->
+                (statsFragment as BaseDashFragment<*>).setProfile(profileConfig)
+            })
+
+            model.getProfile(Preferences(this@TrackingActivity).currentProfile)
+        }
+
         // TODO: In the future I might want to have different stats displayed depending on the selected
         // TODO: profile. In this case we should instantiate the appropriate Fragment here.
 
-        Preferences(this).currentProfile.also { profileType ->
-            (statsFragment as BaseDashFragment<*>).setProfile(profileType)
-        }
+//        Preferences(this).currentProfile.also { profileType ->
+//            (statsFragment as BaseDashFragment<*>).setProfile(profileType)
+//        }
 
         mapView?.getMapAsync {
             map = it
@@ -143,6 +152,16 @@ class TrackingActivity
         super.onSaveInstanceState(outState)
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        //
+        // Restore the screen lock state based on the lock button
+        //
+
+        setScreenLockState(lockButton.isLocked)
+    }
+
     override fun onDestroy() {
         mapView?.onDestroy()
         super.onDestroy()
@@ -150,7 +169,7 @@ class TrackingActivity
 
     override fun onBackPressed() {
 
-        if(lockButton.locked) {
+        if(lockButton.isLocked) {
             // The screen is currently locked
             showLockMessage(this, R.string.tracking_screen_locked_message, true)
 
@@ -290,6 +309,8 @@ class TrackingActivity
 
     private fun onServiceStatsChanged(stats: TrackingStats) {
         Log.d(TAG, "onServiceStatsChanged(stats=$stats)")
+
+        (statsFragment as BaseDashFragment<*>).updateStats(stats)
     }
 
     private fun onServiceLocationChanged(location: GeoLocation) {
@@ -339,13 +360,8 @@ class TrackingActivity
             }
 
             override fun onEndLock(button: LockButton) {
-                val isLocked = button.locked
-
-                startStopButton.isEnabled = !isLocked
-                pauseResumeButton.isEnabled = !isLocked
                 lockProgress.visibility = View.INVISIBLE
-
-                showLockMessage(this@TrackingActivity, isLocked)
+                showLockMessage(this@TrackingActivity, button.isLocked)
             }
 
             override fun onCancelLock(button: LockButton) {
@@ -354,6 +370,10 @@ class TrackingActivity
 
             override fun onLockProgress(button: LockButton, progress: Int) {
                 lockProgress.progress = progress
+            }
+
+            override fun onLockStateChanged(buttons: LockButton, isLocked: Boolean) {
+                setScreenLockState(isLocked)
             }
         })
     }
@@ -375,6 +395,13 @@ class TrackingActivity
             setGravity(android.view.Gravity.CENTER, 0, 0)
             show()
         }
+    }
+
+    private fun setScreenLockState(isLocked: Boolean) {
+        Log.i(TAG, "onRestoreInstanceState(): LockButton.isLocked=$isLocked")
+
+        startStopButton.isEnabled = !isLocked
+        pauseResumeButton.isEnabled = !isLocked
     }
 
     private fun requestPermissionForAction(requestCode: Int) {
@@ -448,7 +475,7 @@ class TrackingActivity
         private const val REQUEST_CODE_ACTION_STOP_TRACKING_SAVE        = 1003
         private const val REQUEST_CODE_ACTION_STOP_TRACKING_DISCARD     = 1004
 
-        private const val STAT_UPDATE_INTERVAL                          = 1000
+        private const val STAT_UPDATE_INTERVAL: Long                    = 1000
 
         @JvmStatic
         fun newInstance(context: Context) {

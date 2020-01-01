@@ -22,6 +22,7 @@ import ie.justonetech.roadtriptracker.viewmodel.ProfileViewModel
 open class BaseDashFragment<VB : ViewDataBinding>(@LayoutRes private var layoutId: Int) : Fragment() {
 
     protected lateinit var viewBinding: VB
+    protected lateinit var profileConfig: ProfileConfig
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return DataBindingUtil.inflate<VB>(inflater, layoutId, container, false).also {
@@ -35,10 +36,8 @@ open class BaseDashFragment<VB : ViewDataBinding>(@LayoutRes private var layoutI
         }.root
     }
 
-    fun setProfile(profileType: ProfileType) {
-        ViewModelProviders.of(this).get(ProfileViewModel::class.java).also {
-            it.getProfile(profileType)
-        }
+    fun setProfile(profileConfig: ProfileConfig) {
+        onProfileConfigChanged(profileConfig)
     }
 
     open fun updateStats(trackingStats: TrackingStats) {
