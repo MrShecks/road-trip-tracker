@@ -34,7 +34,7 @@ class TrackingDashFragment : BaseDashFragment<TrackingDashFragmentBinding>(R.lay
         )
 
         viewBinding.profileTag.setBackgroundColor(ContextCompat.getColor(viewBinding.root.context, profileType.colorId))
-        updateStats(TrackingStats())
+        updateStats(TrackingStats.EMPTY)
     }
 
     override fun updateStats(trackingStats: TrackingStats) {

@@ -22,7 +22,9 @@ data class TrackingStats(
     val totalElevationGain: Double
 ) {
 
-    constructor() : this(
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private constructor() : this(
         null,
         0,
         0,
@@ -34,4 +36,10 @@ data class TrackingStats(
         0.0,
         0.0
     )
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    companion object {
+        val EMPTY = TrackingStats()
+    }
 }

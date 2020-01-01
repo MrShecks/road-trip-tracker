@@ -48,12 +48,11 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
                 }
 
                 override fun onEndMultiSelect() {
+                    Log.i(TAG, "onEndMultiSelect() Called")
                     check(actionMode != null) { "|actionMode| should not be null when onEndMultiSelect() is called"}
 
                     actionMode?.finish()
                     actionMode = null
-
-                    Log.i(TAG, "onEndMultiSelect()")
                 }
 
                 override fun onItemSelectionChanged(selectedItemCount: Int) {
@@ -133,7 +132,6 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
-        routeSummaryList.endMultiSelect()
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -93,20 +93,41 @@ class RouteSummaryRecyclerView @JvmOverloads constructor(context: Context, attrs
             override fun onSelectionChanged() {
 
                 //
-                // If this is the first selection change event then notify the listener
-                // to let them know that multi selection mode has begun
+                // Note: I am not sure if it's a bug in the SelectionTracker or if it's intentional
+                // but when scrolling through the items in the RecyclerView we can get a call
+                // onSelectionChanged() when the selection count is 0 so we need to check if we
+                // have a valid selection with hasSelection() before starting multi-select mode.
                 //
 
-                if(!isMultiSelectActive) {
+                if(itemSelectionTracker.hasSelection() && !isMultiSelectActive) {
+
+                    //
+                    // If this is the first selection change event then notify the listener
+                    // to let them know that multi selection mode has begun
+                    //
+
                     itemSelectionChangedListener?.onBeginMultiSelect()
                     isMultiSelectActive = true
+
+
+                } else if(!itemSelectionTracker.hasSelection() && isMultiSelectActive) {
+
+                    //
+                    // The user has de-selected the last item so we notify the listener
+                    // that multi-selection mode has ended.
+                    //
+
+                    itemSelectionChangedListener?.onEndMultiSelect()
+                    isMultiSelectActive = false
+
+                } else {
+
+                    //
+                    // Notify the listener with the updated selection count
+                    //
+
+                    itemSelectionChangedListener?.onItemSelectionChanged(itemSelectionTracker.selection.size())
                 }
-
-                //
-                // Notify the listener with the updated selection count
-                //
-
-                itemSelectionChangedListener?.onItemSelectionChanged(itemSelectionTracker.selection.size())
             }
 
             override fun onSelectionRestored() {
@@ -120,7 +141,7 @@ class RouteSummaryRecyclerView @JvmOverloads constructor(context: Context, attrs
                 // Note: We also call onItemSelectionChanged() with the selected item count
                 //
 
-                if(!itemSelectionTracker.selection.isEmpty) {
+                if(itemSelectionTracker.hasSelection()) {
                     itemSelectionChangedListener?.let {
                         it.onBeginMultiSelect()
                         it.onItemSelectionChanged(itemSelectionTracker.selection.size())
@@ -154,10 +175,16 @@ class RouteSummaryRecyclerView @JvmOverloads constructor(context: Context, attrs
     }
 
     fun endMultiSelect() {
+
+        //
+        // Note: To end multi-select we just need to clear the current selection
+        // this will cause the SelectionOvservers onSelectionChanged() method to
+        // be called which will take care of ending multi-select and notifying
+        // the listener
+        //
+
         if(isMultiSelectActive) {
             itemSelectionTracker.clearSelection()
-            itemSelectionChangedListener?.onEndMultiSelect()
-            isMultiSelectActive = false
         }
     }
 
