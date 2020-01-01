@@ -27,6 +27,15 @@ class Preferences private constructor(context: Context) {
             }
         }
 
+    var keepScreenOn: Boolean
+        get() = prefs.getBoolean(PREF_KEY_KEEP_SCREEN_ON, true)
+
+        set(value) {
+            prefs.edit(true) {
+                putBoolean(PREF_KEY_KEEP_SCREEN_ON, value)
+            }
+        }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
@@ -34,7 +43,8 @@ class Preferences private constructor(context: Context) {
     companion object {
         private val TAG = Preferences::class.java.simpleName
 
-        private const val PREF_KEY_PROFILE_TYPE = "_pref_profile_type"
+        private const val PREF_KEY_PROFILE_TYPE     = "_pref_profile_type"
+        private const val PREF_KEY_KEEP_SCREEN_ON   = "_pref_keep_screen_on"
 
         @Volatile
         private var instance: Preferences? = null

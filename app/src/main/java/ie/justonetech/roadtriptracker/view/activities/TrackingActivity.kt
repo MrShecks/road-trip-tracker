@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import ie.justonetech.roadtriptracker.R
+import ie.justonetech.roadtriptracker.model.ProfileConfig
 import ie.justonetech.roadtriptracker.service.GeoLocation
 import ie.justonetech.roadtriptracker.model.TrackingStats
 import ie.justonetech.roadtriptracker.service.TrackingService
@@ -41,6 +43,8 @@ class TrackingActivity
     : AppCompatActivity(), ServiceConnection {
 
     private var trackingService: TrackingService? = null
+    private var currentProfileConfig: ProfileConfig? = null
+
     private var map: GoogleMap? = null
 
     private var currentLocationMarker: Marker? = null
@@ -52,7 +56,12 @@ class TrackingActivity
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tracking_activity)
 
-        mapView?.onCreate(savedInstanceState)
+        mapView?.let {
+            it.onCreate(savedInstanceState)
+            it.getMapAsync { map ->
+                this.map = map
+            }
+        }
 
         setupLockButtonStateChangedListener()
 
@@ -87,20 +96,10 @@ class TrackingActivity
         ViewModelProviders.of(this).get(ProfileViewModel::class.java).also { model ->
             model.profile.observe(this, Observer { profileConfig ->
                 (statsFragment as BaseDashFragment<*>).setProfile(profileConfig)
+                currentProfileConfig = profileConfig
             })
 
             model.getProfile(Preferences(this@TrackingActivity).currentProfile)
-        }
-
-        // TODO: In the future I might want to have different stats displayed depending on the selected
-        // TODO: profile. In this case we should instantiate the appropriate Fragment here.
-
-//        Preferences(this).currentProfile.also { profileType ->
-//            (statsFragment as BaseDashFragment<*>).setProfile(profileType)
-//        }
-
-        mapView?.getMapAsync {
-            map = it
         }
     }
 
@@ -193,17 +192,16 @@ class TrackingActivity
         if(grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED) {
             trackingService?.let {
                 when (requestCode) {
-
-                    //
-                    // FIXME: Pass valid config object
-                    //
-
                     REQUEST_CODE_ACTION_START_TRACKING  -> {
-                        it.startTracking(TrackingService.Config(
-                            Preferences(this).currentProfile.id,
-                            1.0f,
-                            STAT_UPDATE_INTERVAL
-                        ))
+                        check(currentProfileConfig != null) { "|currentProfileConfig| has not be retrieved from database" }
+
+                        currentProfileConfig?.let { profileConfig ->
+                            it.startTracking(TrackingService.Config(
+                                profileConfig.id,
+                                profileConfig.sampleInterval,
+                                profileConfig.statUpdateInterval
+                            ))
+                        }
                     }
 
                     REQUEST_CODE_ACTION_PAUSE_TRACKING  -> it.pauseTracking()
@@ -271,7 +269,6 @@ class TrackingActivity
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun onServiceStateChanged(newState: TrackingService.State) {
-
         Log.i(TAG, "onServiceStateChanged(newState=$newState): State Changed")
 
         when(newState) {
@@ -284,6 +281,9 @@ class TrackingActivity
 
                 pauseResumeButton.visibility = View.VISIBLE
                 lockButton.visibility = View.VISIBLE
+
+                if(Preferences(this).keepScreenOn)
+                    window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             }
 
             TrackingService.State.TRACKING_STOPPED -> {
@@ -292,6 +292,9 @@ class TrackingActivity
 
                 pauseResumeButton.visibility = View.GONE
                 lockButton.visibility = View.GONE
+
+                if(Preferences(this).keepScreenOn)
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             }
 
             TrackingService.State.TRACKING_PAUSED -> {

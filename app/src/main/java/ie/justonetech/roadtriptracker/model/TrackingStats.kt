@@ -7,7 +7,7 @@ import java.util.*
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 data class TrackingStats(
-    val startTimestamp: Date,
+    val startTimestamp: Date?,
     val totalDuration: Long,
     val activeDuration: Long,
 
@@ -20,4 +20,18 @@ data class TrackingStats(
 
     val maxElevationGain: Double,
     val totalElevationGain: Double
-)
+) {
+
+    constructor() : this(
+        null,
+        0,
+        0,
+        0.0,
+        0f,
+        0f,
+        0f,
+        0f,
+        0.0,
+        0.0
+    )
+}

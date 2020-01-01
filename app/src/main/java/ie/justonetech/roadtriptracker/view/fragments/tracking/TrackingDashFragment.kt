@@ -5,9 +5,10 @@ import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.databinding.TrackingDashFragmentBinding
 import ie.justonetech.roadtriptracker.model.ProfileConfig
 import ie.justonetech.roadtriptracker.model.TrackingStats
+import ie.justonetech.roadtriptracker.utils.DistanceUnit
 import ie.justonetech.roadtriptracker.utils.ProfileType
+import ie.justonetech.roadtriptracker.utils.SpeedUnit
 import ie.justonetech.roadtriptracker.utils.TrackingStatsFormatter
-import java.util.*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // TrackingDashFragment
@@ -15,8 +16,14 @@ import java.util.*
 
 class TrackingDashFragment : BaseDashFragment<TrackingDashFragmentBinding>(R.layout.tracking_dash_fragment) {
 
+    private var speedUnit = SpeedUnit.KPH
+    private var distanceUnit = DistanceUnit.KILOMETERS
+
     override fun onProfileConfigChanged(profileConfig: ProfileConfig) {
         val profileType = ProfileType.fromId(profileConfig.id)
+
+        speedUnit = profileConfig.speedUnit
+        distanceUnit = profileConfig.distanceUnit
 
         viewBinding.profileName.setText(profileType.nameId)
         viewBinding.profileName.setCompoundDrawablesWithIntrinsicBounds(
@@ -27,32 +34,16 @@ class TrackingDashFragment : BaseDashFragment<TrackingDashFragmentBinding>(R.lay
         )
 
         viewBinding.profileTag.setBackgroundColor(ContextCompat.getColor(viewBinding.root.context, profileType.colorId))
-
-        // DEBUG ONLY
-
-        updateStats(
-            TrackingStats(
-                Date(),
-                0,
-                0,
-
-                0.0,
-
-                0f,
-                0f,
-                0f,
-                0f,
-
-                0.0,
-                0.0
-            )
-        )
-
-        // DEBUG ONLY
+        updateStats(TrackingStats())
     }
 
     override fun updateStats(trackingStats: TrackingStats) {
-        viewBinding.trackingStats = TrackingStatsFormatter(viewBinding.root.context, trackingStats)
+        viewBinding.trackingStats = TrackingStatsFormatter(
+            viewBinding.root.context,
+            trackingStats,
+            speedUnit,
+            distanceUnit
+        )
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////

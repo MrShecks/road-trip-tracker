@@ -7,7 +7,7 @@ import ie.justonetech.roadtriptracker.model.TrackingStats
 // TrackingStatsFormatter
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class TrackingStatsFormatter(context: Context, data: TrackingStats)
+class TrackingStatsFormatter(context: Context, data: TrackingStats, private val speedUnit: SpeedUnit, private val distanceUnit: DistanceUnit)
     : ModelFormatter<TrackingStats>(context, data) {
 
     val totalDuration: String
@@ -19,12 +19,15 @@ class TrackingStatsFormatter(context: Context, data: TrackingStats)
     val pausedDuration: String
         get() = formatDuration(data.totalDuration - data.activeDuration, showZeroHours = true)
 
+    val distance: String
+        get() = formatDistance(data.distance, distanceUnit)
+
     val currentSpeed: String
-        get() = formatSpeed(data.currentSpeed, SpeedUnit.KPH)       // FIXME: Use profile SpeedUnits
+        get() = formatSpeed(data.currentSpeed, speedUnit)
 
     val maxSpeed: String
-        get() = formatSpeed(data.maxSpeed, SpeedUnit.KPH)           // FIXME: Use profile SpeedUnits
+        get() = formatSpeed(data.maxSpeed, speedUnit)
 
     val avgSpeed: String
-        get() = formatSpeed(data.avgSpeed, SpeedUnit.KPH)           // FIXME: Use profile SpeedUnits
+        get() = formatSpeed(data.avgSpeed, speedUnit)
 }

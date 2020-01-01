@@ -112,8 +112,6 @@ class TrackingService : Service() {
     override fun onCreate() {
         Log.i(TAG, "Service onCreate() called")
 
-        Toast.makeText(this, "$TAG:onCreate() Called", Toast.LENGTH_LONG).show()
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Note: getSystemService() can return a null object. It's unlikely but it's probably
             // safer to treat the object as nullable and use Kotlin's "let" function
@@ -143,8 +141,6 @@ class TrackingService : Service() {
 
             notificationManager?.deleteNotificationChannel(NOTIFICATION_CHANNEL)
         }
-
-        Toast.makeText(this, "$TAG:onDestroy() Called", Toast.LENGTH_LONG).show()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -157,6 +153,8 @@ class TrackingService : Service() {
         check(state.value == State.TRACKING_STOPPED) {
             "Tracking service can only be started from the stopped state (state=${state.value})"
         }
+
+        Log.i(TAG, "startTracking(config=$config)")
 
         trackingState.start(config.profileId, config.sampleInterval)
         updateTimer.scheduleAtFixedRate(object: TimerTask() {
