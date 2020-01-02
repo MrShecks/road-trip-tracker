@@ -120,7 +120,7 @@ class RouteSummaryRecyclerView @JvmOverloads constructor(context: Context, attrs
                     itemSelectionChangedListener?.onEndMultiSelect()
                     isMultiSelectActive = false
 
-                } else {
+                } else if(itemSelectionTracker.hasSelection()) {
 
                     //
                     // Notify the listener with the updated selection count

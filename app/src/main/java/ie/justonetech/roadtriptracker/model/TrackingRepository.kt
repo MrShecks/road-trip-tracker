@@ -161,18 +161,12 @@ class TrackingRepository(context: Context) {
         }
     }
 
-    fun deleteRoute(route: RouteDetail) {
-        route.id?.let { routeId ->
-            deleteRoute(routeId)
-        }
-    }
-
-    fun deleteRoute(routeId: Int) {
+    fun deleteRoutes(routeIds: List<Int>) {
         ThreadUtils().runOnDiskThread {
             with(database) {
                 runInTransaction {
-                    routeDetailDao().deleteById(routeId).also {
-                        Log.d(TAG, "Deleted $it routes with routeId=$routeId from database.")
+                    routeDetailDao().deleteByIds(routeIds).also {
+                        Log.d(TAG, "Deleted $it routes from the database")
                     }
                 }
             }

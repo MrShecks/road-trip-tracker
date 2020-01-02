@@ -3,12 +3,14 @@ package ie.justonetech.roadtriptracker.view.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.model.RouteSummary
+import ie.justonetech.roadtriptracker.model.TrackingRepository
 import ie.justonetech.roadtriptracker.view.widgets.RouteSummaryRecyclerView
 import ie.justonetech.roadtriptracker.viewmodel.RouteViewModel
 import kotlinx.android.synthetic.main.history_fragment.*
@@ -112,11 +114,16 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-        routeSummaryList.getSelectedIds().forEach {
-            Log.i(TAG, "Selected RouteId=$it")
-        }
+        item?.let {
+            val selectedIds = routeSummaryList.getSelectedIds()
 
-        routeSummaryList.endMultiSelect()
+            when(it.itemId) {
+                R.id.action_delete -> onDeleteSelected(selectedIds)
+                R.id.action_add_favourite -> onAddFavouriteSelected(selectedIds)
+            }
+
+            routeSummaryList.endMultiSelect()
+        }
 
         return true
     }
@@ -132,9 +139,31 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
+        routeSummaryList.endMultiSelect()
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private fun onDeleteSelected(selectedIds: List<Int>) {
+        AlertDialog.Builder(context!!).apply {
+            setTitle(R.string.route_history_delete_prompt_title)
+            setMessage(getString(R.string.route_history_delete_selected_prompt_message, selectedIds.size))
+
+            setPositiveButton(android.R.string.yes) { _, _ ->
+                TrackingRepository(context).deleteRoutes(selectedIds)
+            }
+
+            setNegativeButton(android.R.string.no) { _, _ ->
+                // Nothing to do here...
+            }
+
+            create().show()
+        }
+    }
+
+    private fun onAddFavouriteSelected(selectedIds: List<Int>) {
+
+    }
 
     companion object {
         private val TAG = HistoryFragment::class.java.simpleName

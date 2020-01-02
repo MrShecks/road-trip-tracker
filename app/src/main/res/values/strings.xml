@@ -38,14 +38,15 @@
 
     <string name="route_detail_map_tab_title">Map</string>
 
-
-
     <string name="route_summary_list_time_title">Time</string>
     <string name="route_summary_list_distance_title">Distance</string>
     <string name="route_summary_list_avg_speed_title">Avg Speed</string>
 
     <string name="route_history_action_menu_delete">Delete</string>
     <string name="route_history_action_menu_favourite">Add Favourite</string>
+
+    <string name="route_history_delete_prompt_title">Delete Selected</string>
+    <string name="route_history_delete_selected_prompt_message">Are you sure you want to delete the %d selected routes?</string>
 
     <plurals name="route_list_selection_action_title">
         <item quantity="one">%d item selected</item>

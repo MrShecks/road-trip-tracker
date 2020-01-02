@@ -39,4 +39,7 @@ interface RouteDetailDao : BaseDao<DbRouteDetail> {
 
     @Query("DELETE FROM TRouteDetail WHERE _id=:id")
     fun deleteById(id: Int): Int
+
+    @Query("DELETE FROM TRouteDetail WHERE _id IN(:ids)")
+    fun deleteByIds(ids: List<Int>): Int
 }
