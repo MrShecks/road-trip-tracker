@@ -3,6 +3,7 @@ package ie.justonetech.roadtriptracker.utils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
@@ -21,9 +22,9 @@ fun setProfileDrawable(textView: TextView, profileId: Int) {
 
     TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds(
         textView,
-        ResourcesCompat.getDrawable(
-            textView.resources,
-            ProfileType.fromId(profileId).drawableId, null
+        AppCompatResources.getDrawable(
+            textView.context,
+            ProfileType.fromId(profileId).drawableId
         ),
         null,
         null,

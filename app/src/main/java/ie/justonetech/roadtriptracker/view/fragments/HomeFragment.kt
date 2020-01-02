@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -86,9 +87,9 @@ class HomeFragment : MapViewHostFragment() {
     private fun showCurrentProfile(context: Context, profile: ProfileType) {
         profileName.setText(profile.nameId)
         profileName.setCompoundDrawablesWithIntrinsicBounds(
-            ContextCompat.getDrawable(context, profile.drawableId),
+            AppCompatResources.getDrawable(context, profile.drawableId),
             null,
-            ContextCompat.getDrawable(context, R.drawable.ic_arrow_drop_down_black_24dp),
+            AppCompatResources.getDrawable(context, R.drawable.ic_arrow_drop_down_black_24dp),
             null
         )
 
@@ -113,7 +114,7 @@ class HomeFragment : MapViewHostFragment() {
             if(routeDetail != null) {
                 latestRouteProfileName?.setText(routeDetail.profileType.nameId)
                 latestRouteProfileName?.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(context, routeDetail.profileType.drawableId),
+                    AppCompatResources.getDrawable(context, routeDetail.profileType.drawableId),
                     null,
                     null,
                     null
@@ -125,7 +126,7 @@ class HomeFragment : MapViewHostFragment() {
             } else {
                 latestRouteProfileName?.text = getString(R.string.home_fragment_no_route_available_message)
                 latestRouteProfileName?.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(context, R.drawable.ic_info_outline_white_24dp),
+                    AppCompatResources.getDrawable(context, R.drawable.ic_info_outline_white_24dp),
                     null,
                     null,
                     null

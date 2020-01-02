@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.utils.ProfileType
@@ -59,7 +60,7 @@ class ProfileListAdapter(context: Context)
             getItem(position)?.let { profile ->
                 viewHolder.profileName.setText(profile.nameId)
                 viewHolder.profileName.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(context, profile.drawableId), null, null, null
+                    AppCompatResources.getDrawable(context, profile.drawableId), null, null, null
                 )
 
                 viewHolder.profileTag.setBackgroundColor(profile.getColor(parent.context))
