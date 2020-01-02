@@ -8,7 +8,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import ie.justonetech.roadtriptracker.R
 import kotlinx.android.synthetic.main.image_toast.view.*
 
@@ -60,7 +62,7 @@ class ImageToast(context: Context) : Toast(context) {
 
         @JvmStatic
         fun create(context: Context, @DrawableRes imageId: Int, text: String, duration: Int): ImageToast {
-            return create(context, ContextCompat.getDrawable(context, imageId), text, duration)
+            return create(context, AppCompatResources.getDrawable(context, imageId), text, duration)
         }
 
         @JvmStatic

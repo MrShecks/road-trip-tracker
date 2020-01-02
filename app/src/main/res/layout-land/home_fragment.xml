@@ -24,7 +24,7 @@
         android:layout_marginRight="8dp"
         android:background="@color/mapOverlayBackgroundColor"
         android:contentDescription="@string/home_fragment_open_fullscreen_map_action_description"
-        android:src="@drawable/ic_fullscreen_white_24dp"
+        app:srcCompat="@drawable/ic_fullscreen_white_24dp"
         android:tint="@color/secondaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,10 +64,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
-                android:drawableLeft="@drawable/ic_profile_running_white_24dp"
-                android:drawableStart="@drawable/ic_profile_running_white_24dp"
-                android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
-                android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                app:drawableRightCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down_black_24dp"
                 android:drawablePadding="4dp"
                 android:gravity="center_vertical"
                 android:textAllCaps="true"
@@ -78,6 +76,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/profileTag"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:drawableLeft="@drawable/ic_profile_running_white_24dp"
+                tools:drawableStart="@drawable/ic_profile_running_white_24dp"
                 tools:text="Running" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

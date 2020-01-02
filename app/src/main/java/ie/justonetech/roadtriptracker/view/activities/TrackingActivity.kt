@@ -478,8 +478,6 @@ class TrackingActivity
         private const val REQUEST_CODE_ACTION_STOP_TRACKING_SAVE        = 1003
         private const val REQUEST_CODE_ACTION_STOP_TRACKING_DISCARD     = 1004
 
-        private const val STAT_UPDATE_INTERVAL: Long                    = 1000
-
         @JvmStatic
         fun newInstance(context: Context) {
             val intent = Intent(context, TrackingActivity::class.java)

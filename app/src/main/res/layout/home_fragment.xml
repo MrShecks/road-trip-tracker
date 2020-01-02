@@ -36,14 +36,16 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="4dp"
-                android:drawableStart="@drawable/ic_profile_running_white_24dp"
-                android:drawableLeft="@drawable/ic_profile_running_white_24dp"
+
                 android:drawablePadding="4dp"
                 android:textAllCaps="true"
                 android:textSize="16sp"
                 app:drawableTint="@color/secondaryTextColor"
                 app:layout_constraintStart_toEndOf="@+id/latestRouteProfileTag"
                 app:layout_constraintTop_toTopOf="parent"
+
+                tools:drawableStart="@drawable/ic_profile_running_white_24dp"
+                tools:drawableLeft="@drawable/ic_profile_running_white_24dp"
                 tools:text="@string/profile_name_running" />
 
             <TextView
@@ -87,7 +89,7 @@
                 android:layout_marginRight="8dp"
                 android:background="@color/mapOverlayBackgroundColor"
                 android:contentDescription="@string/home_fragment_open_fullscreen_map_action_description"
-                android:src="@drawable/ic_fullscreen_white_24dp"
+                app:srcCompat="@drawable/ic_fullscreen_white_24dp"
                 android:tint="@color/secondaryTextColor"
                 app:layout_constraintEnd_toEndOf="@+id/latestRouteMap"
                 app:layout_constraintTop_toTopOf="@+id/latestRouteMap" />
@@ -126,10 +128,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
-                android:drawableStart="@drawable/ic_profile_running_white_24dp"
-                android:drawableLeft="@drawable/ic_profile_running_white_24dp"
-                android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
-                android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                app:drawableRightCompat="@drawable/ic_arrow_drop_down_black_24dp"
                 android:drawablePadding="4dp"
                 android:gravity="center_vertical"
                 android:textAllCaps="true"
@@ -140,6 +140,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/profileTag"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:drawableStart="@drawable/ic_profile_running_white_24dp"
+                tools:drawableLeft="@drawable/ic_profile_running_white_24dp"
                 tools:text="@string/profile_name_running" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -157,81 +159,3 @@
         app:iconPadding="4dp" />
 
 </LinearLayout>
-
-    <!--    <?xml version="1.0" encoding="utf-8"?>-->
-    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical"-->
-    <!--tools:context=".view.activities.MainActivity">-->
-
-    <!--<com.google.android.gms.maps.MapView-->
-    <!--    android:id="@+id/routeMap"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="0dp"-->
-    <!--    android:layout_weight="1" />-->
-
-    <!--<com.google.android.material.card.MaterialCardView-->
-    <!--    android:id="@+id/profileCardView"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="wrap_content"-->
-    <!--    android:layout_margin="8dp"-->
-    <!--    android:clickable="false"-->
-    <!--    app:cardElevation="3dp">-->
-
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
-
-    <!--        <View-->
-    <!--            android:id="@+id/profileTag"-->
-    <!--            android:layout_width="@dimen/profile_tag_width"-->
-    <!--            android:layout_height="0dp"-->
-    <!--            android:background="@color/primaryColor"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/profileName"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="8dp"-->
-    <!--            android:layout_marginLeft="8dp"-->
-    <!--            android:layout_marginTop="16dp"-->
-    <!--            android:layout_marginEnd="8dp"-->
-    <!--            android:layout_marginRight="8dp"-->
-    <!--            android:layout_marginBottom="16dp"-->
-    <!--            android:drawableLeft="@drawable/ic_profile_running_white_24dp"-->
-    <!--            android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"-->
-    <!--            android:drawablePadding="4dp"-->
-    <!--            android:gravity="center_vertical"-->
-    <!--            android:text="TextView"-->
-    <!--            android:textAllCaps="true"-->
-    <!--            android:textSize="24sp"-->
-    <!--            android:textStyle="bold"-->
-    <!--            app:drawableTint="@color/secondaryTextColor"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toEndOf="@+id/profileTag"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            tools:text="Running" />-->
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-    <!--</com.google.android.material.card.MaterialCardView>-->
-
-    <!--<Button-->
-    <!--    android:id="@+id/startTracking"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="wrap_content"-->
-    <!--    android:layout_marginLeft="8dp"-->
-    <!--    android:layout_marginRight="8dp"-->
-    <!--    android:layout_marginBottom="8dp"-->
-    <!--    android:drawableTint="@color/primaryTextColor"-->
-    <!--    android:paddingTop="8dp"-->
-    <!--    android:paddingBottom="8dp"-->
-    <!--    android:text="@string/home_fragment_start_route_button"-->
-    <!--    app:iconPadding="4dp" />-->
-
-    <!--</LinearLayout>-->
