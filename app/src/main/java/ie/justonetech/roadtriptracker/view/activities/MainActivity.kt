@@ -1,7 +1,9 @@
 package ie.justonetech.roadtriptracker.view.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -44,6 +46,20 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(Navigation.findNavController(this, R.id.navHostFragment), appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        Log.i(TAG, "onOptionItemSelected(): Item=$item")
+
+        if(item?.itemId == R.id.destination_settings) {
+            val navController = Navigation.findNavController(this, R.id.navHostFragment)
+
+            navController.navigate(R.id.destination_settings)
+
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupActionBar(navController: NavController) {

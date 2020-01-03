@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/prefs_category_general_title">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_keep_screen_on"
+            android:summaryOff="@string/prefs_keep_screen_on_summary_off"
+            android:summaryOn="@string/prefs_keep_screen_on_summary_on"
+            android:title="@string/prefs_keep_screen_on_title"
+            app:iconSpaceReserved="false" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:dialogTitle="@string/prefs_map_type_selection_dialog_title"
+            android:entries="@array/prefs_map_type_entries"
+            android:entryValues="@array/prefs_map_type_values"
+            android:key="@string/pref_key_map_type"
+            android:title="@string/prefs_map_type_title"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:summary="Change the configuration settings for tracking profiles"
+            app:title="Profile Settings" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/prefs_category_about_title">
+
+        <Preference
+            android:selectable="false"
+            android:summary="@string/prefs_about_summary"
+            app:iconSpaceReserved="false"
+            app:title="@string/app_name" />
+
+        <Preference
+            android:summary="0.0.1 (Beta)"
+            android:title="@string/prefs_version_title"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

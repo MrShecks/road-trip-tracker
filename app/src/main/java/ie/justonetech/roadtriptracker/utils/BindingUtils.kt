@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
@@ -13,7 +14,7 @@ import androidx.databinding.BindingAdapter
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 @BindingAdapter("android:profileImage")
-fun setProfileImage(imageView: ImageView, profileId: Int) {
+fun setProfileImage(imageView: AppCompatImageView, profileId: Int) {
     imageView.setImageResource(ProfileType.fromId(profileId).drawableId)
 }
 

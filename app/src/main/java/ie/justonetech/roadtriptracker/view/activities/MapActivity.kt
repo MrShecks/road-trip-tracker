@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.LatLng
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.model.RouteDetail
 import ie.justonetech.roadtriptracker.utils.MapUtils
+import ie.justonetech.roadtriptracker.utils.Preferences
 import ie.justonetech.roadtriptracker.viewmodel.RouteViewModel
 import kotlinx.android.synthetic.main.map_activity.*
 
@@ -76,6 +77,8 @@ class MapActivity
     }
 
     override fun onMapReady(map: GoogleMap) {
+        map.mapType = Preferences(this).mapType
+
         if(routeId != RouteDetail.INVALID_ID) {
             ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
                 model.routeDetail.observe(this, Observer {

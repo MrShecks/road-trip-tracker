@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Road Trip Tracker</string>
 
+    <!--
+        Home Fragment
+    -->
+
     <string name="home_fragment_title">Home</string>
     <string name="home_fragment_start_route_button">Start New Route</string>
     <string name="home_fragment_profile_dialog_title">Select Profile</string>
@@ -10,11 +14,18 @@
     <string name="home_fragment_open_route_detail_action_description">Open route detail</string>
     <string name="home_fragment_open_fullscreen_map_action_description">Open fullscreen route map</string>
 
+    <!-- History Fragment -->
     <string name="history_fragment_title">History</string>
 
+    <!-- Favourites Fragment -->
     <string name="favourites_fragment_title">Favourites</string>
 
+    <!-- History Fragment -->
     <string name="settings_fragment_title">Settings</string>
+
+    <!--
+        Route Detail Fragment
+    -->
 
     <string name="route_detail_fragment_title">Route Detail</string>
 
@@ -53,6 +64,10 @@
         <item quantity="other">%d items selected</item>
     </plurals>
 
+    <!--
+        Tracking Activity
+    -->
+
     <string name="tracking_activity_title">Tracking</string>
 
     <string name="tracking_stat_speed_title">@string/route_detail_stat_speed_title</string>
@@ -80,12 +95,20 @@
 
     <string name="map_activity_title">Map</string>
 
+    <!--
+        Profiles
+    -->
+
     <string name="profile_name_walking">Walking</string>
     <string name="profile_name_running">Running</string>
     <string name="profile_name_cycling">Cycling</string>
     <string name="profile_name_driving">Driving</string>
     <string name="profile_name_boating">Boating</string>
     <string name="profile_name_motorcycling">Motorcycling</string>
+
+    <!--
+        Metrics
+    -->
 
     <string name="distance_unit_meters">meters</string>
     <string name="distance_unit_miles">miles</string>
@@ -101,7 +124,44 @@
     <string name="speed_unit_suffix_fps">fps</string>
     <string name="speed_unit_suffix_knots">kts</string>
 
+    <!--
+        Misc Messages
+    -->
+
     <string name="tracking_service_tracking_started_message">Route tracking service started.</string>
     <string name="tracking_service_description">Location tracking service used by the Road Trip Tracker application to log GPS location for route tracking.</string>
     <string name="error_no_location_permissions">Location permissions are required in order to enable route tracking.</string>
+
+    <!--
+        Preferences
+    -->
+
+    <string name="pref_key_current_profile">_pref_key_current_profile</string>
+    <string name="pref_key_keep_screen_on">_pref_key_keep_screen_on</string>
+    <string name="pref_key_map_type">_pref_key_map_type</string>
+
+    <string name="pref_value_map_type_normal">_pref_value_map_type_normal</string>
+    <string name="pref_value_map_type_terrain">_pref_value_map_type_terrain</string>
+    <string name="pref_value_map_type_satellite">_pref_value_map_type_satellite</string>
+    <string name="pref_value_map_type_hybrid">_pref_value_map_type_hybrid</string>
+
+    <string name="prefs_category_general_title">General</string>
+
+    <string name="prefs_keep_screen_on_title">Keep screen on</string>
+    <string name="prefs_keep_screen_on_summary_on">The screen will remain on and bright while tracking is in progress</string>
+    <string name="prefs_keep_screen_on_summary_off">The screen will be allowed to turn off while tracking is in progress</string>
+
+    <string name="prefs_map_type_title">Map type</string>
+    <string name="prefs_map_type_selection_dialog_title">Select map type</string>
+    <string name="prefs_map_type_entry_normal">Normal</string>
+    <string name="prefs_map_type_entry_terrain">Terrain</string>
+    <string name="prefs_map_type_entry_satellite">Satellite</string>
+    <string name="prefs_map_type_entry_hybrid">Hybrid</string>
+
+    <string name="prefs_category_profiles_title">Profiles</string>
+
+    <string name="prefs_category_about_title">About</string>
+    <string name="prefs_about_summary">TODO: Add about information for Road Trip Tracker</string>
+    <string name="prefs_version_title">Version</string>
+
 </resources>

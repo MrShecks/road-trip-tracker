@@ -98,6 +98,8 @@ class HomeFragment : MapViewHostFragment() {
 
     override fun onMapReady(mapView: MapView, map: GoogleMap) {
 
+        map.mapType = Preferences(mapView.context).mapType
+
         ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
             model.routeDetail.observe(viewLifecycleOwner, Observer {
                 if(it != null)

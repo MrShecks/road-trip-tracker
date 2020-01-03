@@ -13,6 +13,7 @@ import com.google.android.gms.maps.MapView
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.databinding.RouteDetailFragmentBinding
 import ie.justonetech.roadtriptracker.utils.MapUtils
+import ie.justonetech.roadtriptracker.utils.Preferences
 import ie.justonetech.roadtriptracker.utils.RouteDetailFormatter
 import ie.justonetech.roadtriptracker.viewmodel.RouteViewModel
 
@@ -43,6 +44,8 @@ class RouteDetailFragment : MapViewHostFragment() {
     }
 
     override fun onMapReady(mapView: MapView, map: GoogleMap) {
+        map.mapType = Preferences(mapView.context).mapType
+
         ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
             model.routeDetail.observe(viewLifecycleOwner, Observer {
                 MapUtils.drawRoute(it.points, map)

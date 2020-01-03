@@ -59,6 +59,7 @@ class TrackingActivity
         mapView?.let {
             it.onCreate(savedInstanceState)
             it.getMapAsync { map ->
+                map.mapType = Preferences(this).mapType
                 this.map = map
             }
         }

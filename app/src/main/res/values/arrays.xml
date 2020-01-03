@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="prefs_map_type_entries">
+        <item>@string/prefs_map_type_entry_normal</item>
+        <item>@string/prefs_map_type_entry_terrain</item>
+        <item>@string/prefs_map_type_entry_satellite</item>
+        <item>@string/prefs_map_type_entry_hybrid</item>
+    </string-array>
+
+    <string-array name="prefs_map_type_values">
+        <item>@string/pref_value_map_type_normal</item>
+        <item>@string/pref_value_map_type_terrain</item>
+        <item>@string/pref_value_map_type_satellite</item>
+        <item>@string/pref_value_map_type_hybrid</item>
+    </string-array>
+</resources>
