@@ -25,7 +25,7 @@
         <item name="windowActionModeOverlay">true</item>
 
 <!--        <item name="preferenceTheme">@style/RoadTripTracker.Theme.Preferences</item>-->
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
 
     </style>
 

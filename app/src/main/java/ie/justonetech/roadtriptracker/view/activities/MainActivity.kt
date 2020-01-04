@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             setupActionBar(navController)
             setupBottomNavigationMenu(navController)
             setupSideNavigationMenu(navController)
+            setupNavigationChangeListener(navController)
         }
     }
 
@@ -49,17 +50,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        Log.i(TAG, "onOptionItemSelected(): Item=$item")
+        return Navigation.findNavController(this, R.id.navHostFragment).run {
+            NavigationUI.onNavDestinationSelected(item!!, this)
 
-        if(item?.itemId == R.id.destination_settings) {
-            val navController = Navigation.findNavController(this, R.id.navHostFragment)
-
-            navController.navigate(R.id.destination_settings)
-
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
+        } || super.onOptionsItemSelected(item)
     }
 
     private fun setupActionBar(navController: NavController) {
@@ -77,6 +71,14 @@ class MainActivity : AppCompatActivity() {
     private fun setupSideNavigationMenu(navController: NavController) {
         sideNavigationView?.let {
             NavigationUI.setupWithNavController(it, navController)
+        }
+    }
+
+    private fun setupNavigationChangeListener(navController: NavController) {
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            // TODO: Hide/Remove the settings toolbar action when the settings fragment is visible
+
+            Log.i(TAG, "OnDestinationChangedListener() destination=$destination")
         }
     }
 

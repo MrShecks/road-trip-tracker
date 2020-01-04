@@ -24,10 +24,20 @@
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
-        <Preference
-            app:iconSpaceReserved="false"
+        <PreferenceScreen
             app:summary="Change the configuration settings for tracking profiles"
-            app:title="Profile Settings" />
+            app:title="Profile Settings"
+            >
+
+            <SwitchPreferenceCompat
+                android:defaultValue="true"
+                android:key="@string/pref_key_keep_screen_on"
+                android:summaryOff="@string/prefs_keep_screen_on_summary_off"
+                android:summaryOn="@string/prefs_keep_screen_on_summary_on"
+                android:title="@string/prefs_keep_screen_on_title"
+                app:iconSpaceReserved="false" />
+        </PreferenceScreen>
+
     </PreferenceCategory>
 
     <PreferenceCategory

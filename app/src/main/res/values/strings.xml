@@ -20,8 +20,11 @@
     <!-- Favourites Fragment -->
     <string name="favourites_fragment_title">Favourites</string>
 
-    <!-- History Fragment -->
+    <!-- Settings Fragment -->
     <string name="settings_fragment_title">Settings</string>
+
+    <!-- Settings Profile List Fragment -->
+    <string name="profile_list_settings_fragment_title">Select Profile</string>
 
     <!--
         Route Detail Fragment
