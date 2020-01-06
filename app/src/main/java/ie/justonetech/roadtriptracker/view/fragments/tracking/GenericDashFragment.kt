@@ -5,6 +5,7 @@ import ie.justonetech.roadtriptracker.databinding.GenericDashFragmentBinding
 import ie.justonetech.roadtriptracker.model.ProfileConfig
 import ie.justonetech.roadtriptracker.model.TrackingStats
 import ie.justonetech.roadtriptracker.utils.DistanceUnit
+import ie.justonetech.roadtriptracker.utils.ProfileType
 import ie.justonetech.roadtriptracker.utils.SpeedUnit
 import ie.justonetech.roadtriptracker.utils.TrackingStatsFormatter
 
@@ -37,5 +38,10 @@ class GenericDashFragment : BaseDashFragment<GenericDashFragmentBinding>(R.layou
 
     companion object {
         private val TAG = GenericDashFragment::class.java.simpleName
+
+        @JvmStatic
+        fun newInstance(profileType: ProfileType): BaseDashFragment<*> {
+            return GenericDashFragment()
+        }
     }
 }

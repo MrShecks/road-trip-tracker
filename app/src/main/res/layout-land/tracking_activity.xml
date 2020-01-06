@@ -8,19 +8,17 @@
     tools:context=".view.activities.TrackingActivity"
     >
 
-    <fragment
-        android:id="@+id/statsFragment"
-        android:name="ie.justonetech.roadtriptracker.view.fragments.tracking.GenericDashFragment"
+    <FrameLayout
+        android:id="@+id/dashFragmentContainer"
         android:layout_width="match_parent"
-
         android:layout_height="0dp"
+
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="4dp"
-
         android:layout_marginEnd="4dp"
-
         android:layout_marginRight="4dp"
+
         app:layout_constraintBottom_toTopOf="@+id/lockProgress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
