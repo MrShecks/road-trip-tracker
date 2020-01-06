@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -27,6 +28,7 @@ import ie.justonetech.roadtriptracker.service.GeoLocation
 import ie.justonetech.roadtriptracker.model.TrackingStats
 import ie.justonetech.roadtriptracker.service.TrackingService
 import ie.justonetech.roadtriptracker.utils.Preferences
+import ie.justonetech.roadtriptracker.utils.ProfileType
 import ie.justonetech.roadtriptracker.view.fragments.tracking.BaseDashFragment
 import ie.justonetech.roadtriptracker.view.widgets.ImageToast
 import ie.justonetech.roadtriptracker.view.widgets.LockButton
@@ -64,6 +66,7 @@ class TrackingActivity
             }
         }
 
+        setupProfileDashFragment(Preferences(this).currentProfile)
         setupLockButtonStateChangedListener()
 
         startStopButton.setOnClickListener {
@@ -92,15 +95,6 @@ class TrackingActivity
                         Log.e(TAG, "pauseResumeButton.onClick(): Unexpected service state (state=${service.state.value})")
                 }
             }
-        }
-
-        ViewModelProviders.of(this).get(ProfileViewModel::class.java).also { model ->
-            model.profile.observe(this, Observer { profileConfig ->
-                (statsFragment as BaseDashFragment<*>).setProfile(profileConfig)
-                currentProfileConfig = profileConfig
-            })
-
-            model.getProfile(Preferences(this@TrackingActivity).currentProfile)
         }
     }
 
@@ -354,6 +348,28 @@ class TrackingActivity
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private fun setupProfileDashFragment(profileType: ProfileType) {
+        ViewModelProviders.of(this).get(ProfileViewModel::class.java).also { model ->
+            model.profile.observe(this, Observer { profileConfig ->
+                (statsFragment as BaseDashFragment<*>).setProfile(profileConfig)
+
+                profileName?.setText(profileType.nameId)
+                profileName?.setCompoundDrawablesWithIntrinsicBounds(
+                    AppCompatResources.getDrawable(this@TrackingActivity, profileType.drawableId),
+                    null,
+                    null,
+                    null
+                )
+
+                profileTag?.setBackgroundColor(profileType.getColor(this@TrackingActivity))
+
+                currentProfileConfig = profileConfig
+            })
+
+            model.getProfile(profileType)
+        }
+    }
 
     private fun setupLockButtonStateChangedListener() {
 

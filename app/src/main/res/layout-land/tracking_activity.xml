@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/statsFragment"
-        android:name="ie.justonetech.roadtriptracker.view.fragments.tracking.TrackingDashFragment"
+        android:name="ie.justonetech.roadtriptracker.view.fragments.tracking.GenericDashFragment"
         android:layout_width="match_parent"
 
         android:layout_height="0dp"
@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/tracking_dash_fragment" />
+        tools:layout="@layout/generic_dash_fragment" />
 
     <ProgressBar
         android:id="@+id/lockProgress"

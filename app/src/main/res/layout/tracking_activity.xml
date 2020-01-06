@@ -7,24 +7,97 @@
     android:orientation="vertical"
     tools:context=".view.activities.TrackingActivity">
 
-    <fragment
-        android:id="@+id/statsFragment"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/statsCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
 
-        android:name="ie.justonetech.roadtriptracker.view.fragments.tracking.TrackingDashFragment"
-        tools:layout="@layout/tracking_dash_fragment"
-        />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/profileTag"
+                android:layout_width="@dimen/profile_tag_width"
+                android:layout_height="0dp"
+                android:background="@color/primaryColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/profileName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
+                android:text="@string/profile_name_cycling"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                app:drawableTint="@color/secondaryTextColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/profileTag"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:drawableStart="@drawable/ic_profile_cycling_white_24dp"
+                tools:drawableLeft="@drawable/ic_profile_cycling_white_24dp"
+                tools:text="Cycling" />
+
+            <fragment
+                android:id="@+id/statsFragment"
+                android:name="ie.justonetech.roadtriptracker.view.fragments.tracking.GenericDashFragment"
+                android:layout_width="0dp"
+
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/profileTag"
+                app:layout_constraintTop_toBottomOf="@+id/profileName"
+                tools:layout="@layout/generic_dash_fragment" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+<!--    <fragment-->
+<!--        android:id="@+id/statsFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+
+<!--        android:layout_marginStart="4dp"-->
+<!--        android:layout_marginLeft="4dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginEnd="4dp"-->
+<!--        android:layout_marginRight="4dp"-->
+
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+
+<!--        android:name="ie.justonetech.roadtriptracker.view.fragments.tracking.GenericDashFragment"-->
+<!--        tools:layout="@layout/generic_dash_fragment"-->
+<!--        />-->
 
     <ProgressBar
         android:id="@+id/lockProgress"
@@ -39,7 +112,7 @@
         android:layout_marginRight="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statsFragment"
+        app:layout_constraintTop_toBottomOf="@+id/statsCardView"
         tools:visibility="visible"
         />
 
