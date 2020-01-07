@@ -80,6 +80,12 @@
     <string name="tracking_stat_active_time_title">@string/route_detail_stat_active_time</string>
     <string name="tracking_stat_paused_time_title">@string/route_detail_stat_paused_time</string>
 
+    <string name="tracking_stat_speed_with_unit_suffix">Speed (%s)</string>
+    <string name="tracking_stat_max_speed_with_unit_suffix">Max (%s)</string>
+    <string name="tracking_stat_avg_speed_with_unit_suffix">Avg (%s)</string>
+    <string name="tracking_stat_total_climb_with_unit_suffix">Climb (%s)</string>
+    <string name="tracking_stat_distance_with_unit_suffix">Distance (%s)</string>
+
     <string name="tracking_start_button_title">Start</string>
     <string name="tracking_stop_button_title">Stop</string>
     <string name="tracking_pause_button_title">Pause</string>

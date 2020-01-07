@@ -29,8 +29,7 @@ import ie.justonetech.roadtriptracker.model.TrackingStats
 import ie.justonetech.roadtriptracker.service.TrackingService
 import ie.justonetech.roadtriptracker.utils.Preferences
 import ie.justonetech.roadtriptracker.utils.ProfileType
-import ie.justonetech.roadtriptracker.view.fragments.tracking.BaseDashFragment
-import ie.justonetech.roadtriptracker.view.fragments.tracking.GenericDashFragment
+import ie.justonetech.roadtriptracker.view.fragments.tracking.DashFragmentFactory
 import ie.justonetech.roadtriptracker.view.utils.addFragment
 import ie.justonetech.roadtriptracker.view.utils.findFragmentById
 import ie.justonetech.roadtriptracker.view.widgets.ImageToast
@@ -309,7 +308,7 @@ class TrackingActivity
     }
 
     private fun onServiceStatsChanged(stats: TrackingStats) {
-        findFragmentById<BaseDashFragment<*>>(R.id.dashFragmentContainer)?.updateStats(stats)
+        findFragmentById<DashFragmentFactory.DashFragment>(R.id.dashFragmentContainer)?.updateStats(stats)
     }
 
     private fun onServiceLocationChanged(location: GeoLocation) {
@@ -353,12 +352,12 @@ class TrackingActivity
     private fun setupProfileDashFragment(profileType: ProfileType) {
 
         // Add dash fragment based on the selected profile
-        addFragment(R.id.dashFragmentContainer, GenericDashFragment.newInstance(profileType))
+        addFragment(R.id.dashFragmentContainer, DashFragmentFactory.newInstance(profileType))
 
         ViewModelProviders.of(this).get(ProfileViewModel::class.java).also { model ->
             model.profile.observe(this, Observer { profileConfig ->
 
-                findFragmentById<BaseDashFragment<*>>(R.id.dashFragmentContainer)?.setProfile(profileConfig)
+                findFragmentById<DashFragmentFactory.DashFragment>(R.id.dashFragmentContainer)?.setProfile(profileConfig)
 
                 profileName?.setText(profileType.nameId)
                 profileName?.setCompoundDrawablesWithIntrinsicBounds(
@@ -494,8 +493,6 @@ class TrackingActivity
 
     companion object {
         private val TAG = TrackingActivity::class.java.simpleName
-
-        private const val TRACKING_DASH_FRAGMENT = "_dash_fragment_tag"
 
         private const val REQUEST_CODE_ACTION_START_TRACKING            = 1000
         private const val REQUEST_CODE_ACTION_PAUSE_TRACKING            = 1001
