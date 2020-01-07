@@ -18,7 +18,7 @@ open class ModelFormatter<T>(protected val context: Context, val data: T) {
         return FormatUtils().formatDistance(context, distance, DistanceUnit.METERS, targetUnit, withSuffix)
     }
 
-    protected fun formatSpeed(speed: Float, targetUnit: SpeedUnit, withSuffix: Boolean = true): String {
-        return FormatUtils().formatSpeed(context, speed, SpeedUnit.MPS, targetUnit, withSuffix)
+    protected fun formatSpeed(speed: Float, targetUnit: SpeedUnit, format: FormatUtils.SpeedFormat = FormatUtils.SpeedFormat.FORMAT_WHOLE_NUMBER_WITH_SUFFIX): String {
+        return FormatUtils().formatSpeed(context, speed, SpeedUnit.MPS, targetUnit, format)
     }
 }

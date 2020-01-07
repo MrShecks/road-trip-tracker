@@ -21,6 +21,13 @@ class FormatUtils private constructor() {
         FORMAT_SHORT_SHORT_TIME
     }
 
+    enum class SpeedFormat {
+        FORMAT_DECIMAL,
+        FORMAT_WHOLE_NUMBER,
+        FORMAT_DECIMAL_WITH_SUFFIX,
+        FORMAT_WHOLE_NUMBER_WITH_SUFFIX
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private val dateFormats = mapOf(
@@ -68,11 +75,15 @@ class FormatUtils private constructor() {
             String.format(Locale.getDefault(), "%.2f", sourceUnit.convertTo(distance, targetUnit))
     }
 
-    fun formatSpeed(context: Context, speed: Float, sourceUnit: SpeedUnit, targetUnit: SpeedUnit, withSuffix: Boolean = true): String {
-        return if(withSuffix)
-            String.format(Locale.getDefault(), "%.2f %s", sourceUnit.convertTo(speed, targetUnit), targetUnit.getSuffix(context))
-        else
-            String.format(Locale.getDefault(), "%.2f", sourceUnit.convertTo(speed, targetUnit))
+    fun formatSpeed(context: Context, speed: Float, sourceUnit: SpeedUnit, targetUnit: SpeedUnit, format: SpeedFormat = SpeedFormat.FORMAT_WHOLE_NUMBER_WITH_SUFFIX): String {
+        val targetSpeed = sourceUnit.convertTo(speed, targetUnit)
+
+        return when(format) {
+            SpeedFormat.FORMAT_DECIMAL -> String.format(Locale.getDefault(), "%.2f", targetSpeed)
+            SpeedFormat.FORMAT_WHOLE_NUMBER -> String.format(Locale.getDefault(), "%d", targetSpeed.toInt())
+            SpeedFormat.FORMAT_DECIMAL_WITH_SUFFIX -> String.format(Locale.getDefault(), "%.2f %s", targetSpeed, targetUnit.getSuffix(context))
+            SpeedFormat.FORMAT_WHOLE_NUMBER_WITH_SUFFIX -> String.format(Locale.getDefault(), "%d %s", targetSpeed.toInt(), targetUnit.getSuffix(context))
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
