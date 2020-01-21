@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
+import android.view.Surface
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -32,6 +33,7 @@ import ie.justonetech.roadtriptracker.utils.ProfileType
 import ie.justonetech.roadtriptracker.view.fragments.tracking.DashFragmentFactory
 import ie.justonetech.roadtriptracker.view.utils.addFragment
 import ie.justonetech.roadtriptracker.view.utils.findFragmentById
+import ie.justonetech.roadtriptracker.view.utils.getRotation
 import ie.justonetech.roadtriptracker.view.widgets.ImageToast
 import ie.justonetech.roadtriptracker.view.widgets.LockButton
 import ie.justonetech.roadtriptracker.viewmodel.ProfileViewModel
@@ -59,6 +61,17 @@ class TrackingActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tracking_activity)
+
+        // Hide the action bar when in landscape orientation
+
+        when(getRotation()) {
+            Surface.ROTATION_90, Surface.ROTATION_270 -> {
+                supportActionBar?.hide()
+
+                // FIXME: Not sure if I want to hide the status bar or not
+                //window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            }
+        }
 
         mapView?.let {
             it.onCreate(savedInstanceState)
