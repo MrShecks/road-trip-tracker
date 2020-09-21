@@ -33,6 +33,9 @@ class TrackingStatsFormatter(context: Context, data: TrackingStats, private val 
     val avgSpeed: String
         get() = formatSpeed(data.avgSpeed, speedUnit, FormatUtils.SpeedFormat.FORMAT_WHOLE_NUMBER)
 
+    val avgActiveSpeed: String
+        get() = formatSpeed(data.avgActiveSpeed, speedUnit, FormatUtils.SpeedFormat.FORMAT_WHOLE_NUMBER)
+
     val distanceLabel: String
         get() = context.getString(R.string.tracking_stat_distance_with_unit_suffix, distanceUnit.getSuffix(context))
 
