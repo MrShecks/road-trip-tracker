@@ -25,10 +25,6 @@ class RouteViewModel(application: Application)
         repository.getRouteList()
     }
 
-    val favouriteRouteList: LiveData<PagedList<RouteSummary>> by lazy {
-        repository.getFavouriteRouteList()
-    }
-
     val routeDetail = Transformations.switchMap(currentRouteId) {
         if(currentRouteId.value != RouteDetail.INVALID_ID)
             repository.getRouteDetail(it)

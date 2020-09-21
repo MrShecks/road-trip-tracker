@@ -197,8 +197,7 @@ class TrackingService : Service() {
                     trackingState.maxElevationGain,
                     trackingState.totalElevationGain,
                     trackingState.maxSpeed,
-                    trackingState.avgSpeed,
-                    false
+                    trackingState.avgSpeed
                 ),
 
                 trackingState.locationPoints.map {

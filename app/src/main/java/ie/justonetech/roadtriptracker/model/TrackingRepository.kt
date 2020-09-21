@@ -37,36 +37,12 @@ class TrackingRepository(context: Context) {
             .toLiveData(pagedListConfig)
     }
 
-    fun getFavouriteRouteList(): LiveData<PagedList<RouteSummary>> {
-        val pagedListConfig = PagedList.Config.Builder()
-            .setEnablePlaceholders(true)
-            .setInitialLoadSizeHint(PAGE_LOAD_SIZE_HINT)
-            .setPageSize(PAGE_SIZE)
-            .build()
-
-        return database.routeDetailDao()
-            .getFavourites()
-            .toLiveData(pagedListConfig)
-    }
-
     fun getProfileList(): LiveData<List<ProfileConfig>> {
         return database.profileConfigDao().getList()
     }
 
     fun getProfile(id: Int): LiveData<ProfileConfig> {
         return database.profileConfigDao().getProfileById(id)
-    }
-
-    fun setFavouriteRoute(routeId: Int?, isFavourite: Boolean) {
-        routeId?.let {
-            ThreadUtils().runOnDiskThread {
-                with(database) {
-                    runInTransaction {
-                        routeDetailDao().setFavouriteById(it, isFavourite)
-                    }
-                }
-            }
-        }
     }
 
     @Deprecated("Not needed, TrackingService will use addRoute(DbRouteDetail, List<DbRoutePoint>")
@@ -92,9 +68,7 @@ class TrackingRepository(context: Context) {
                             route.totalElevationGain,
 
                             route.maxSpeed,
-                            route.avgSpeed,
-
-                            route.isFavourite
+                            route.avgSpeed
                         )
                     )
 

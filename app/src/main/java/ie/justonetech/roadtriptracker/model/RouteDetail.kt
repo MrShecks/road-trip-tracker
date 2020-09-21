@@ -31,8 +31,6 @@ data class RouteDetail(
     @ColumnInfo(name = "max_speed")             val maxSpeed: Float,
     @ColumnInfo(name = "avg_speed")             val avgSpeed: Float,
 
-    @ColumnInfo(name = "is_favourite")          val isFavourite: Boolean,
-
     @Relation(parentColumn = "profile_id", entityColumn = "_id", entity = DbProfileConfig::class)
     val profileConfig: ProfileConfig,
 

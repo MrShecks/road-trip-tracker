@@ -28,8 +28,6 @@ data class RouteSummary(
     @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Float,
     @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Float,
 
-    @ColumnInfo(name = "is_favourite")          var isFavourite: Boolean,
-
     @Relation(parentColumn = "profile_id", entityColumn = "_id", entity = DbProfileConfig::class)
     val profileConfig: ProfileConfig
 )

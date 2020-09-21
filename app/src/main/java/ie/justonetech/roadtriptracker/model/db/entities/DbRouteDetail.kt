@@ -11,8 +11,7 @@ import java.util.*
 @Entity(
     tableName = "TRouteDetail",
     indices = [
-        Index(value = ["profile_id"], name = "IDX_RouteDetail_Profile_Id"),
-        Index(value = ["is_favourite"], name = "IDX_RouteDetail_Is_Favourite")
+        Index(value = ["profile_id"], name = "IDX_RouteDetail_Profile_Id")
     ],
     foreignKeys = [
         ForeignKey(entity = DbProfileConfig::class, parentColumns = ["_id"], childColumns = ["profile_id"], onDelete = ForeignKey.NO_ACTION)
@@ -34,7 +33,5 @@ data class DbRouteDetail(
     @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Double,
 
     @ColumnInfo(name = "max_speed")             val maxSpeed: Float,
-    @ColumnInfo(name = "avg_speed")             val avgSpeed: Float,
-
-    @ColumnInfo(name = "is_favourite")          val isFavourite: Boolean
+    @ColumnInfo(name = "avg_speed")             val avgSpeed: Float
 )

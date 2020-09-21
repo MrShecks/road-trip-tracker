@@ -97,16 +97,12 @@ abstract class TrackingDatabase protected constructor()
                 // DEBUG: Adding some test routes
                 //
 
-                for(n in 0..150) {
-                    insertTestRoute(db, false)
-                }
-
                 for(n in 0..50) {
-                    insertTestRoute(db, true)
+                    insertTestRoute(db)
                 }
             }
 
-            private fun insertTestRoute(db: SupportSQLiteDatabase, isFavourite: Boolean = false) {
+            private fun insertTestRoute(db: SupportSQLiteDatabase) {
                 val profileId = Random.nextInt(ProfileType.PROFILE_TYPE_WALKING.id, ProfileType.PROFILE_TYPE_MOTORCYCLING.id + 1)
                 val totalDuration = TimeUnit.SECONDS.toMillis(Random.nextLong(10 * 60, 100 * 60))
                 val activeDuration = totalDuration - TimeUnit.SECONDS.toMillis(Random.nextLong(10 * 60))
@@ -137,8 +133,7 @@ abstract class TrackingDatabase protected constructor()
                         $maxElevationGain, 
                         $totalElevationGain, 
                         $maxSpeed, 
-                        ${distance / TimeUnit.MILLISECONDS.toSeconds(activeDuration)}, 
-                        ${if(isFavourite) 1 else 0}
+                        ${distance / TimeUnit.MILLISECONDS.toSeconds(activeDuration)} 
                     )
                     """)
             }
