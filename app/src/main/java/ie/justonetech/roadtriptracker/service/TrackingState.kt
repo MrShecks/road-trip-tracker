@@ -30,9 +30,6 @@ class TrackingState {
     var avgSpeed: Float = 0.0f
         private set
 
-    var avgActiveSpeed: Float = 0.0f
-        private set
-
     var maxElevationGain: Double = 0.0
         private set
 
@@ -84,11 +81,8 @@ class TrackingState {
             if(currentSpeed > maxSpeed)
                 maxSpeed = location.speed
 
-            if(totalDuration.getElapsedTime() > 0)
-                avgSpeed = (distance / totalDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
-
             if(activeDuration.getElapsedTime() > 0)
-                avgActiveSpeed = (distance / activeDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
+                avgSpeed = (distance / activeDuration.getElapsedTime(TimeUnit.SECONDS)).toFloat()
 
             if(!previousAltitude.isNaN()) {
                 if(location.altitude > previousAltitude) {
@@ -125,7 +119,6 @@ class TrackingState {
 
             maxSpeed,
             avgSpeed,
-            avgActiveSpeed,
             currentSpeed,
 
             maxElevationGain,
@@ -139,7 +132,6 @@ class TrackingState {
         currentSpeed = 0.0f
         maxSpeed = 0.0f
         avgSpeed = 0.0f
-        avgActiveSpeed = 0.0f
 
         maxElevationGain = 0.0
         totalElevationGain = 0.0

@@ -198,7 +198,6 @@ class TrackingService : Service() {
                     trackingState.totalElevationGain,
                     trackingState.maxSpeed,
                     trackingState.avgSpeed,
-                    trackingState.avgActiveSpeed,
                     false
                 ),
 

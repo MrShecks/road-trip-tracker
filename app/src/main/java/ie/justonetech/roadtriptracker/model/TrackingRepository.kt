@@ -93,7 +93,6 @@ class TrackingRepository(context: Context) {
 
                             route.maxSpeed,
                             route.avgSpeed,
-                            route.avgActiveSpeed,
 
                             route.isFavourite
                         )

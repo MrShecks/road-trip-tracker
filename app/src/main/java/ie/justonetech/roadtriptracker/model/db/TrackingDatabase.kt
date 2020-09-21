@@ -137,7 +137,6 @@ abstract class TrackingDatabase protected constructor()
                         $maxElevationGain, 
                         $totalElevationGain, 
                         $maxSpeed, 
-                        ${distance / TimeUnit.MILLISECONDS.toSeconds(totalDuration)}, 
                         ${distance / TimeUnit.MILLISECONDS.toSeconds(activeDuration)}, 
                         ${if(isFavourite) 1 else 0}
                     )

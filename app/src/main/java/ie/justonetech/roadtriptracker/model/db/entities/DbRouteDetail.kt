@@ -35,7 +35,6 @@ data class DbRouteDetail(
 
     @ColumnInfo(name = "max_speed")             val maxSpeed: Float,
     @ColumnInfo(name = "avg_speed")             val avgSpeed: Float,
-    @ColumnInfo(name = "avg_active_speed")      val avgActiveSpeed: Float,
 
     @ColumnInfo(name = "is_favourite")          val isFavourite: Boolean
 )

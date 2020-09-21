@@ -23,7 +23,7 @@ class RouteSummaryFormatter(context: Context, data: RouteSummary) : ModelFormatt
         get() = formatDistance(data.distance, data.profileConfig.distanceUnit)
 
     val avgSpeed: String
-        get() = formatSpeed(data.avgActiveSpeed, data.profileConfig.speedUnit)
+        get() = formatSpeed(data.avgSpeed, data.profileConfig.speedUnit)
 
     val profileName: String
         get() = ProfileType.fromId(data.profileId).getName(context)

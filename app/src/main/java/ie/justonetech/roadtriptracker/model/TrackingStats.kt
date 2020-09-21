@@ -15,7 +15,6 @@ data class TrackingStats(
 
     val maxSpeed: Float,
     val avgSpeed: Float,
-    val avgActiveSpeed: Float,
     val currentSpeed: Float,
 
     val maxElevationGain: Double,
@@ -29,7 +28,6 @@ data class TrackingStats(
         0,
         0,
         0.0,
-        0f,
         0f,
         0f,
         0f,

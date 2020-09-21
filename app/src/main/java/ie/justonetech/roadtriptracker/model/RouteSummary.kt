@@ -24,7 +24,6 @@ data class RouteSummary(
     @ColumnInfo(name = "distance")              var distance: Double,
     @ColumnInfo(name = "max_speed")             var maxSpeed: Float,
     @ColumnInfo(name = "avg_speed")             var avgSpeed: Float,
-    @ColumnInfo(name = "avg_active_speed")      var avgActiveSpeed: Float,
 
     @ColumnInfo(name = "max_elevation_gain")    val maxElevationGain: Float,
     @ColumnInfo(name = "total_elevation_gain")  val totalElevationGain: Float,

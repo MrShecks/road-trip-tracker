@@ -33,7 +33,7 @@ class RouteDetailFormatter(context: Context, data: RouteDetail) : ModelFormatter
         get() = formatSpeed(data.maxSpeed, data.profileConfig.speedUnit)
 
     val avgSpeed: String
-        get() = formatSpeed(data.avgActiveSpeed, data.profileConfig.speedUnit)
+        get() = formatSpeed(data.avgSpeed, data.profileConfig.speedUnit)
 
     // TODO: Pace is total time/total distance and is a fraction read as "x <time unit> per <distance unit>"
     // E.g 10 minutes per mile, 0.01 hrs per kilometer, 2 seconds per meter
