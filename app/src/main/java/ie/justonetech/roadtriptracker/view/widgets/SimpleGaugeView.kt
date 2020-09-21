@@ -6,14 +6,14 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.*
-import android.os.Bundle
+import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.annotation.ColorInt
-import kotlin.math.abs
 import ie.justonetech.roadtriptracker.R
+import kotlin.math.abs
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // SimpleGaugeView
@@ -121,7 +121,6 @@ class SimpleGaugeView : View {
     constructor(context: Context, attrs: AttributeSet?): this(context, attrs, 0)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
-
         context.theme.obtainStyledAttributes(attrs, R.styleable.SimpleGaugeView, defStyleAttr, 0).apply {
             try {
                 isInitialising = true
@@ -142,6 +141,7 @@ class SimpleGaugeView : View {
                         else    -> Paint.Cap.BUTT
                     }
                 }
+
 
                 minValue = getInt(R.styleable.SimpleGaugeView_gaugeView_minValue, 0)
                 maxValue = getInt(R.styleable.SimpleGaugeView_gaugeView_maxValue, DEFAULT_MAX_VALUE)
@@ -206,7 +206,6 @@ class SimpleGaugeView : View {
     }
 
     override fun onSaveInstanceState(): Parcelable? {
-        val superState = super.onSaveInstanceState()
 
         //
         // Note: Only saving the state that can change at runtime.
@@ -214,15 +213,14 @@ class SimpleGaugeView : View {
         // be read when the view is recreated.
         //
 
-        return Bundle().apply {
-            putParcelable("superState", superState)
-            putInt("value", value)
-            putInt("maxValue", maxValue)
-            putInt("barColor", barColor)
-            putInt("fillColor", fillColor)
-            putInt("textColor", textColor)
-            putInt("labelColor", labelColor)
-            putString("labelText", labelText)
+        return SimpleGaugeViewState(super.onSaveInstanceState()).also {
+            it.value = value
+            it.maxValue = maxValue
+            it.barColor = barColor
+            it.fillColor = fillColor
+            it.textColor = textColor
+            it.labelColor = labelColor
+            it.labelText = labelText
         }
     }
 
@@ -230,16 +228,19 @@ class SimpleGaugeView : View {
 
         isInitialising = true
 
-        with(state as Bundle) {
-            super.onRestoreInstanceState(getParcelable("superState"))
+        if(state is SimpleGaugeViewState) {
+            super.onRestoreInstanceState(state.superState)
 
-            value = getInt("value")
-            maxValue = getInt("maxValue")
-            barColor = getInt("barColor")
-            fillColor = getInt("fillColor")
-            textColor = getInt("textColor")
-            labelColor = getInt("labelColor")
-            labelText = getString("labelText", "")
+            maxValue = state.maxValue
+            barColor = state.barColor
+            fillColor = state.fillColor
+            textColor = state.textColor
+            labelColor = state.labelColor
+            labelText = state.labelText
+            value = state.value
+
+        } else {
+            super.onRestoreInstanceState(state)
         }
 
         isInitialising = false
@@ -375,6 +376,58 @@ class SimpleGaugeView : View {
 
     private fun TypedArray.getTextSize(index: Int, defaultSize: Float): Float {
         return getDimensionPixelSize(index, defaultSize.toInt()).toFloat()
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    // SimpleGaugeViewState
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    class SimpleGaugeViewState : BaseSavedState {
+
+        var value: Int = 0
+        var maxValue: Int = 0
+        var barColor: Int = 0
+        var fillColor: Int = 0
+        var textColor: Int = 0
+        var labelColor: Int = 0
+        var labelText: String = String()
+
+        constructor(parcelable: Parcelable?) : super(parcelable)
+
+        constructor(parcel: Parcel) : super(parcel) {
+            value = parcel.readInt()
+            maxValue = parcel.readInt()
+            barColor = parcel.readInt()
+            fillColor = parcel.readInt()
+            textColor = parcel.readInt()
+            labelColor = parcel.readInt()
+            labelText = parcel.readString() ?: String()
+        }
+
+        override fun writeToParcel(out: Parcel?, flags: Int) {
+            super.writeToParcel(out, flags)
+
+            out?.let {
+                it.writeInt(value)
+                it.writeInt(maxValue)
+                it.writeInt(barColor)
+                it.writeInt(fillColor)
+                it.writeInt(textColor)
+                it.writeInt(labelColor)
+                it.writeString(labelText)
+            }
+        }
+
+        @JvmField
+        val CREATOR: Parcelable.Creator<SimpleGaugeViewState> = object : Parcelable.Creator<SimpleGaugeViewState> {
+            override fun createFromParcel(source: Parcel): SimpleGaugeViewState {
+                return SimpleGaugeViewState(source)
+            }
+
+            override fun newArray(size: Int): Array<SimpleGaugeViewState?> {
+                return arrayOfNulls(size)
+            }
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.databinding.GenericDashFragmentBinding
+import ie.justonetech.roadtriptracker.databinding.SpeedDashFragmentBinding
 import ie.justonetech.roadtriptracker.databinding.TimeDashFragmentBinding
 import ie.justonetech.roadtriptracker.model.ProfileConfig
 import ie.justonetech.roadtriptracker.model.TrackingStats
@@ -49,6 +50,21 @@ class DashFragmentFactory {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     class TimeDashFragment : BaseDashFragment<TimeDashFragmentBinding>(R.layout.time_dash_fragment) {
+        override fun updateStats(trackingStats: TrackingStats) {
+            viewBinding.trackingStats = TrackingStatsFormatter(
+                viewBinding.root.context,
+                trackingStats,
+                speedUnit,
+                distanceUnit
+            )
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    // SpeedDashFragment
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    class SpeedDashFragment : BaseDashFragment<SpeedDashFragmentBinding>(R.layout.speed_dash_fragment) {
         override fun updateStats(trackingStats: TrackingStats) {
             viewBinding.trackingStats = TrackingStatsFormatter(
                 viewBinding.root.context,
@@ -103,6 +119,9 @@ class DashFragmentFactory {
             return when(profileType) {
                 ProfileType.PROFILE_TYPE_WALKING,
                 ProfileType.PROFILE_TYPE_RUNNING -> TimeDashFragment()
+
+                ProfileType.PROFILE_TYPE_CYCLING,
+                ProfileType.PROFILE_TYPE_MOTORCYCLING -> SpeedDashFragment()
 
                 else -> GenericDashFragment()
             }
