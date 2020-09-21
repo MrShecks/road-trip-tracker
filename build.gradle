@@ -8,24 +8,24 @@ buildscript {
         targetSdkVersion = 28
         minSdkVersion = 16
 
-        kotlinVersion = '1.3.61'
-        kotlinCoreVersion = '1.1.0'
-        kotlinCoroutinesVersion = '1.3.0'
+        kotlinVersion = '1.4.10'
+        kotlinCoreVersion = '1.3.1'
+        kotlinCoroutinesVersion = '1.3.7'
 
-        androidBuildToolsVersion = '3.5.3'
+        androidBuildToolsVersion = '4.0.1'
 
-        roomLibraryVersion = '2.2.3'
-        navigationLibraryVersion = '2.2.0-rc04'
-        preferencesLibraryVersion = '1.1.0'
-        pagingLibraryVersion = '2.1.1'
+        roomLibraryVersion = '2.2.5'
+        navigationLibraryVersion = '2.3.0'
+        preferencesLibraryVersion = '1.1.1'
+        pagingLibraryVersion = '2.1.2'
         recyclerViewLibraryVersion = '1.0.0'
-        lifeCycleExtensionLibraryVersion = '2.1.0'
+        lifeCycleExtensionLibraryVersion = '2.2.0'
 
-        constraintlayoutLibraryVersion = '1.1.3'
+        constraintlayoutLibraryVersion = '2.0.1'
         recyclerViewSelectionLibraryVersion = '1.0.0'
 
-        appcompatLibraryVersion = '1.1.0'
-        materialLibraryVersion = '1.2.0-alpha03'
+        appcompatLibraryVersion = '1.2.0'
+        materialLibraryVersion = '1.3.0-alpha02'
 
         googlePlayServicesVersion = '17.0.0'
     }
