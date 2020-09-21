@@ -19,7 +19,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
@@ -367,7 +367,7 @@ class TrackingActivity
         // Add dash fragment based on the selected profile
         addFragment(R.id.dashFragmentContainer, DashFragmentFactory.newInstance(profileType))
 
-        ViewModelProviders.of(this).get(ProfileViewModel::class.java).also { model ->
+        ViewModelProvider(this).get(ProfileViewModel::class.java).also { model ->
             model.profile.observe(this, Observer { profileConfig ->
 
                 findFragmentById<DashFragmentFactory.DashFragment>(R.id.dashFragmentContainer)?.setProfile(profileConfig)

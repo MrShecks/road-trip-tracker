@@ -54,7 +54,6 @@
     <string name="route_summary_list_avg_speed_title">Avg Speed</string>
 
     <string name="route_history_action_menu_delete">Delete</string>
-    <string name="route_history_action_menu_favourite">Add Favourite</string>
 
     <string name="route_history_delete_prompt_title">Delete Selected</string>
     <string name="route_history_delete_selected_prompt_message">Are you sure you want to delete the %d selected routes?</string>

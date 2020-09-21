@@ -6,7 +6,7 @@ import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import ie.justonetech.roadtriptracker.R
 import ie.justonetech.roadtriptracker.model.RouteSummary
@@ -32,7 +32,7 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
+        viewModel = ViewModelProvider(this).get(RouteViewModel::class.java).also { model ->
 
             routeSummaryList.setOnItemClickListener(object: RouteSummaryRecyclerView.ItemClickListener {
                 override fun onItemClicked(item: RouteSummary) {
@@ -119,7 +119,9 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
 
             when(it.itemId) {
                 R.id.action_delete -> onDeleteSelected(selectedIds)
-                R.id.action_add_favourite -> onAddFavouriteSelected(selectedIds)
+                else -> {
+                    // TODO: Add other options here...
+                }
             }
 
             routeSummaryList.endMultiSelect()
@@ -145,7 +147,7 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun onDeleteSelected(selectedIds: List<Int>) {
-        AlertDialog.Builder(context!!).apply {
+        AlertDialog.Builder(requireContext()).apply {
             setTitle(R.string.route_history_delete_prompt_title)
             setMessage(getString(R.string.route_history_delete_selected_prompt_message, selectedIds.size))
 
@@ -159,10 +161,6 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
 
             create().show()
         }
-    }
-
-    private fun onAddFavouriteSelected(selectedIds: List<Int>) {
-
     }
 
     companion object {

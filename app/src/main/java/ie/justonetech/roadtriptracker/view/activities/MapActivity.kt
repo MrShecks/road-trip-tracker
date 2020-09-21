@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
@@ -80,7 +80,7 @@ class MapActivity
         map.mapType = Preferences(this).mapType
 
         if(routeId != RouteDetail.INVALID_ID) {
-            ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
+            ViewModelProvider(this).get(RouteViewModel::class.java).also { model ->
                 model.routeDetail.observe(this, Observer {
                     MapUtils.drawRoute(it.points, map, DEFAULT_MAP_ZOOM)
                 })

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -36,7 +36,7 @@ class RouteDetailFragment : MapViewHostFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
+        viewModel = ViewModelProvider(this).get(RouteViewModel::class.java).also { model ->
             setupRouteDetailObserver(model)
 
             model.fetchRouteDetail(args.routeId)
@@ -46,7 +46,7 @@ class RouteDetailFragment : MapViewHostFragment() {
     override fun onMapReady(mapView: MapView, map: GoogleMap) {
         map.mapType = Preferences(mapView.context).mapType
 
-        ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
+        ViewModelProvider(this).get(RouteViewModel::class.java).also { model ->
             model.routeDetail.observe(viewLifecycleOwner, Observer {
                 MapUtils.drawRoute(it.points, map)
             })

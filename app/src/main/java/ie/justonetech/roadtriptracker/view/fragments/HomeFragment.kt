@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -41,7 +41,7 @@ class HomeFragment : MapViewHostFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
+        viewModel = ViewModelProvider(this).get(RouteViewModel::class.java).also { model ->
             setupLatestRouteObserver(view.context, model)
             model.fetchLatestRouteDetail()
             //model.fetchRouteDetail(2000)
@@ -100,7 +100,7 @@ class HomeFragment : MapViewHostFragment() {
 
         map.mapType = Preferences(mapView.context).mapType
 
-        ViewModelProviders.of(this).get(RouteViewModel::class.java).also { model ->
+        ViewModelProvider(this).get(RouteViewModel::class.java).also { model ->
             model.routeDetail.observe(viewLifecycleOwner, Observer {
                 if(it != null)
                     MapUtils.drawRoute(it.points, map)
