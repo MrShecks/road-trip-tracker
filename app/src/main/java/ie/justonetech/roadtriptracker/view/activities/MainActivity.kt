@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolBar)
 
         Navigation.findNavController(this, R.id.navHostFragment).also { navController ->
-            appBarConfiguration = AppBarConfiguration(setOf(R.id.destination_home, R.id.destination_history, R.id.destination_favourites), drawerLayout)
+            appBarConfiguration = AppBarConfiguration(setOf(R.id.destination_home, R.id.destination_history), drawerLayout)
 
             setupActionBar(navController)
             setupBottomNavigationMenu(navController)

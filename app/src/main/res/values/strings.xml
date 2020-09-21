@@ -17,9 +17,6 @@
     <!-- History Fragment -->
     <string name="history_fragment_title">History</string>
 
-    <!-- Favourites Fragment -->
-    <string name="favourites_fragment_title">Favourites</string>
-
     <!-- Settings Fragment -->
     <string name="settings_fragment_title">Settings</string>
 
