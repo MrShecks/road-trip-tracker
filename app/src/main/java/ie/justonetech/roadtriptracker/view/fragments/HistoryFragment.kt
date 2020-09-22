@@ -1,3 +1,20 @@
+/*
+ * This file is part of Road Trip Tracker.
+ *
+ * Road Trip Tracker is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Road Trip Tracker is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Road Trip Tracker.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package ie.justonetech.roadtriptracker.view.fragments
 
 import android.os.Bundle
@@ -71,6 +88,8 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
             })
         }
 
+        // FIXME: I don't think this is working anymore, I must have broken something
+
         //
         // Note: In order for selection tracking to persisted between device configuration
         // changes we need include the RouteSummaryRecyclerView in the fragment lifecycle
@@ -106,7 +125,7 @@ class HistoryFragment : Fragment(), ActionMode.Callback {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun startActionMode(callback: ActionMode.Callback): ActionMode? {
-        return activity?.startActionMode(callback)
+        return requireActivity().startActionMode(callback)
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
