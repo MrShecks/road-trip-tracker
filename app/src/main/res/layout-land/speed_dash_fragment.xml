@@ -33,11 +33,19 @@
 
         <ie.justonetech.roadtriptracker.view.widgets.SimpleGaugeView
             android:id="@+id/currentSpeed"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            
+            app:gaugeView_barWidth="18dp"
+            app:gaugeView_textSize="26sp"
+
+            app:gaugeView_value="50"
+            app:gaugeView_minValue="0"
+            app:gaugeView_maxValue="100"
+
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +57,7 @@
             android:layout_marginRight="8dp"
 
             android:text="@{trackingStats.totalDuration}"
-            android:textSize="18sp"
+            android:textSize="28sp"
 
             app:layout_constraintBottom_toTopOf="@+id/textView2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +75,7 @@
             android:text="@string/tracking_stat_time_title"
             android:textAllCaps="true"
             android:textColor="@color/primaryColor"
-            android:textSize="16sp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toTopOf="@+id/activeDuration"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/totalDuration"
@@ -82,7 +90,7 @@
             android:layout_marginRight="8dp"
 
             android:text="@{trackingStats.activeDuration}"
-            android:textSize="18sp"
+            android:textSize="28sp"
 
             app:layout_constraintBottom_toTopOf="@+id/textView11"
             app:layout_constraintEnd_toEndOf="parent"
@@ -100,7 +108,7 @@
             android:text="@string/tracking_stat_active_time_title"
             android:textAllCaps="true"
             android:textColor="@color/primaryColor"
-            android:textSize="16sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/pausedDuration"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activeDuration"
@@ -115,7 +123,7 @@
             android:layout_marginRight="8dp"
 
             android:text="@{trackingStats.pausedDuration}"
-            android:textSize="18sp"
+            android:textSize="28sp"
 
             app:layout_constraintBottom_toTopOf="@+id/textView13"
             app:layout_constraintEnd_toEndOf="parent"
@@ -133,7 +141,7 @@
             android:text="@string/tracking_stat_paused_time_title"
             android:textAllCaps="true"
             android:textColor="@color/primaryColor"
-            android:textSize="16sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pausedDuration"
             app:layout_constraintVertical_chainStyle="packed" />
