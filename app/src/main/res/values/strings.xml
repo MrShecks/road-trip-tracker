@@ -117,6 +117,9 @@
 
     <string name="map_activity_title">Map</string>
 
+    <string name="tracking_location_services_prompt_title">Enable Location Services</string>
+    <string name="tracking_location_services_prompt_message">Location services must be enabled before tracking can be started.\n\nWould you like go to the location settings?</string>
+
     <!--
         Profiles
     -->

@@ -21,6 +21,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -104,8 +105,15 @@ class TrackingActivity
         startStopButton.setOnClickListener {
             trackingService?.let { service ->
                 when(service.getCurrentState()) {
-                    TrackingService.State.TRACKING_STOPPED ->
-                        requestPermissionForAction(REQUEST_CODE_ACTION_START_TRACKING)
+                    TrackingService.State.TRACKING_STOPPED -> {
+                        if(!isLocationServiceAvailable()) {
+                            requestStartLocationServices()
+
+                        } else {
+                            requestPermissionForAction(REQUEST_CODE_ACTION_START_TRACKING)
+                        }
+                    }
+
 
                     TrackingService.State.TRACKING_STARTED,
                     TrackingService.State.TRACKING_PAUSED ->
@@ -516,6 +524,34 @@ class TrackingActivity
             }
 
             create().show()
+        }
+    }
+
+    private fun requestStartLocationServices() {
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.tracking_location_services_prompt_title)
+            setMessage(R.string.tracking_location_services_prompt_message)
+
+            setPositiveButton(android.R.string.yes) { _, _ ->
+                startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            }
+
+            setNegativeButton(android.R.string.no) { _, _ ->
+                // Nothing to do here...
+            }
+
+            create().show()
+        }
+    }
+
+    private fun isLocationServiceAvailable(): Boolean {
+        return try {
+            with(getSystemService(Context.LOCATION_SERVICE) as LocationManager) {
+                isProviderEnabled(LocationManager.GPS_PROVIDER)
+            }
+
+        } catch (_: SecurityException) {
+            false
         }
     }
 
