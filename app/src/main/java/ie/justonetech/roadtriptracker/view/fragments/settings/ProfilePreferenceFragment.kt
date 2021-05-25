@@ -21,26 +21,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import ie.justonetech.roadtriptracker.R
-import ie.justonetech.roadtriptracker.view.adapters.ProfileListAdapter
-import kotlinx.android.synthetic.main.profile_list_selection_fragment.*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// ProfileListSelectionFragment
+// ProfilePreferenceFragment
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class ProfileListSelectionFragment : Fragment() {
+class ProfilePreferenceFragment : Fragment() {
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private val args: ProfilePreferenceFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.profile_list_selection_fragment, container, false)
+        return inflater.inflate(R.layout.profile_preference_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        profileList.adapter = ProfileListAdapter(view.context)
+        // TODO: Retrieve profileType settings from DB and update UI
+        Toast.makeText(view.context, "Selected: ${args.profileType}", Toast.LENGTH_LONG).show()
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    companion object {
+        private val TAG = ProfilePreferenceFragment::class.java.simpleName
     }
 }

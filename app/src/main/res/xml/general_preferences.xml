@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ This file is part of Road Trip Tracker.
   ~
   ~ Road Trip Tracker is free software: you can redistribute it and/or modify
@@ -20,16 +19,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/prefs_category_general_title">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_key_keep_screen_on"
-            android:summaryOff="@string/prefs_keep_screen_on_summary_off"
-            android:summaryOn="@string/prefs_keep_screen_on_summary_on"
-            android:title="@string/prefs_keep_screen_on_title"
-            app:iconSpaceReserved="false" />
+        app:title="@string/prefs_category_general_title"
+        android:icon="@drawable/ic_settings_black_24p">
 
         <ListPreference
             android:defaultValue="0"
@@ -41,25 +32,41 @@
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
-        <PreferenceScreen
-            app:summary="Change the configuration settings for tracking profiles"
-            app:title="Profile Settings"
-            >
-
-            <SwitchPreferenceCompat
-                android:defaultValue="true"
-                android:key="@string/pref_key_keep_screen_on"
-                android:summaryOff="@string/prefs_keep_screen_on_summary_off"
-                android:summaryOn="@string/prefs_keep_screen_on_summary_on"
-                android:title="@string/prefs_keep_screen_on_title"
-                app:iconSpaceReserved="false" />
-        </PreferenceScreen>
+        <Preference
+            android:title="Profiles"
+            app:iconSpaceReserved="false"
+            android:summary="Change the configuration settings for tracking profiles"
+            android:key="_pref_profile_settings" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/prefs_category_about_title">
+        app:title="@string/prefs_category_tracking_title"
+        android:icon="@drawable/ic_tracking_black_24p">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_keep_screen_on"
+            android:summaryOff="@string/prefs_keep_screen_on_summary_off"
+            android:summaryOn="@string/prefs_keep_screen_on_summary_on"
+            android:title="@string/prefs_keep_screen_on_title"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_keep_screen_on"
+            android:summaryOff="@string/prefs_lock_screen_orientation_off"
+            android:summaryOn="@string/prefs_lock_screen_orientation_on"
+            android:title="@string/prefs_lock_screen_orientation_title"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory
+        app:title="@string/prefs_category_about_title"
+        android:icon="@drawable/ic_help_black_24p">
 
         <Preference
             android:selectable="false"

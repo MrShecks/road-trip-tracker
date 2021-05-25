@@ -40,8 +40,8 @@
     </fragment>
     <fragment
         android:id="@+id/destination_settings"
-        android:name="ie.justonetech.roadtriptracker.view.fragments.settings.SettingsFragment"
-        android:label="@string/settings_fragment_title" >
+        android:name="ie.justonetech.roadtriptracker.view.fragments.settings.GeneralPreferenceFragment"
+        android:label="@string/preference_fragment_title" >
         <action
             android:id="@+id/action_destination_settings_to_profile_list_selection"
             app:destination="@id/destination_profile_list_selection" />
@@ -56,6 +56,18 @@
     </fragment>
     <fragment
         android:id="@+id/destination_profile_list_selection"
-        android:name="ie.justonetech.roadtriptracker.view.fragments.settings.ProfileListSelectionFragment"
-        android:label="@string/profile_list_settings_fragment_title" />
+        android:name="ie.justonetech.roadtriptracker.view.fragments.settings.ProfileListPreferenceFragment"
+        android:label="@string/profile_list_prefernece_fragment_title" >
+        <action
+            android:id="@+id/action_destination_profile_list_selection_to_profile_preferences"
+            app:destination="@id/destination_profile_preferences" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_profile_preferences"
+        android:name="ie.justonetech.roadtriptracker.view.fragments.settings.ProfilePreferenceFragment"
+        android:label="@string/profile_preference_fragment_title" >
+        <argument
+            android:name="profileType"
+            app:argType="ie.justonetech.roadtriptracker.utils.ProfileType" />
+    </fragment>
 </navigation>

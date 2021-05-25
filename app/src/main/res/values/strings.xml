@@ -35,10 +35,13 @@
     <string name="history_fragment_title">History</string>
 
     <!-- Settings Fragment -->
-    <string name="settings_fragment_title">Settings</string>
+    <string name="preference_fragment_title">Settings</string>
 
-    <!-- Settings Profile List Fragment -->
-    <string name="profile_list_settings_fragment_title">Select Profile</string>
+    <!-- Profile List Preference Fragment -->
+    <string name="profile_list_prefernece_fragment_title">Select Profile</string>
+
+    <!-- Profile Preferences -->
+    <string name="profile_preference_fragment_title">Profile Settings</string>
 
     <!--
         Route Detail Fragment
@@ -164,6 +167,7 @@
     <string name="pref_key_current_profile">_pref_key_current_profile</string>
     <string name="pref_key_keep_screen_on">_pref_key_keep_screen_on</string>
     <string name="pref_key_map_type">_pref_key_map_type</string>
+    <string name="pref_key_tracking_screen_orientation">_pref_key_tracking_screen_orientation</string>
 
     <string name="pref_value_map_type_normal">_pref_value_map_type_normal</string>
     <string name="pref_value_map_type_terrain">_pref_value_map_type_terrain</string>
@@ -172,9 +176,14 @@
 
     <string name="prefs_category_general_title">General</string>
 
+    <string name="prefs_category_tracking_title">Tracking</string>
     <string name="prefs_keep_screen_on_title">Keep screen on</string>
     <string name="prefs_keep_screen_on_summary_on">The screen will remain on and bright while tracking is in progress</string>
     <string name="prefs_keep_screen_on_summary_off">The screen will be allowed to turn off while tracking is in progress</string>
+
+    <string name="prefs_lock_screen_orientation_title">Lock screen orientation</string>
+    <string name="prefs_lock_screen_orientation_on">The screen will be locked in the selected orientation while tracking is in progress</string>
+    <string name="prefs_lock_screen_orientation_off">The screen will be free to change orientation while tracking is in progress</string>
 
     <string name="prefs_map_type_title">Map type</string>
     <string name="prefs_map_type_selection_dialog_title">Select map type</string>
@@ -188,5 +197,7 @@
     <string name="prefs_category_about_title">About</string>
     <string name="prefs_about_summary">TODO: Add about information for Road Trip Tracker</string>
     <string name="prefs_version_title">Version</string>
+
+
 
 </resources>

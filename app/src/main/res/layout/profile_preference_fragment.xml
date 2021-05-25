@@ -16,16 +16,7 @@
   ~ along with Road Trip Tracker.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <item
-        android:id="@+id/destination_settings"
-        android:icon="@drawable/ic_settings_white_24dp"
-        android:title="@string/preference_fragment_title"
-        app:showAsAction="ifRoom"
-
-        android:iconTint="?attr/colorOnPrimary"
-        app:iconTint="?attr/colorOnPrimary"
-        />
-</menu>
+</androidx.constraintlayout.widget.ConstraintLayout>

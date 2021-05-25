@@ -19,16 +19,11 @@ package ie.justonetech.roadtriptracker.view.fragments.settings
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.preference.Preference
+import androidx.navigation.Navigation
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
 import ie.justonetech.roadtriptracker.R
-import ie.justonetech.roadtriptracker.view.activities.MainActivity
 
 //
 // https://source.android.com/devices/tech/settings/settings-guidelines
@@ -41,9 +36,8 @@ import ie.justonetech.roadtriptracker.view.activities.MainActivity
 // SettingsFragment
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class SettingsFragment : PreferenceFragmentCompat() /* ,
-    PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
-    PreferenceFragmentCompat.OnPreferenceStartScreenCallback*/ {
+class GeneralPreferenceFragment : PreferenceFragmentCompat(),
+    PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -51,24 +45,35 @@ class SettingsFragment : PreferenceFragmentCompat() /* ,
         setPreferencesFromResource(R.xml.general_preferences, rootKey)
     }
 
-    // TODO: Need to figure out how to use nested preference screens with the Navigation Library
-    // TODO: The Google docs seems to be lacking here...
+    override fun onPreferenceStartScreen(preferenceFragment: PreferenceFragmentCompat?, preferenceScreen: PreferenceScreen?): Boolean {
+        Log.d(TAG, "onPreferenceStartScreen(): pref=$preferenceScreen")
 
-//    override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat?, pref: Preference?): Boolean {
-//        Log.i(TAG, "onPreferenceStartFragment(caller=$caller, pref=$pref)")
-//
-//        return false
-//    }
-//
-//    override fun onPreferenceStartScreen(caller: PreferenceFragmentCompat?, pref: PreferenceScreen?): Boolean {
-//        Log.i(TAG, "onPreferenceStartScreen(caller=$caller, pref=$pref)")
-//
-//        return false
-//    }
+        // FIXME: Clean up this mess
+        // FIXME: Look into the correct way to do multi level preferences, I think we're supposed to just switch out the fragment
+
+        return preferenceScreen?.let {
+            when(it.key) {
+                "_pref_profile_settings" -> {
+                    GeneralPreferenceFragmentDirections.actionDestinationSettingsToProfileListSelection().also { action ->
+                        Navigation.findNavController(requireView()).navigate(action)
+                    }
+
+                    true
+                }
+
+                else ->
+                    false
+            }
+        } ?: false
+    }
+
+    override fun getCallbackFragment(): Fragment {
+        return this
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     companion object {
-        private val TAG = SettingsFragment::class.java.simpleName
+        private val TAG = GeneralPreferenceFragment::class.java.simpleName
     }
 }

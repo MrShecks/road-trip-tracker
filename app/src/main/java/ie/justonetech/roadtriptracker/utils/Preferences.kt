@@ -17,10 +17,13 @@
 
 package ie.justonetech.roadtriptracker.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 
 import android.preference.PreferenceManager
+import androidx.annotation.StringRes
 import androidx.core.content.edit
 import com.google.android.gms.maps.GoogleMap
 import ie.justonetech.roadtriptracker.R
@@ -30,30 +33,26 @@ import ie.justonetech.roadtriptracker.R
 // Singleton used to manage the applications stored preferences
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-class Preferences private constructor(context: Context) {
+class Preferences private constructor(private val context: Context) {
 
     var currentProfile: ProfileType
         get() {
             return ProfileType.fromId(
-                prefs.getInt(PREF_KEY_CURRENT_PROFILE,
-                    ProfileType.PROFILE_TYPE_WALKING.id)
+                getInt(R.string.pref_key_current_profile, ProfileType.PROFILE_TYPE_WALKING.id)
             )
         }
 
-        set(value) {
-            prefs.edit(true) {
-                putInt(PREF_KEY_CURRENT_PROFILE, value.id)
-            }
-        }
+        set(value) = putInt(R.string.pref_key_current_profile, value.id)
 
     val keepScreenOn: Boolean
-        get() = prefs.getBoolean(PREF_KEY_KEEP_SCREEN_ON, true)
+        get() = getBoolean(R.string.pref_key_keep_screen_on, true)
 
     val mapType: Int
-        get() {
-            return mapTypes[prefs.getString(PREF_KEY_MAP_TYPE, "")!!]
-                ?: GoogleMap.MAP_TYPE_NORMAL
-        }
+        get() = mapTypes[getString(R.string.pref_key_map_type, "")] ?: GoogleMap.MAP_TYPE_NORMAL
+
+    var trackingScreenOrientation: Int
+        get() = getInt(R.string.pref_key_tracking_screen_orientation, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+        set(value) = putInt(R.string.pref_key_tracking_screen_orientation, value)
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -63,9 +62,10 @@ class Preferences private constructor(context: Context) {
     // Preference key names
     //
 
-    private val PREF_KEY_CURRENT_PROFILE        = context.getString(R.string.pref_key_current_profile)
-    private val PREF_KEY_KEEP_SCREEN_ON         = context.getString(R.string.pref_key_keep_screen_on)
-    private val PREF_KEY_MAP_TYPE               = context.getString(R.string.pref_key_map_type)
+//    private val PREF_KEY_CURRENT_PROFILE                = context.getString(R.string.pref_key_current_profile)
+//    private val PREF_KEY_KEEP_SCREEN_ON                 = context.getString(R.string.pref_key_keep_screen_on)
+//    private val PREF_KEY_MAP_TYPE                       = context.getString(R.string.pref_key_map_type)
+//    private val PREF_KEY_TRACKING_SCREEN_ORIENTAITON    = context.getString(R.string.pref_key_tracking_screen_orientation)
 
     //
     // Preference values
@@ -78,6 +78,38 @@ class Preferences private constructor(context: Context) {
         context.getString(R.string.pref_value_map_type_hybrid) to GoogleMap.MAP_TYPE_HYBRID
     )
 
+    private fun getString(@StringRes id: Int, defaultValue: String = ""): String {
+        return prefs.getString(context.getString(id), defaultValue) ?: defaultValue
+    }
+
+    private fun putString(@StringRes id: Int, value: String, commit: Boolean = true) {
+        prefs.edit(commit) {
+            putString(context.getString(id), value)
+        }
+    }
+
+    private fun getBoolean(@StringRes id: Int, defaultValue: Boolean): Boolean {
+        return prefs.getBoolean(context.getString(id), defaultValue)
+    }
+
+    private fun putBoolean(@StringRes id: Int, value: Boolean, commit: Boolean = true) {
+        prefs.edit(commit) {
+            putBoolean(context.getString(id), value)
+        }
+    }
+
+    private fun getInt(@StringRes id: Int, defaultValue: Int): Int {
+        return prefs.getInt(context.getString(id), defaultValue)
+    }
+
+    private fun putInt(@StringRes id: Int, value: Int, commit: Boolean = true) {
+        prefs.edit(commit) {
+            putInt(context.getString(id), value)
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
     companion object {
         private val TAG = Preferences::class.java.simpleName
 
@@ -88,7 +120,7 @@ class Preferences private constructor(context: Context) {
         @JvmStatic
         operator fun invoke(context: Context): Preferences {
             return instance ?: synchronized(LOCK) {
-                instance ?: Preferences(context).also {
+                instance ?: Preferences(context.applicationContext).also {
                     instance = it
                 }
             }
